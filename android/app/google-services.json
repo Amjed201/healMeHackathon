@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "500698076345",
+    "project_id": "logistic-8127f",
+    "storage_bucket": "logistic-8127f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:500698076345:android:530ca0b73a18d02b06f768",
+        "android_client_info": {
+          "package_name": "com.ktl.logistic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "500698076345-6icobt5k2nnvmb20tq79mvha67b3dnn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAoh9Qix_lwG16Q4WL9zt98VoOiJnXBTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "500698076345-6icobt5k2nnvmb20tq79mvha67b3dnn0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
