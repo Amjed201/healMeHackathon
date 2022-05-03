@@ -37,10 +37,11 @@ class MyApp extends StatelessWidget {
                   primaryColor: const Color(0xff387E7E),
                   secondaryHeaderColor: const Color(0xffFAA933),
                   // focus color for texts
+                  hintColor: Color(0xff454B60),
                   focusColor: Colors.black,
                   fontFamily: Get.locale?.languageCode == 'en'
                       ? 'PlusJakartaSans'
-                      : 'Cairo',
+                      : 'Montserrat-Arabic',
                   colorScheme:
                       ColorScheme.fromSwatch(primarySwatch: Colors.orange)
                           .copyWith(secondary: const Color(0xffa49e9e))),

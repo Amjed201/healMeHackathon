@@ -1,15 +1,28 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:logistic/ui/screens/otp.dart';
-import 'package:logistic/ui/widgets/commonButton.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/ui/widgets/back.dart';
+import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:pin_code_text_field/pin_code_text_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class InfoScreen extends StatefulWidget {
+  @override
+  State<InfoScreen> createState() => _InfoScreenState();
+}
 
-  final TextEditingController _phoneController = TextEditingController();
+class _InfoScreenState extends State<InfoScreen> {
+  final _phoneNode = FocusNode();
+
+  var _phoneController = TextEditingController();
+
+  final auth = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,30 +31,8 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
           child: ListView(
         children: [
-          //check if keyboard is opened or not
-          // if condition is true => keyboard is closed
-          MediaQuery.of(context).viewInsets.bottom == 0
-              ?
-              //shape
-              Column(
-                  children: [
-                    Lottie.asset('assets/lottie/box.json',
-                        fit: BoxFit.fill,
-                        width: 428.w,
-                        height: 580.h,
-                        repeat: false),
-                    Divider(
-                      height: 10,
-                      color: Theme.of(context).secondaryHeaderColor,
-                      thickness: 10,
-                    ),
-                  ],
-                )
-              : SizedBox(
-                  height: 200.h,
-                ),
           SizedBox(
-            height: 20.h,
+            height: 250.h,
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15.w),
@@ -50,29 +41,28 @@ class LoginScreen extends StatelessWidget {
               children: [
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 30.w),
-
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      AutoSizeText(
-                        'login'.tr,
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 22.sp,
+                        AutoSizeText(
+                          'completeInfo'.tr,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 22.sp,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      AutoSizeText(
-                        'phone'.tr,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.sp,
+                        SizedBox(
+                          height: 10.h,
                         ),
-                      ),
-                    ],)),
-
+                        AutoSizeText(
+                          'name'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ],
+                    )),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -120,10 +110,41 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 40.h,
                 ),
-                GradientButton(
-                    title: 'login'.tr, onTap: () => Get.to(() => OtpScreen())),
+                GradientButton(title: 'save'.tr, onTap: () => null),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Center(
+                  child: RichText(
+                    maxLines: 1,
+                    text: TextSpan(
+                        text: 'agreeTerms'.tr,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          fontFamily: (Get.locale?.languageCode == 'en'
+                              ? 'PlusJakartaSans'
+                              : 'Montserrat-Arabic'),
+                          color: Colors.black45,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: 'serviceTerms'.tr,
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                fontFamily: (Get.locale?.languageCode == 'en'
+                                    ? 'PlusJakartaSans'
+                                    : 'Montserrat-Arabic'),
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Get.to(() => const Privacy());
+                                })
+                        ]),
+                  ),
+                ),
               ],
             ),
           )

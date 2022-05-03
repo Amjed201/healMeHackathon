@@ -4,27 +4,34 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GradientButton extends StatelessWidget {
   String title;
+  Function() onTap;
 
-  GradientButton(this.title, {Key? key}) : super(key: key);
+  GradientButton({required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 80.h,
-      width: 428.w,
-      decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: BorderRadius.circular(12),
-          gradient: const LinearGradient(
-              colors: [Color(0xff387D7E), const Color(0xff27595A)],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft)),
+    return InkWell(
+      onTap: onTap,
       child: Center(
-          child: AutoSizeText(
-        title,
-        style: TextStyle(
-            fontSize: 18.sp, color: Colors.white, fontWeight: FontWeight.w400),
-      )),
+        child: Container(
+          height: 69.h,
+          width: 380.w,
+          decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: BorderRadius.circular(12),
+              gradient: const LinearGradient(
+                  colors: [Color(0xff387D7E), const Color(0xff27595A)],
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft)),
+          child: Center(
+              child: AutoSizeText(
+            title,
+            style: TextStyle(
+                fontSize: 18.sp,
+                color: Colors.white,),
+          )),
+        ),
+      ),
     );
   }
 }

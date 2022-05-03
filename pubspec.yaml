@@ -113,21 +113,19 @@ flutter:
   # example:
   fonts:
 
-    - family: Cairo
+    - family: Montserrat-Arabic
       fonts:
-        - asset: assets/fonts/Cairo-Regular.ttf
+        - asset: assets/fonts/Montserrat-Arabic-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Cairo-Medium.ttf
+        - asset: assets/fonts/Montserrat-Arabic-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Cairo-Bold.ttf
+        - asset: assets/fonts/Montserrat-Arabic-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Cairo-ExtraBold.ttf
+        - asset: assets/fonts/Montserrat-Arabic-ExtraBold.ttf
           weight: 900
-        - asset: assets/fonts/Cairo-Black.ttf
+        - asset: assets/fonts/Montserrat-Arabic-Black.ttf
           weight: 900
-        - asset: assets/fonts/Cairo-SemiBold.ttf
-          weight: 900
-        - asset: assets/fonts/Cairo-Light.ttf
+        - asset: assets/fonts/Montserrat-Arabic-Light.ttf
           weight: 900
 
     - family: PlusJakartaSans

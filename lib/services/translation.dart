@@ -7,6 +7,8 @@ class LocaleString extends Translations {
         //ENGLISH LANGUAGE
         'en_US': {
           "login" : "Login",
+          "save" : "Save",
+          "completeInfo" : "Complete your information",
 
 
 
@@ -41,7 +43,7 @@ class LocaleString extends Translations {
           "rePass": "Confirm Password",
           "enterRePass": "Confirm Your Password",
           "agreeTerms": "Your follow-up indicates acceptance of ",
-          "serviceTerms": "the service and privacy policy",
+          "serviceTerms": "Terms and conditions",
           "register": "Register",
 
           //my account page
@@ -185,6 +187,10 @@ class LocaleString extends Translations {
         //ARABIC LANGUAGE
         'ar_AR': {
           "login" : "تسجيل الدخول",
+          "save" : "حفظ البيانات",
+          "completeInfo" : "اكمال البيانات",
+
+
 
 
 
@@ -206,19 +212,19 @@ class LocaleString extends Translations {
           "startSave": "ابدأ الحفظ الآن",
           "mobile": "الهاتف المحمول",
           "phone": "رقم الهاتف",
-          "mobileConfirm": "تأكيد الهاتف المحمول",
+          "mobileConfirm": "التحقق من رقم الهاتف",
           "enterCode":
-              "الرجاء إدخال رمز التأكيد الذي تم إرساله إلى رقم الهاتف المحمول",
+              "الرجاء إدخال الرقم السري المرسل الى الرقم ",
           "modify": "تعديل",
-          "confirmVerify": "تأكيد التحقق",
-          "resend": "إعادة إرسال",
+          "confirmVerify": "تحقق الان",
+          "resend": "إعادة إرسال الرمز خلال ",
           "createAcc": "إنشاء حساب",
           "pass": "كلمة المرور",
           "enterPass": "أدخل كلمة المرور",
           "rePass": "تأكيد كلمة المرور",
           "enterRePass": "تأكيد كلمة المرور",
           "agreeTerms": "تشير متابعتك الى الموافقة على",
-          "serviceTerms": " بنود الخدمة وسياسة الخصوصية",
+          "serviceTerms": " الشروط والاحكام",
 
           //my account page
           "register": "تسجيل",
@@ -245,7 +251,7 @@ class LocaleString extends Translations {
 
           //edit profile page
           "editProf": "تحرير الملف الشخصي",
-          "name": "الاسم",
+          "name": "اسم الكريم",
           "email": "البريد الإلكتروني",
           "birthday": "تاريخ الميلاد",
           "city": "المدينة",

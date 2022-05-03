@@ -351,7 +351,7 @@ class ApiService {
 
   Future<List<Order>> myOrders(BuildContext context, int page) async {
     print(storage.getToken() ?? '');
-    var response = await _getTest("my_orders", token: storage.getToken()! ?? '');
+    var response = await _getTest("my_orders", token: storage.getToken() ?? '');
     var responseMap = jsonDecode(response.body) as Map<String, dynamic>;
     if (responseMap["ResponseCode"] == 1) {
       print('success');
@@ -368,7 +368,7 @@ class ApiService {
   Future<List<Order>> myOrderHistory(BuildContext context, int page) async {
     print(storage.getToken() ?? '');
     var response =
-        await _getTest("my_order_history", token: storage.getToken()! ?? '');
+        await _getTest("my_order_history", token: storage.getToken() ?? '');
     var responseMap = jsonDecode(response.body) as Map<String, dynamic>;
     if (responseMap["ResponseCode"] == 1) {
       print('success');
