@@ -123,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                   height: 30.h,
                 ),
                 GradientButton(
-                    title: 'login'.tr, onTap: () => Get.to(() => OtpScreen())),
+                    'login'.tr, () => Get.to(() => OtpScreen())),
               ],
             ),
           )

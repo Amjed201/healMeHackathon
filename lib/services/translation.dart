@@ -9,6 +9,7 @@ class LocaleString extends Translations {
           "login" : "Login",
           "save" : "Save",
           "completeInfo" : "Complete your information",
+          "cancel" : "Cancel Order",
 
 
 
@@ -189,6 +190,7 @@ class LocaleString extends Translations {
           "login" : "تسجيل الدخول",
           "save" : "حفظ البيانات",
           "completeInfo" : "اكمال البيانات",
+          "cancel" : "الغاء الطلب",
 
 
 

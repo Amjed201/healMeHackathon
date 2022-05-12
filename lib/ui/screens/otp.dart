@@ -108,15 +108,13 @@ class _OtpScreenState extends State<OtpScreen> {
                 SizedBox(
                   height: 50.h,
                 ),
-                GradientButton(
-                    title: 'confirmVerify'.tr,
-                    onTap: () {
-                      // if (_otpController.text.length == 4) {
-                      //   auth.checkOtp(
-                      //       code: _otpController.text, context: context);
-                      // }
-                      Get.to(() => InfoScreen());
-                    }),
+                GradientButton('confirmVerify'.tr, () {
+                  // if (_otpController.text.length == 4) {
+                  //   auth.checkOtp(
+                  //       code: _otpController.text, context: context);
+                  // }
+                  Get.to(() => InfoScreen());
+                }),
                 SizedBox(
                   height: 30.h,
                 ),

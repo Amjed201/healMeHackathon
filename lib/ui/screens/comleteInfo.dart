@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/ui/screens/home.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -81,7 +82,7 @@ class _InfoScreenState extends State<InfoScreen> {
                         else if (value.length != 10)
                           return 'Short Phone Number';
                       },
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       cursorColor: Theme.of(context).primaryColor,
                       decoration: InputDecoration(
                         fillColor: Colors.white,
@@ -112,7 +113,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 SizedBox(
                   height: 40.h,
                 ),
-                GradientButton(title: 'save'.tr, onTap: () => null),
+                GradientButton('save'.tr, () => Get.to(() => Home())),
                 SizedBox(
                   height: 20.h,
                 ),

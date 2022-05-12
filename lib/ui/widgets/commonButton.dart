@@ -5,8 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class GradientButton extends StatelessWidget {
   String title;
   Function() onTap;
+  double height;
 
-  GradientButton({required this.title, required this.onTap});
+  GradientButton(this.title, this.onTap, [this.height = 55]);
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class GradientButton extends StatelessWidget {
       onTap: onTap,
       child: Center(
         child: Container(
-          height: 69.h,
-          width: 380.w,
+          height: height,
+          width: 400.w,
           decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),
@@ -27,8 +28,9 @@ class GradientButton extends StatelessWidget {
               child: AutoSizeText(
             title,
             style: TextStyle(
-                fontSize: 18.sp,
-                color: Colors.white,),
+              fontSize: 18.sp,
+              color: Colors.white,
+            ),
           )),
         ),
       ),
