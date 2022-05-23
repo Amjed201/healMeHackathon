@@ -8,7 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
-import 'package:logistic/ui/screens/home.dart';
+import 'package:logistic/ui/screens/new_order_map.dart';
+import 'package:logistic/ui/screens/tabs_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -113,7 +114,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 SizedBox(
                   height: 40.h,
                 ),
-                GradientButton('save'.tr, () => Get.to(() => Home())),
+                GradientButton('save'.tr, () => Get.to(() => TabsScreen())),
                 SizedBox(
                   height: 20.h,
                 ),

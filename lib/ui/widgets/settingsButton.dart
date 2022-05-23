@@ -7,9 +7,7 @@ class SettingsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.back();
-      },
+      onTap: () {},
       child: Center(
         child: Container(
           decoration: BoxDecoration(

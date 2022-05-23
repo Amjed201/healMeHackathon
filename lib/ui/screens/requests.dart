@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
-import 'package:logistic/ui/screens/comleteInfo.dart';
+import 'package:logistic/ui/screens/complete_info.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -92,7 +92,7 @@ class RequestCard extends StatelessWidget {
                   'توصيل خلال 40 دقيقة'.tr,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 16.sp,
+                    fontSize: 14.sp,
                   ),
                 ),
                 SizedBox(
@@ -118,7 +118,7 @@ class RequestCard extends StatelessWidget {
                           child: AutoSizeText(
                         'الموافقة على العرض'.tr,
                         style: TextStyle(
-                          fontSize: 18.sp,
+                          fontSize: 16.sp,
                           color: Colors.white,
                         ),
                       )),

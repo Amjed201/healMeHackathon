@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
-import 'package:logistic/ui/screens/comleteInfo.dart';
+import 'package:logistic/ui/screens/complete_info.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';

@@ -8,8 +8,12 @@ class LocaleString extends Translations {
         'en_US': {
           "login" : "Login",
           "save" : "Save",
+          "home" : "Home",
+          "help" : "Help",
           "completeInfo" : "Complete your information",
           "cancel" : "Cancel Order",
+          "newOrder" : "New Order + ",
+          "confirmOrder" : "Confirm Order",
 
 
 
@@ -188,9 +192,13 @@ class LocaleString extends Translations {
         //ARABIC LANGUAGE
         'ar_AR': {
           "login" : "تسجيل الدخول",
+          "home" : "الرئيسية",
+          "help" : "المساعدة",
           "save" : "حفظ البيانات",
           "completeInfo" : "اكمال البيانات",
           "cancel" : "الغاء الطلب",
+          "newOrder" : "+ انشاء طلب جديد",
+          "confirmOrder" : "تأكيد الطلب",
 
 
 

@@ -8,7 +8,6 @@ class NotificationButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.back();
       },
       child: Center(
         child: Container(

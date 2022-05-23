@@ -16,12 +16,14 @@ import 'package:logistic/ui/widgets/notificationButton.dart';
 import 'package:logistic/ui/widgets/settingsButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
-class Home extends StatefulWidget {
+class NewOrderMap extends StatefulWidget {
+  const NewOrderMap({Key? key}) : super(key: key);
+
   @override
-  State<Home> createState() => _HomeState();
+  State<NewOrderMap> createState() => _NewOrderMapState();
 }
 
-class _HomeState extends State<Home> {
+class _NewOrderMapState extends State<NewOrderMap> {
   final auth = Get.find<AuthController>();
 
   @override
@@ -38,9 +40,9 @@ class _HomeState extends State<Home> {
                   32.5549,
                 ),
                 zoom: 18),
-            zoomControlsEnabled: true,
-            myLocationButtonEnabled: true,
-            myLocationEnabled: true,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+            myLocationEnabled: false,
             padding: EdgeInsets.symmetric(vertical: 240.h),
             // markers: _markers,
             onMapCreated: (GoogleMapController controller) {
@@ -56,24 +58,7 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 20.h,
-                    ),
-
-                    ///app bar
-                    SizedBox(
-                      width: 428.w,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          NotificationButton(),
-                          Spacer(),
-                          SettingsButton(),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(
-                      height: 20.h,
+                      height: 30.h,
                     ),
 
                     Container(
@@ -203,51 +188,10 @@ class _HomeState extends State<Home> {
                 height: 20.h,
               ),
               GradientButton(
-                  'continue'.tr, () => Get.to(() => RequestScreen()), 85.h),
+                  'continue'.tr, () => Get.to(() => RequestScreen())),
               SizedBox(
                 height: 30.h,
               ),
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 79.h,
-                    color: Colors.white,
-                    child: Center(
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 50.h,
-                          ),
-                          AutoSizeText(
-                            'currentOrders'.tr,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16.sp,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 40.h,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 30.h,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: Icon(
-                          Icons.keyboard_arrow_down,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ],
