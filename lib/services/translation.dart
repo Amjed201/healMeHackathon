@@ -14,6 +14,10 @@ class LocaleString extends Translations {
           "cancel" : "Cancel Order",
           "newOrder" : "New Order + ",
           "confirmOrder" : "Confirm Order",
+          "paymentMethod" : "Payment Method",
+          "startDate" : "Start Date",
+          "startTime" : "Start Time",
+
 
 
 
@@ -199,6 +203,9 @@ class LocaleString extends Translations {
           "cancel" : "الغاء الطلب",
           "newOrder" : "+ انشاء طلب جديد",
           "confirmOrder" : "تأكيد الطلب",
+          "paymentMethod" : "طريقة الدفع",
+          "startDate" : "تاريخ الانطلاق",
+          "startTime" : "وقت الانطلاق",
 
 
 

@@ -47,7 +47,7 @@ class MyOrders extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              const Expanded(
+              Expanded(
                   child: TabBarView(
                 children: [RunningOrdersWidget(), HistoryOrdersWidget()],
               ))
@@ -55,23 +55,202 @@ class MyOrders extends StatelessWidget {
   }
 }
 
-class RunningOrdersWidget extends StatelessWidget {
-  const RunningOrdersWidget({Key? key}) : super(key: key);
+class RunningOrdersWidget extends StatefulWidget {
+  RunningOrdersWidget({Key? key}) : super(key: key);
+
+  @override
+  State<RunningOrdersWidget> createState() => _RunningOrdersWidgetState();
+}
+
+class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
+  List<DropdownMenuItem<String>> _paymentMethods = [
+    const DropdownMenuItem(child: Text("Cash"), value: "Cash"),
+    const DropdownMenuItem(child: const Text("Visa"), value: "Visa"),
+  ];
+
+  TextEditingController _startDateController = TextEditingController();
+  TextEditingController _startTimeController = TextEditingController();
+  TextEditingController _detailsContoller = TextEditingController();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1970, 8),
+        lastDate: DateTime(2023));
+    if (picked != null) {
+      // setState(() {
+      //   birthDate = picked;
+      //   _birthController.text = DateFormat('y-MM-d').format(birthDate!);
+      // });
+    }
+  }
 
   showBottomSheet() {
     Get.bottomSheet(Container(
-      height: 500.h,
       color: Colors.white,
-      child: Column(
-        children: [
-          Spacer(),
-          GradientButton('confirmOrder'.tr, () async {
-            Get.back();
-            await Future.delayed(Duration(milliseconds: 300));
-            Get.to(() => NewOrderMap());
-          }),
-          SizedBox(height: 20.h,)
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 40.h,
+            ),
+            SizedBox(
+                width: 400.w,
+                child: DropdownButtonFormField(
+                  items: _paymentMethods,
+                  hint: Text('paymentMethod'.tr),
+                  onChanged: (String? newValue) {},
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please choose a payment method';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey[400]!,
+                        width: 2.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0)),
+                  ),
+                )),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                  width: 180.w,
+                  child: TextFormField(
+                    controller: _startDateController,
+                    // textInputAction: TextInputAction.next,
+                    // onEditingComplete: () => _cityNode.requestFocus(),
+                    enabled: false,
+                    keyboardType: TextInputType.text,
+                    cursorColor: Theme.of(context).primaryColor,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabled: false,
+                        hintText: 'startDate'.tr,
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Colors.grey[400]!,
+                          ),
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  width: 180.w,
+                  child: TextFormField(
+                    controller: _startDateController,
+                    // textInputAction: TextInputAction.next,
+                    // onEditingComplete: () => _cityNode.requestFocus(),
+                    enabled: false,
+                    keyboardType: TextInputType.text,
+                    cursorColor: Theme.of(context).primaryColor,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        enabled: false,
+                        hintText: 'startTime'.tr,
+                        contentPadding:
+                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          borderSide: BorderSide(
+                            width: 2,
+                            color: Colors.grey[400]!,
+                          ),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            SizedBox(
+              width: 400.w,
+              child: TextFormField(
+                controller: _detailsContoller,
+                textInputAction: TextInputAction.done,
+                enabled: true,
+                maxLines: 4,
+                // validator: (value) {
+                //   if (GetUtils.isLengthLessThan(value, 5))
+                //     return 'Please enter your Birth Date';
+                // },
+                keyboardType: TextInputType.text,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    enabled: true,
+                    hintText: 'shipmentDetails'.tr,
+                    contentPadding:
+                        const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey[400]!,
+                        width: 2.0,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Theme.of(context).primaryColor,
+                        width: 2.0,
+                      ),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: BorderSide(
+                        color: Colors.grey[400]!,
+                        width: 2.0,
+                      ),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide:
+                          BorderSide(color: Colors.grey[400]!, width: 2),
+                    )),
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            GradientButton('confirmOrder'.tr, () async {
+              Get.back();
+              await Future.delayed(Duration(milliseconds: 300));
+              Get.to(() => NewOrderMap());
+            }),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
       ),
     ));
   }
