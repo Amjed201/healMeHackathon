@@ -25,31 +25,34 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-        designSize: const Size(428, 926),
-        builder: (_) => GetMaterialApp(
-              locale:
-              // Get.find<LocalStorage>().getLang() == 'en'
-              //     ? Locale('en', 'EN')
+      designSize: const Size(428, 926),
+      builder: (_) => GetMaterialApp(
+        locale:
+            // Get.find<LocalStorage>().getLang() == 'en'
+            //     ? Locale('en', 'EN')
+            //     :
+            Locale('ar', 'AR'),
+        translations: LocaleString(),
+        debugShowCheckedModeBanner: false,
+        title: 'Logistic',
+        theme: ThemeData(
+          primaryColor: const Color(0xff387E7E),
+          secondaryHeaderColor: const Color(0xffFAA933),
+          // focus color for texts
+          hintColor: Color(0xff444A60),
+          focusColor: Colors.black,
+          fontFamily:
+              // Get.locale?.languageCode == 'en'
+              //     ? 'PlusJakartaSans'
               //     :
-              Locale('ar', 'AR'),
-              translations: LocaleString(),
-              debugShowCheckedModeBanner: false,
-              title: 'Logistic',
-              theme: ThemeData(
-                  primaryColor: const Color(0xff387E7E),
-                  secondaryHeaderColor: const Color(0xffFAA933),
-                  // focus color for texts
-                  hintColor: Color(0xff444A60),
-                  focusColor: Colors.black,
-                  fontFamily:
-                  // Get.locale?.languageCode == 'en'
-                  //     ? 'PlusJakartaSans'
-                  //     :
-                  'Montserrat-Arabic',
-                  colorScheme:
-                      ColorScheme.fromSwatch(primarySwatch: Colors.orange)
-                          .copyWith(secondary: const Color(0xffa49e9e))),
-              home: LoginScreen(),
-            ));
+              'Montserrat-Arabic',
+          colorScheme:
+              ColorScheme.fromSwatch(primarySwatch: Colors.orange).copyWith(
+            secondary: const Color(0xffa49e9e),
+          ),
+        ),
+        home: LoginScreen(),
+      ),
+    );
   }
 }
