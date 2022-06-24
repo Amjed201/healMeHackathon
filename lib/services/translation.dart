@@ -6,26 +6,17 @@ class LocaleString extends Translations {
   Map<String, Map<String, String>> get keys => {
         //ENGLISH LANGUAGE
         'en_US': {
-          "login" : "Login",
-          "save" : "Save",
-          "home" : "Home",
-          "help" : "Help",
-          "completeInfo" : "Complete your information",
-          "cancel" : "Cancel Order",
-          "newOrder" : "New Order + ",
-          "confirmOrder" : "Confirm Order",
-          "paymentMethod" : "Payment Method",
-          "startDate" : "Start Date",
-          "startTime" : "Start Time",
-
-
-
-
-
-
-
-
-
+          "login": "Login",
+          "save": "Save",
+          "home": "Home",
+          "help": "Help",
+          "completeInfo": "Complete your information",
+          "cancel": "Cancel Order",
+          "newOrder": "New Order + ",
+          "confirmOrder": "Confirm Order",
+          "paymentMethod": "Payment Method",
+          "startDate": "Start Date",
+          "startTime": "Start Time",
 
           //splash page
           "welcome": "Welcome back",
@@ -54,6 +45,9 @@ class LocaleString extends Translations {
           "agreeTerms": "Your follow-up indicates acceptance of ",
           "serviceTerms": "Terms and conditions",
           "register": "Register",
+          "suspended_account": "Your Account Is Suspended",
+          "suspended_account_reason": "Your Account Is Suspended Due To",
+          "contact_support": "Contact Support",
 
           //my account page
           "myAccount": "My Account",
@@ -76,6 +70,9 @@ class LocaleString extends Translations {
           "yes": "Yes",
           "no": "No",
           "signUpFirst": "Please sign up first to continue",
+          "settings": "Settings",
+          "userName": "User Name",
+          "manegeContact": "Manege Contacts",
 
           //edit profile page
           "editProf": "Edit Profile",
@@ -183,7 +180,8 @@ class LocaleString extends Translations {
           "done": "Done",
           "textIntro1": "The first platform for discount offers in Sudan",
           "textIntro2": "Find your  nearest offers and save more",
-          "textIntro3": "Pay inside the app and get the coupon and enjoy the discount",
+          "textIntro3":
+              "Pay inside the app and get the coupon and enjoy the discount",
 
           //ads page
           "ads": "Advertisement",
@@ -195,26 +193,17 @@ class LocaleString extends Translations {
         },
         //ARABIC LANGUAGE
         'ar_AR': {
-          "login" : "تسجيل الدخول",
-          "home" : "الرئيسية",
-          "help" : "المساعدة",
-          "save" : "حفظ البيانات",
-          "completeInfo" : "اكمال البيانات",
-          "cancel" : "الغاء الطلب",
-          "newOrder" : "+ انشاء طلب جديد",
-          "confirmOrder" : "تأكيد الطلب",
-          "paymentMethod" : "طريقة الدفع",
-          "startDate" : "تاريخ الانطلاق",
-          "startTime" : "وقت الانطلاق",
-
-
-
-
-
-
-
-
-
+          "login": "تسجيل الدخول",
+          "home": "الرئيسية",
+          "help": "المساعدة",
+          "save": "حفظ البيانات",
+          "completeInfo": "اكمال البيانات",
+          "cancel": "الغاء الطلب",
+          "newOrder": "+ انشاء طلب جديد",
+          "confirmOrder": "تأكيد الطلب",
+          "paymentMethod": "طريقة الدفع",
+          "startDate": "تاريخ الانطلاق",
+          "startTime": "وقت الانطلاق",
 
           //splash page
           "welcome": "مرحبا",
@@ -230,8 +219,7 @@ class LocaleString extends Translations {
           "mobile": "الهاتف المحمول",
           "phone": "رقم الهاتف",
           "mobileConfirm": "التحقق من رقم الهاتف",
-          "enterCode":
-              "الرجاء إدخال الرقم السري المرسل الى الرقم ",
+          "enterCode": "الرجاء إدخال الرقم السري المرسل الى الرقم ",
           "modify": "تعديل",
           "confirmVerify": "تحقق الان",
           "resend": "إعادة إرسال الرمز خلال ",
@@ -242,6 +230,9 @@ class LocaleString extends Translations {
           "enterRePass": "تأكيد كلمة المرور",
           "agreeTerms": "تشير متابعتك الى الموافقة على",
           "serviceTerms": " الشروط والاحكام",
+          "suspended_account": "تم تعليق حسابك",
+          "suspended_account_reason": "تم تعليق حسابك مؤقتاً نتيجة ل",
+          "contact_support": "تواصل مع الدعم",
 
           //my account page
           "register": "تسجيل",
@@ -265,6 +256,9 @@ class LocaleString extends Translations {
           "yes": "نعم",
           "no": "لا",
           "signUpFirst": "قم بتسجبل حسابك للمتابعة",
+          "settings": "الإعدادات",
+          "userName": "إسم المستخدم",
+          "manegeContact": "إدارة جهات الإتصال",
 
           //edit profile page
           "editProf": "تحرير الملف الشخصي",

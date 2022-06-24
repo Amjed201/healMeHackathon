@@ -12,6 +12,7 @@ import 'package:logistic/ui/screens/new_order_map.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/text_field.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -20,9 +21,8 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  final _phoneNode = FocusNode();
-
-  var _phoneController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _emailController = TextEditingController();
 
   final auth = Get.find<AuthController>();
 
@@ -42,73 +42,57 @@ class _InfoScreenState extends State<InfoScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        AutoSizeText(
-                          'completeInfo'.tr,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 22.sp,
-                          ),
+                  margin: EdgeInsets.symmetric(horizontal: 30.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AutoSizeText(
+                        'completeInfo'.tr,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 22.sp,
                         ),
-                        SizedBox(
-                          height: 10.h,
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      AutoSizeText(
+                        'name'.tr,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.sp,
                         ),
-                        AutoSizeText(
-                          'name'.tr,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   height: 10.h,
                 ),
                 Center(
-                  child: SizedBox(
-                    width: 380.w,
-                    height: 69.h,
-                    child: TextFormField(
-                      controller: _phoneController,
-                      textInputAction: TextInputAction.done,
-                      onEditingComplete: () =>
-                          FocusManager.instance.primaryFocus?.unfocus(),
-                      validator: (value) {
-                        if (!GetUtils.isPhoneNumber(value!))
-                          return 'Please enter a valid phone';
-                        else if (value.length != 10)
-                          return 'Short Phone Number';
-                      },
-                      keyboardType: TextInputType.text,
-                      cursorColor: Theme.of(context).primaryColor,
-                      decoration: InputDecoration(
-                        fillColor: Colors.white,
-                        filled: true,
-                        // hintText: 'phone'.tr,
-                        contentPadding:
-                            const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: const BorderSide(
-                            color: Colors.black26,
-                            width: 1.0,
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).primaryColor,
-                            width: 2.0,
-                          ),
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0)),
-                      ),
+                  child: MyTextField(
+                    controller: _phoneController,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30.w),
+                  child: AutoSizeText(
+                    'email'.tr,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.sp,
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Center(
+                  child: MyTextField(
+                    controller: _emailController,
                   ),
                 ),
                 SizedBox(

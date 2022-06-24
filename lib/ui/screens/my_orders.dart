@@ -6,6 +6,8 @@ import 'package:logistic/ui/screens/new_order_map.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/order_card.dart';
 
+import '../widgets/suspended_account_popup.dart';
+
 class MyOrders extends StatelessWidget {
   const MyOrders({Key? key}) : super(key: key);
 
@@ -263,10 +265,18 @@ class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.pending_actions,
-              size: 50,
-              color: Theme.of(context).focusColor,
+            GestureDetector(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const SuspendedAccount(),
+                );
+              },
+              child: Icon(
+                Icons.pending_actions,
+                size: 50,
+                color: Theme.of(context).focusColor,
+              ),
             ),
             AutoSizeText(
               'noCurrentOrders'.tr,
