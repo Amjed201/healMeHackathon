@@ -71,8 +71,12 @@ class LocaleString extends Translations {
           "no": "No",
           "signUpFirst": "Please sign up first to continue",
           "settings": "Settings",
-          "userName": "User Name",
-          "manegeContact": "Manege Contacts",
+          "userName": "User name",
+          "manegeContact": "Manege contacts",
+          "contactUs": "Contact us",
+          "customerService": "Customer service",
+          "online": "Online",
+          "writeMessage": "Write your message",
 
           //edit profile page
           "editProf": "Edit Profile",
@@ -233,6 +237,9 @@ class LocaleString extends Translations {
           "suspended_account": "تم تعليق حسابك",
           "suspended_account_reason": "تم تعليق حسابك مؤقتاً نتيجة ل",
           "contact_support": "تواصل مع الدعم",
+          "customerService": "خدمة العملاء",
+          "online": "متصل",
+          "writeMessage": "أكتب رسالتك ...",
 
           //my account page
           "register": "تسجيل",
@@ -259,6 +266,7 @@ class LocaleString extends Translations {
           "settings": "الإعدادات",
           "userName": "إسم المستخدم",
           "manegeContact": "إدارة جهات الإتصال",
+          "contactUs": "تواصل معنا",
 
           //edit profile page
           "editProf": "تحرير الملف الشخصي",

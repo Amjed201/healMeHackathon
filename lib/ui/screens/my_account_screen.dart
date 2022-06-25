@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/ui/screens/contact_us_screen.dart';
 
 import '../widgets/my_account_button.dart';
 
@@ -91,6 +92,12 @@ class MyAccount extends StatelessWidget {
             MyAccountButton(
               icon: Icons.check,
               label: "terms".tr,
+            ),
+            const Divider(),
+            MyAccountButton(
+              onTap: () => Get.to(() => const ContactUsScreen()),
+              icon: Icons.contact_support_outlined,
+              label: "contactUs".tr,
             ),
           ],
         ),
