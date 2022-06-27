@@ -26,6 +26,7 @@ class LocaleString extends Translations {
           "myAcc": "My Account",
           "myOrders": "My Orders",
           "offers": "Offers",
+          "acceptOrder": "Accept Order",
 
           //auth pages
           "startSave": "Start saving now",
@@ -217,6 +218,7 @@ class LocaleString extends Translations {
           "myAcc": "حسابي",
           "myOrders": "طلباتي",
           "offers": "العروض",
+          "acceptOrder": "الموافقة على العروض",
 
           //auth pages
           "startSave": "ابدأ الحفظ الآن",
