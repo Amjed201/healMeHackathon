@@ -12,6 +12,8 @@ import 'package:logistic/controllers/authController.dart';
 import 'package:logistic/ui/screens/requests.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
+import 'package:logistic/ui/widgets/map_widgets/vechial_details_on_map.dart';
 import 'package:logistic/ui/widgets/notificationButton.dart';
 import 'package:logistic/ui/widgets/settingsButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -53,142 +55,23 @@ class _NewOrderMapState extends State<NewOrderMap> {
           ),
           Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30.h,
-                    ),
-
-                    Container(
-                      width: 400.w,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12)),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 20.h),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 15.h,
-                                  backgroundColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Column(
-                                  children: [
-                                    AutoSizeText(
-                                      'completeInfo'.tr,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    AutoSizeText(
-                                      'completeInfo'.tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).hintColor,
-                                        fontSize: 14.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            // SizedBox(height: 30.h,),
-
-                            ///fix vertical divider
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            //     child: VerticalDivider(color: Colors.black,thickness: 2,width: 2,indent: 1.h,endIndent: 30.h,)),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 15.h,
-                                  backgroundColor:
-                                      Theme.of(context).secondaryHeaderColor,
-                                ),
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                Column(
-                                  children: [
-                                    AutoSizeText(
-                                      'completeInfo'.tr,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.sp,
-                                      ),
-                                    ),
-                                    AutoSizeText(
-                                      'completeInfo'.tr,
-                                      style: TextStyle(
-                                        color: Theme.of(context).hintColor,
-                                        fontSize: 14.sp,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // SizedBox(
-                    //   height: 330.h,
-                    // ),
-                  ],
-                ),
+              SizedBox(
+                height: 50.h,
+              ),
+              const FromTo(
+                withDriverDetails: false,
               ),
               const Spacer(),
-              Container(
-                width: 400.w,
-                // height: 80.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Center(
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.directions_car,
-                      size: 50.h,
-                    ),
-                    title: AutoSizeText(
-                      'completeInfo'.tr,
-                      style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                    subtitle: AutoSizeText(
-                      'completeInfo'.tr,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 40.h,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
+              const VechialDetailsOnMap(),
               SizedBox(
                 height: 20.h,
               ),
               GradientButton(
-                  'continue'.tr, () => Get.to(() => RequestScreen())),
+                'continue'.tr,
+                () => Get.to(
+                  () => const RequestScreen(),
+                ),
+              ),
               SizedBox(
                 height: 30.h,
               ),

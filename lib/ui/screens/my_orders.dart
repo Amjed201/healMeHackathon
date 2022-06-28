@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/ui/screens/new_order_map.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
-import 'package:logistic/ui/widgets/order_card.dart';
+import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 
 import '../widgets/suspended_account_popup.dart';
 
@@ -300,9 +300,15 @@ class HistoryOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return OrderCard();
-        });
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return const Padding(
+          padding: EdgeInsets.all(10),
+          child: FromTo(
+            withDriverDetails: true,
+          ),
+        );
+      },
+    );
   }
 }
