@@ -110,11 +110,13 @@ class CartController extends GetxController {
   }
 
   int calculateServiceFees() {
-    _totalFees =0;
+    _totalFees = 0;
     for (var element in _cartItems) {
       num fees = 0;
-      print('quantity: ${element.quantity} total: ${element.quantity * num.parse(element.offer.serviceFees.toString())}');
-      fees = (num.parse(element.offer.serviceFees.toString()) * element.quantity);
+      print(
+          'quantity: ${element.quantity} total: ${element.quantity * num.parse(element.offer.serviceFees.toString())}');
+      fees =
+          (num.parse(element.offer.serviceFees.toString()) * element.quantity);
       _totalFees = int.parse((fees + _totalFees).toString());
     }
     return _totalFees;
