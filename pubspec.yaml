@@ -70,6 +70,7 @@ dependencies:
   firebase_dynamic_links: ^2.0.9
   lottie: ^1.2.2
   firebase_messaging_platform_interface: 3.1.6
+  sliding_up_panel: ^2.0.0+1
 
 
 dev_dependencies:

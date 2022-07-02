@@ -138,6 +138,11 @@ class LocaleString extends Translations {
           "branch": "Available Branches",
           "wantOffer": "I want this offer",
           "offerAdded": "Offer has been added to your card",
+          "cancelOrder": "Cancel order",
+          "confirmLoading": "Confirm loading",
+          "orderDate": "Order date",
+          "orderPrice": "Order price",
+          "orderDetails": "Order details",
 
           //cart page
           "cart": "Cart",
@@ -341,6 +346,11 @@ class LocaleString extends Translations {
           "branch": "الفروع المتاحة",
           "wantOffer": "أريد هذا العرض",
           "offerAdded": "تمت اضافة العرض الى السلة",
+          "cancelOrder": "إلغاء الطلب",
+          "confirmLoading": "تأكيد الشحن",
+          "orderDate": "تاريخ الطلب",
+          "orderPrice": "سعر الطلب",
+          "orderDetails": "تفاصيل الطلب",
 
           //cart page
           "cart": "عربة التسوق",

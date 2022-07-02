@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>539450346492-2fd5mu5rbn1mjcun1on5285pg37fnomk.apps.googleusercontent.com</string>
+	<string>500698076345-jndugjt2mcngr8s211s40oa94f9ue7tr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.539450346492-2fd5mu5rbn1mjcun1on5285pg37fnomk</string>
+	<string>com.googleusercontent.apps.500698076345-jndugjt2mcngr8s211s40oa94f9ue7tr</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD17yKbB1ofGuiiy3lD525nR4NWe9gHgPo</string>
+	<string>AIzaSyDc5374YonCRchSawYKO6u460klesAvzuo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>539450346492</string>
+	<string>500698076345</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>root.software.way.driver</string>
+	<string>Com.ktl.logistic</string>
 	<key>PROJECT_ID</key>
-	<string>way-rider</string>
+	<string>logistic-8127f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>way-rider.appspot.com</string>
+	<string>logistic-8127f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:539450346492:ios:e777f18c5367d60fab0079</string>
+	<string>1:500698076345:ios:38cbbb731546bbc806f768</string>
 </dict>
 </plist>

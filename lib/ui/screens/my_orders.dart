@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
+import 'package:logistic/ui/widgets/order/order_details_on_map.dart';
 
 import '../widgets/order/create_order.dart';
 import '../widgets/suspended_account_popup.dart';
@@ -136,10 +137,13 @@ class HistoryOrdersWidget extends StatelessWidget {
     return ListView.builder(
       itemCount: 3,
       itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.all(10),
-          child: FromTo(
-            withDriverDetails: true,
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () => Get.to(() => const OrderDetailsOnMap()),
+            child: const FromTo(
+              withDriverDetails: true,
+            ),
           ),
         );
       },

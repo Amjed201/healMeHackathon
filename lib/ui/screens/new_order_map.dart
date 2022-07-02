@@ -37,11 +37,12 @@ class _NewOrderMapState extends State<NewOrderMap> {
         children: [
           GoogleMap(
             initialCameraPosition: const CameraPosition(
-                target: LatLng(
-                  15.5594,
-                  32.5549,
-                ),
-                zoom: 18),
+              target: LatLng(
+                15.5594,
+                32.5549,
+              ),
+              zoom: 18,
+            ),
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             myLocationEnabled: false,
