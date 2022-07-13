@@ -12,8 +12,32 @@ class CreateOrderController extends GetxController {
   ];
 
   var startDateController = TextEditingController();
-  var endDateController = TextEditingController();
   var detailsController = TextEditingController();
   var reciverController = TextEditingController();
   var reciverPhoneController = TextEditingController();
+  var reciverPhoneController2 = TextEditingController();
+
+  DateTime? startDate;
+
+  Future<void> pickDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(1970, 8),
+        lastDate: DateTime(2023));
+    if (picked != null && picked != startDate) {
+      startDate = picked;
+      update();
+    }
+  }
+
+  bool _anotherReceiver = false;
+
+  bool get anotherReceiver => _anotherReceiver;
+
+
+  void toggleReceiver() {
+    _anotherReceiver = !_anotherReceiver;
+    update();
+  }
 }

@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/auth/otp.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
@@ -104,12 +107,18 @@ class LoginScreen extends StatelessWidget {
                       child: TextFormField(
                         controller: _phoneController,
                         textInputAction: TextInputAction.done,
-                        onEditingComplete: () =>
-                            FocusManager.instance.primaryFocus?.unfocus(),
+                        onEditingComplete: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          Get.find<AuthController>().phone =
+                              _phoneController.text;
+                        },
+                        onChanged: (text) {
+                          Get.find<AuthController>().phone = text;
+                        },
                         validator: (value) {
                           if (!GetUtils.isPhoneNumber(value!)) {
                             return 'Please enter a valid phone';
-                          } else if (value.length != 10) {
+                          } else if (value.length <= 10) {
                             return 'Short Phone Number';
                           } else {
                             return "Please enter a valid phone";
@@ -147,12 +156,12 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  GradientButton(
-                    'login'.tr,
-                    () => Get.to(
-                      () => OtpScreen(),
-                    ),
-                  ),
+                  GradientButton('login'.tr, () {
+                    _phoneController.text.length < 10?
+                        showToast('short phone number'.tr, context):
+
+                    Get.to(() => OtpScreen());
+                  }),
                 ],
               ),
             )

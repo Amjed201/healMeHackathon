@@ -7,26 +7,27 @@ import 'package:logistic/ui/screens/splash.dart';
 
 class AuthController extends GetxController {
   bool _loading = false;
-  late String _phone;
-  // User? _user;
+
+  String _phone = '';
+
+  String get phone => _phone;
+
+  set phone(String value) {
+    _phone = value;
+  } // User? _user;
   //
   // set user(User? value) {
   //   _user = value;
   //   update();
   // }
 
-
   bool get loading => _loading;
-
-  String get phone => _phone;
 
   // User? get user => _user;
 
   final api = Get.find<ApiService>();
 
-  getUserProfile(BuildContext context) async {
-
-  }
+  getUserProfile(BuildContext context) async {}
 
   clearUser(bool isLogout) async {
     // _user = null;
@@ -36,6 +37,7 @@ class AuthController extends GetxController {
       Get.offAll(() => const SplashScreen());
     }
   }
+
   updateFcmToken({required BuildContext context}) async {
     try {
       // await api.updateFirebaseID(context);

@@ -26,6 +26,7 @@ class LocaleString extends Translations {
           "anotherPerson": "Another person",
           "reciverName": "Reciver name",
           "reciverPhone": "Reciver phone",
+          "reciverPhone2": "Another Reciver phone (optional)",
           "shipmentDetails": "Shipment details",
           "chooseRegion": "Choose region",
           "chooseCity": "Choose City",
@@ -111,7 +112,6 @@ class LocaleString extends Translations {
           "map": "Show in map",
           "manageContacts": "Manage Contacts",
           "reasons": "Other reasons",
-
         },
         //ARABIC LANGUAGE
         'ar_AR': {
@@ -135,6 +135,7 @@ class LocaleString extends Translations {
           "anotherPerson": "شخص اخر",
           "reciverName": "اسم المستلم",
           "reciverPhone": "هاتف المستلم",
+          "reciverPhone2": "هاتف المستلم اضافي (اختياري)",
           "shipmentDetails": "تفاصيل الشحن",
           "chooseRegion": "اختر المنطقة",
           "chooseCity": "اختر المدينة",

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
 import 'package:logistic/ui/widgets/global/global_text_form.dart';
@@ -137,17 +138,20 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GlobalTextForm(
-                        controller: createOrder.startDateController,
-                        w: 180.w,
-                        label: 'startTime'.tr,
-                        color: const Color(0xfff8f7fb),
-                      ),
-                      GlobalTextForm(
-                        controller: createOrder.endDateController,
-                        w: 180.w,
-                        label: 'endTime'.tr,
-                        color: const Color(0xfff8f7fb),
+                      InkWell(
+                        onTap: () {
+                          createOrder.pickDate(context);
+                        },
+                        child: GetBuilder<CreateOrderController>(
+                          builder: (_) => GlobalTextForm(
+                            controller: _.startDateController,
+                            w: 380.w,
+                            label: _.startDate == null
+                                ? 'startTime'.tr
+                                : DateFormat('y-MM-d').format(_.startDate!),
+                            color: const Color(0xfff8f7fb),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -180,10 +184,15 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                           SizedBox(
                             width: 10.w,
                           ),
-                          CupertinoSwitch(
-                            value: true,
-                            onChanged: (value) {},
-                            activeColor: Theme.of(context).secondaryHeaderColor,
+                          GetBuilder<CreateOrderController>(
+                            builder: (_) => CupertinoSwitch(
+                              value: _.anotherReceiver,
+                              onChanged: (value) {
+                                _.toggleReceiver();
+                              },
+                              activeColor:
+                                  Theme.of(context).secondaryHeaderColor,
+                            ),
                           )
                         ],
                       ),
@@ -193,28 +202,45 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                 SizedBox(
                   height: 22.h,
                 ),
-                Center(
-                  child: GlobalTextForm(
-                    controller: createOrder.reciverController,
-                    label: 'reciverName',
-                    color: const Color(0xfff8f7fb),
-                    w: 380.w,
-                  ),
+                GetBuilder<CreateOrderController>(
+                  builder:(_)=>
+                      _.anotherReceiver?
+                      Column(children: [
+                    Center(
+                      child: GlobalTextForm(
+                        controller: createOrder.reciverController,
+                        label: 'reciverName',
+                        color: const Color(0xfff8f7fb),
+                        w: 380.w,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Center(
+                      child: GlobalTextForm(
+                        controller: createOrder.reciverPhoneController,
+                        label: 'reciverPhone',
+                        color: const Color(0xfff8f7fb),
+                        w: 380.w,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),    Center(
+                      child: GlobalTextForm(
+                        controller: createOrder.reciverPhoneController,
+                        label: 'reciverPhone2',
+                        color: const Color(0xfff8f7fb),
+                        w: 380.w,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                  ],):SizedBox()
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Center(
-                  child: GlobalTextForm(
-                    controller: createOrder.reciverPhoneController,
-                    label: 'reciverPhone',
-                    color: const Color(0xfff8f7fb),
-                    w: 380.w,
-                  ),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
+
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
                   child: TextFormField(

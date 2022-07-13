@@ -52,7 +52,7 @@ class _OtpScreenState extends State<OtpScreen> {
               height: 15.h,
             ),
             AutoSizeText(
-              'enterCode'.tr + '  96612578745+  ',
+              'enterCode'.tr + Get.find<AuthController>().phone,
               style: TextStyle(
                 fontSize: 14.sp,
                 color: Theme.of(context).hintColor,

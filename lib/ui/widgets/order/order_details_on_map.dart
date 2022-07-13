@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
@@ -53,6 +54,25 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
               controller: panelController,
               maxHeight: 560.h,
               minHeight: 150.h,
+              body: GoogleMap(
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(
+                    15.5594,
+                    32.5549,
+                  ),
+                  zoom: 18,
+                ),
+                zoomControlsEnabled: false,
+                myLocationButtonEnabled: false,
+                myLocationEnabled: false,
+                padding: EdgeInsets.symmetric(vertical: 240.h),
+                // markers: _markers,
+                onMapCreated: (GoogleMapController controller) {
+                  // _controller = controller;
+                  // mapController.loading = false;
+                  // setMarker();
+                },
+              ),
               panel: Column(
                 children: [
                   GradientButton(
@@ -126,11 +146,18 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                FromTo(
-                  withDriverDetails: false,
+            Column(
+              children: [
+                SizedBox(
+                  height: 20.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    FromTo(
+                      withDriverDetails: false,
+                    ),
+                  ],
                 ),
               ],
             ),
