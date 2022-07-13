@@ -110,6 +110,8 @@ class LocaleString extends Translations {
           "notifications": "Notifications",
           "map": "Show in map",
           "manageContacts": "Manage Contacts",
+          "reasons": "Other reasons",
+
         },
         //ARABIC LANGUAGE
         'ar_AR': {
@@ -233,6 +235,7 @@ class LocaleString extends Translations {
           "notifications": "الاشعارات",
           "map": "عرض الخريطة",
           "manageContacts": "إدارة جهات إتصالي",
+          "reasons": "اسباب اخرى",
         },
       };
 }
