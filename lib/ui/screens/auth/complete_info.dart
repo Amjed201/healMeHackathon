@@ -1,20 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
-import 'package:logistic/controllers/create_order_controller.dart';
-import 'package:logistic/ui/screens/new_order_map.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/text_field.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class InfoScreen extends StatefulWidget {
   @override
@@ -73,6 +67,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 Center(
                   child: MyTextField(
                     controller: _phoneController,
+                    hintText: '',
                   ),
                 ),
                 SizedBox(
@@ -94,6 +89,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 Center(
                   child: MyTextField(
                     controller: _emailController,
+                    hintText: '',
                   ),
                 ),
                 SizedBox(

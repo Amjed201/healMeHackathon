@@ -4,7 +4,11 @@ import 'package:get/get.dart';
 
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
-  const MyTextField({Key? key, required this.controller}) : super(key: key);
+  final String hintText;
+
+  const MyTextField(
+      {Key? key, required this.controller, required this.hintText})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +21,9 @@ class MyTextField extends StatelessWidget {
         onEditingComplete: () => FocusManager.instance.primaryFocus?.unfocus(),
         validator: (value) {
           if (!GetUtils.isPhoneNumber(value!)) {
-            return 'Please enter a valid phone';
+            return 'Please enter ' + hintText;
           } else if (value.length != 10) {
-            return 'Short Phone Number';
+            return 'Short' + hintText;
           }
           return null;
         },
@@ -28,7 +32,8 @@ class MyTextField extends StatelessWidget {
         decoration: InputDecoration(
           fillColor: Colors.white,
           filled: true,
-          // hintText: 'phone'.tr,
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.grey),
           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),

@@ -8,7 +8,7 @@ import 'package:logistic/services/helpers.dart';
 import 'package:get/get.dart';
 import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/services/translation.dart';
-import 'package:logistic/ui/screens/login.dart';
+import 'package:logistic/ui/screens/auth/login.dart';
 import 'package:logistic/ui/screens/splash.dart';
 // import 'firebase_options.dart';
 

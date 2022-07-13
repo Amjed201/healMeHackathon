@@ -4,8 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
 import 'package:logistic/ui/widgets/back.dart';
-
-import '../widgets/request_card_widget.dart';
+import 'package:logistic/ui/widgets/request_card_widget.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({Key? key}) : super(key: key);

@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
-import 'package:logistic/ui/screens/complete_info.dart';
+import 'package:logistic/ui/screens/auth/complete_info.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -87,8 +87,8 @@ class _OtpScreenState extends State<OtpScreen> {
                 pinBoxDecoration:
                     ProvidedPinBoxDecoration.defaultPinBoxDecoration,
                 pinBoxRadius: 15,
-                pinBoxHeight: 96.h,
-                pinBoxWidth: 61.w,
+                pinBoxHeight: 86.h,
+                pinBoxWidth: 56.w,
                 pinBoxOuterPadding: EdgeInsets.symmetric(horizontal: 8.w),
                 pinTextStyle: TextStyle(
                     fontSize: 30.sp, color: Theme.of(context).hintColor),
@@ -119,8 +119,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.find<AuthController>()
-                          .sendOtp(phone: auth.phone, context: context);
+                      // Get.find<AuthController>()
+                      //     .sendOtp(phone: auth.phone, context: context);
                     },
                     child: AutoSizeText(
                       '60:00'.tr,

@@ -2,12 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logistic/ui/screens/contact_us_screen.dart';
+import 'package:logistic/ui/screens/profile/contact_us_screen.dart';
+import 'package:logistic/ui/screens/profile/edit_profile_screen.dart';
+import 'package:logistic/ui/screens/profile/manage_contacts_screen.dart';
 
-import '../widgets/my_account_button.dart';
+import '../../widgets/my_account_button.dart';
 
-class MyAccount extends StatelessWidget {
-  const MyAccount({Key? key}) : super(key: key);
+class MyProfile extends StatelessWidget {
+  const MyProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class MyAccount extends StatelessWidget {
         child: ListView(
           children: [
             SizedBox(
-              height: 84.h,
+              height: 30.h,
             ),
             CircleAvatar(
               radius: 41.sp,
@@ -82,11 +84,17 @@ class MyAccount extends StatelessWidget {
             MyAccountButton(
               icon: Icons.person,
               label: "editProf".tr,
+              onTap: () {
+                Get.to(() => EditProfile());
+              },
             ),
             const Divider(),
             MyAccountButton(
               icon: Icons.document_scanner_outlined,
               label: "manegeContact".tr,
+              onTap: () {
+                Get.to(() => ManageContacts());
+              },
             ),
             const Divider(),
             MyAccountButton(

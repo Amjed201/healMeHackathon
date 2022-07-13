@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:logistic/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -53,24 +52,24 @@ class LocalStorage {
 
 
   // User
-  Future setUser(User? user) async {
-    if (user != null) {
-      String json = jsonEncode(user.toJson());
-      await _prefs.setString("userData", json);
-    } else {
-      return "";
-    }
-  }
-
-  User? getUser() {
-    String? json = _prefs.getString("userData");
-    if (json != null && json.isNotEmpty) {
-      var obj = jsonDecode(json);
-      return User.fromJson(obj);
-    } else {
-      return null;
-    }
-  }
+  // Future setUser(User? user) async {
+  //   if (user != null) {
+  //     String json = jsonEncode(user.toJson());
+  //     await _prefs.setString("userData", json);
+  //   } else {
+  //     return "";
+  //   }
+  // }
+  //
+  // User? getUser() {
+  //   String? json = _prefs.getString("userData");
+  //   if (json != null && json.isNotEmpty) {
+  //     var obj = jsonDecode(json);
+  //     return User.fromJson(obj);
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   // Clear All
   Future clearAll() async {

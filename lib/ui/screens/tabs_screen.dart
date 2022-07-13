@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:logistic/ui/screens/my_account_screen.dart';
-import 'package:logistic/ui/screens/my_orders.dart';
-import 'package:logistic/ui/screens/new_order_map.dart';
+import 'package:logistic/ui/screens/orders/my_orders.dart';
 import 'package:logistic/ui/screens/notification.dart';
+import 'package:logistic/ui/screens/profile/my_profile_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +22,7 @@ class _TabsScreenState extends State<TabsScreen> {
       const MyOrders(),
       const NotificationScreen(),
       const Placeholder(),
-      const MyAccount(),
+      const MyProfile(),
     ];
   }
 

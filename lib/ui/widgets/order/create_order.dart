@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
 import 'package:logistic/ui/widgets/global/global_text_form.dart';
 import 'package:logistic/ui/widgets/global/intermittent_line.dart';
 
 import '../../../controllers/create_order_controller.dart';
-import '../../screens/new_order_map.dart';
 import '../commonButton.dart';
 
 class CreateOrderSheet extends GetView<CreateOrderController> {

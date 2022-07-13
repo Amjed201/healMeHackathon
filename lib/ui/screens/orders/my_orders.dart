@@ -6,8 +6,8 @@ import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/order/order_details_on_map.dart';
 
-import '../widgets/order/create_order.dart';
-import '../widgets/suspended_account_popup.dart';
+import '../../widgets/order/create_order.dart';
+import '../../widgets/suspended_account_popup.dart';
 
 class MyOrders extends StatelessWidget {
   const MyOrders({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class MyOrders extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Expanded(
+            const Expanded(
               child: TabBarView(
                 children: [RunningOrdersWidget(), HistoryOrdersWidget()],
               ),
