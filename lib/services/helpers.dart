@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
@@ -13,6 +14,7 @@ Future initControllers() async {
   Get.put(LocalizationController());
   Get.put(ApiService());
   Get.put(AuthController());
+  Get.put(CreateOrderController());
 }
 
 void showToast(String msg, BuildContext context, {Color? color}) =>

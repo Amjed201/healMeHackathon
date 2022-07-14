@@ -38,6 +38,8 @@ class LocaleString extends Translations {
           "acceptOrder": "Accept Order",
           "mobile": "Mobile",
           "phone": "Phone Number",
+          "shortPhone": "Phone Number is short",
+          "enterPhone": "Please enter your phone number",
           "mobileConfirm": "Mobile Confirm",
           "enterCode":
               "Please Enter Confirmation Code That Sent To Mobile Number",
@@ -147,6 +149,8 @@ class LocaleString extends Translations {
           "acceptOrder": "الموافقة على العروض",
           "mobile": "الهاتف المحمول",
           "phone": "رقم الهاتف",
+          "enterPhone": "الرجاء كتابة رقم الهاتف",
+          "shortPhone": "رقم الهاتف قصير",
           "mobileConfirm": "التحقق من رقم الهاتف",
           "enterCode": "الرجاء إدخال الرقم السري المرسل الى الرقم ",
           "modify": "تعديل",

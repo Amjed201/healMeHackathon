@@ -79,12 +79,49 @@ class _EditProfileState extends State<EditProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: MyTextField(
-                        controller: _nameController,
-                        hintText: 'name'.tr,
+                Center(
+                child: SizedBox(
+                width: 380.w,
+                  height: 69.h,
+                  child: TextFormField(
+                    controller: _nameController,
+                    textInputAction: TextInputAction.next,
+                    onEditingComplete: () => FocusManager.instance.primaryFocus?.unfocus(),
+                    validator: (value) {
+                      if (!GetUtils.isPhoneNumber(value!)) {
+                        return 'Please enter ' + 'name'.tr;
+                      } else if (value.length < 2) {
+                        return 'Short' + 'name'.tr;
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.text,
+                    cursorColor: Theme.of(context).primaryColor,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: 'name'.tr,
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: const BorderSide(
+                          color: Colors.black26,
+                          width: 1.0,
+                        ),
                       ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2.0,
+                        ),
+                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
                     ),
+                  ),
+                ),
+              ),
                     SizedBox(
                       height: 10.h,
                     ),

@@ -13,8 +13,11 @@ class AuthController extends GetxController {
   String get phone => _phone;
 
   set phone(String value) {
-    _phone = value;
-  } // User? _user;
+    _phone = value + ' 966+';
+    update();
+  }
+
+  // User? _user;
   //
   // set user(User? value) {
   //   _user = value;

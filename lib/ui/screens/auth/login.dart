@@ -100,68 +100,70 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Center(
-                    child: SizedBox(
-                      width: 380.w,
-                      height: 69.h,
-                      child: TextFormField(
-                        controller: _phoneController,
-                        textInputAction: TextInputAction.done,
-                        onEditingComplete: () {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          Get.find<AuthController>().phone =
-                              _phoneController.text;
-                        },
-                        onChanged: (text) {
-                          Get.find<AuthController>().phone = text;
-                        },
-                        validator: (value) {
-                          if (!GetUtils.isPhoneNumber(value!)) {
-                            return 'Please enter a valid phone';
-                          } else if (value.length <= 10) {
-                            return 'Short Phone Number';
-                          } else {
-                            return "Please enter a valid phone";
-                          }
-                        },
-                        keyboardType: TextInputType.number,
-                        cursorColor: Theme.of(context).primaryColor,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          // hintText: 'phone'.tr,
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: const BorderSide(
-                              color: Colors.black26,
-                              width: 1.0,
+                  GetBuilder<AuthController>(builder: (authController) {
+                    // _phoneController.text = authController.phone;
+                    return Center(
+                      child: SizedBox(
+                        width: 380.w,
+                        height: 69.h,
+                        child: TextFormField(
+                          controller: _phoneController,
+                          textInputAction: TextInputAction.done,
+                          onEditingComplete: () {
+                            authController.phone = _phoneController.text;
+                            login(context);
+                          },
+                          onChanged: (text) => authController.phone = text,
+                          onFieldSubmitted: (text) =>
+                              authController.phone = text,
+                          validator: (value) {
+                            if (!GetUtils.isPhoneNumber(value!)) {
+                              return 'Please enter a valid phone';
+                            } else if (value.length <= 10) {
+                              return 'Short Phone Number';
+                            } else {
+                              return "Please enter a valid phone";
+                            }
+                          },
+                          textDirection: TextDirection.ltr,
+                          keyboardType: TextInputType.number,
+                          cursorColor: Theme.of(context).primaryColor,
+                          decoration: InputDecoration(
+                            suffixIcon: Padding(
+                              padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
+                              child: Text('+966',style: TextStyle(fontSize: 18.sp),),
                             ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                            borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                              width: 2.0,
+                            fillColor: Colors.white,
+                            filled: true,
+                            // hintText: 'phone'.tr,
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                20.0, 15.0, 20.0, 15.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                                width: 1.0,
+                              ),
                             ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                   SizedBox(
                     height: 30.h,
                   ),
-                  GradientButton('login'.tr, () {
-                    _phoneController.text.length < 10?
-                        showToast('short phone number'.tr, context):
-
-                    Get.to(() => OtpScreen());
-                  }),
+                  GradientButton('login'.tr, () => login(context)),
                 ],
               ),
             )
@@ -169,5 +171,14 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void login(BuildContext context) {
+    int phoneLength = _phoneController.text.length;
+    phoneLength == 0
+        ? showToast('enterPhone'.tr, context)
+        : phoneLength < 9
+            ? showToast('shortPhone'.tr, context)
+            : Get.to(() => OtpScreen());
   }
 }

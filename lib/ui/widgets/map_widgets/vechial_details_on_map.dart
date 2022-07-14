@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/create_order_controller.dart';
 
 class VechialDetailsOnMap extends StatelessWidget {
-  const VechialDetailsOnMap({Key? key}) : super(key: key);
+   VechialDetailsOnMap({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,46 +22,15 @@ class VechialDetailsOnMap extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                    height: 52.h,
-                    width: 76.w,
-                    child: Image.asset('assets/images/car_placeholder.png'),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'completeInfo'.tr,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      Text(
-                        'completeInfo'.tr,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const Icon(
-                Icons.keyboard_arrow_down_sharp,
-                color: Colors.black,
-              )
-            ],
-          ),
-          Divider(
-            height: 20.h,
+          GetBuilder<CreateOrderController>(
+            builder:(controller)=> DropdownButton(
+              items: controller.vehicles,
+              onChanged: (String? value) {
+                 controller.selectedVehicle = value??'';
+              },
+              value: controller.selectedVehicle,
+              isExpanded: true,
+            ),
           ),
           Expanded(
               child: Column(

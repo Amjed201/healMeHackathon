@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:logistic/ui/screens/orders/requests_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
@@ -27,6 +28,14 @@ class NewOrderMap extends StatefulWidget {
 
 class _NewOrderMapState extends State<NewOrderMap> {
   final auth = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Get.find<CreateOrderController>().selectedVehicle =
+        Get.find<CreateOrderController>().vehicles.first.value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +72,7 @@ class _NewOrderMapState extends State<NewOrderMap> {
                 withDriverDetails: false,
               ),
               const Spacer(),
-              const VechialDetailsOnMap(),
+              VechialDetailsOnMap(),
               SizedBox(
                 height: 20.h,
               ),
