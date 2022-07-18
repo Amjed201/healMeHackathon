@@ -46,7 +46,7 @@ class VechialDetailsOnMap extends StatelessWidget {
               Text(
                 'completeInfo'.tr,
                 style: TextStyle(
-                  fontSize: 30.sp,
+                  fontSize: 25.sp,
                   color: Theme.of(context).secondaryHeaderColor,
                 ),
               ),

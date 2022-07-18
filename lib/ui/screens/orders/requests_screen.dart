@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/ui/screens/orders/request_details_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/request_card_widget.dart';
@@ -49,7 +50,9 @@ class _RequestScreenState extends State<RequestScreen> {
                       color: Colors.white,
                       child: Column(
                         children: [
-                          SizedBox(height: 40.h,),
+                          SizedBox(
+                            height: 40.h,
+                          ),
                           Container(
                             width: double.infinity,
                             margin: EdgeInsets.symmetric(
@@ -153,8 +156,9 @@ class _RequestScreenState extends State<RequestScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 50.h,),
-
+                          SizedBox(
+                            height: 50.h,
+                          ),
                           GradientButton('cancel'.tr, () {})
                         ],
                       ),
@@ -175,7 +179,9 @@ class _RequestScreenState extends State<RequestScreen> {
         body: SafeArea(
           child: ListView.builder(
             itemCount: 3,
-            itemBuilder: (context, index) => const RequestCard(),
+            itemBuilder: (context, index) => InkWell(
+                onTap: () => Get.to(() => OrderRequestDetails()),
+                child: const RequestCard()),
           ),
         ));
   }

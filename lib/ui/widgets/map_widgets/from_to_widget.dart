@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/ui/widgets/order/dotted_divider.dart';
 
 class FromTo extends StatelessWidget {
   final bool withDriverDetails;
@@ -53,30 +54,7 @@ class FromTo extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 5.h,
-                      width: 2.w,
-                      color: Colors.grey[400],
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 5.h,
-                      width: 2.w,
-                      color: Colors.grey[400],
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 5.h,
-                      width: 2.w,
-                      color: Colors.grey[400],
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 1.h),
-                      height: 5.h,
-                      width: 2.w,
-                      color: Colors.grey[400],
-                    ),
+                   DottedDivider(length: 5),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
