@@ -14,12 +14,6 @@ class ManageContacts extends StatefulWidget {
 
 class _ManageContactsState extends State<ManageContacts> {
   @override
-  void initState() {
-    super.initState();
-    Get.find<ContactsController>().getContacts();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,

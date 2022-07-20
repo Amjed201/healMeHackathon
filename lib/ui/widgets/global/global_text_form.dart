@@ -5,6 +5,7 @@ class GlobalTextForm extends StatelessWidget {
   const GlobalTextForm({
     Key? key,
     required this.controller,
+    required this.isEnabled,
     this.w = 200,
     required this.label,
     this.color = Colors.white,
@@ -13,6 +14,7 @@ class GlobalTextForm extends StatelessWidget {
   final double w;
   final String label;
   final Color color;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -20,14 +22,15 @@ class GlobalTextForm extends StatelessWidget {
       width: w,
       child: TextFormField(
         controller: controller,
-        enabled: false,
+        enabled: isEnabled,
         keyboardType: TextInputType.text,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           fillColor: color,
           filled: true,
-          enabled: false,
+          // enabled: isEnabled,
           hintText: label.tr,
+          hintStyle: TextStyle(color: Colors.grey),
           contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),

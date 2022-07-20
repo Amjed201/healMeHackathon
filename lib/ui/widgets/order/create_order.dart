@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/data/models/city.dart';
+import 'package:logistic/data/models/contact.dart';
 import 'package:logistic/data/models/region.dart';
 import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
@@ -55,10 +57,10 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: DropdownButtonFormField<Region>(
-                      onTap:(){
+                      onTap: () {
                         print('pressssssssssssssssed');
-                        controller.selectedCity1=null;
-                      } ,
+                        controller.selectedCity1 = null;
+                      },
                       items: controller.regions,
                       value: controller.selectedRegion1 != null
                           ? controller.selectedRegion1
@@ -114,6 +116,9 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                       ),
                       onChanged: (City? newValue) {
                         controller.selectedCity1 = newValue;
+                        if (controller.autoPickCity) {
+                          controller.selectedCity2 = newValue;
+                        }
                       },
                       decoration: InputDecoration(
                         fillColor: const Color(0xfff8f7fb),
@@ -157,10 +162,10 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: DropdownButtonFormField<Region>(
-                      onTap:(){
+                      onTap: () {
                         print('pressssssssssssssssed');
-                        controller.selectedCity2=null;
-                      } ,
+                        controller.selectedCity2 = null;
+                      },
                       items: controller.regions,
                       value: controller.selectedRegion2 != null
                           ? controller.selectedRegion2
@@ -197,10 +202,7 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: DropdownButtonFormField<City>(
-                      items:
-                          controller.cities2 == []
-                              ? []
-                              : controller.cities2,
+                      items: controller.cities2 == [] ? [] : controller.cities2,
                       value: controller.selectedCity2 == null
                           ? null
                           : controller.selectedCity2,
@@ -270,18 +272,19 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                           onTap: () {
                             controller.pickDateAndTime(context);
                           },
-                          child: GetBuilder<CreateOrderController>(
-                            builder: (_) => GlobalTextForm(
-                              controller: _.startDateController,
-                              w: 380.w,
-                              label: _.startDate == null || _.startTime == null
-                                  ? 'startTime'.tr
-                                  : DateFormat('y-MM-d').format(_.startDate!) +
-                                      '    '
-                                          '${_.startTime!.hour} : ' +
-                                      '${_.startTime!.minute}',
-                              color: const Color(0xfff8f7fb),
-                            ),
+                          child: GlobalTextForm(
+                            isEnabled: false,
+                            controller: controller.startDateController,
+                            w: 380.w,
+                            label: controller.startDate == null ||
+                                    controller.startTime == null
+                                ? 'startTime'.tr
+                                : DateFormat('y-MM-d')
+                                        .format(controller.startDate!) +
+                                    '    '
+                                        '${controller.startTime!.hour} : ' +
+                                    '${controller.startTime!.minute}',
+                            color: const Color(0xfff8f7fb),
                           ),
                         ),
                       ],
@@ -315,16 +318,14 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                             SizedBox(
                               width: 10.w,
                             ),
-                            GetBuilder<CreateOrderController>(
-                              builder: (_) => CupertinoSwitch(
-                                value: _.anotherReceiver,
-                                onChanged: (value) {
-                                  _.toggleReceiver();
-                                },
-                                activeColor:
-                                    Theme.of(context).secondaryHeaderColor,
-                              ),
-                            )
+                            CupertinoSwitch(
+                              value: controller.anotherReceiver,
+                              onChanged: (value) {
+                                controller.toggleReceiver();
+                              },
+                              activeColor:
+                                  Theme.of(context).secondaryHeaderColor,
+                            ),
                           ],
                         ),
                       ],
@@ -333,48 +334,69 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   SizedBox(
                     height: 22.h,
                   ),
-                  GetBuilder<CreateOrderController>(
-                      builder: (_) => _.anotherReceiver
-                          ? Column(
+                  controller.anotherReceiver
+                      ? Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Center(
                                   child: GlobalTextForm(
+                                    isEnabled: true,
                                     controller: controller.reciverController,
                                     label: 'reciverName',
                                     color: const Color(0xfff8f7fb),
-                                    w: 380.w,
+                                    w: 300.w,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Center(
-                                  child: GlobalTextForm(
-                                    controller:
-                                        controller.reciverPhoneController,
-                                    label: 'reciverPhone',
-                                    color: const Color(0xfff8f7fb),
-                                    w: 380.w,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Center(
-                                  child: GlobalTextForm(
-                                    controller:
-                                        controller.reciverPhoneController,
-                                    label: 'reciverPhone2',
-                                    color: const Color(0xfff8f7fb),
-                                    w: 380.w,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
+                                DropdownButton(
+                                  items: Get.find<ContactsController>()
+                                      .contactsMenu,
+                                  onChanged: (Contact? contact) {
+                                    Contact? selectedContact =
+                                        Get.find<ContactsController>()
+                                            .selectedContact;
+                                    selectedContact = contact;
+                                    controller.reciverController.text =
+                                        selectedContact?.name ?? '';
+                                    controller.reciverPhoneController.text =
+                                        selectedContact?.primaryPhone ?? '';
+                                    controller.reciverPhoneController2.text =
+                                        selectedContact?.secondaryPhone ?? '';
+                                  },
+                                )
                               ],
-                            )
-                          : SizedBox()),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Center(
+                              child: GlobalTextForm(
+                                isEnabled: true,
+                                controller: controller.reciverPhoneController,
+                                label: 'reciverPhone',
+                                color: const Color(0xfff8f7fb),
+                                w: 380.w,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Center(
+                              child: GlobalTextForm(
+                                isEnabled: true,
+                                controller: controller.reciverPhoneController,
+                                label: 'reciverPhone2',
+                                color: const Color(0xfff8f7fb),
+                                w: 380.w,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: TextFormField(

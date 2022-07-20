@@ -143,27 +143,21 @@ class CreateOrderController extends GetxController {
   ];
 
   String? _selectedVehicle = '';
-
   String? get selectedVehicle => _selectedVehicle;
-
   set selectedVehicle(String? value) {
     _selectedVehicle = value;
-    update();
+    // update();
   }
 
   Region? _selectedRegion1;
-
   Region? get selectedRegion1 => _selectedRegion1;
-
   set selectedRegion1(Region? value) {
     _selectedRegion1 = value;
     update();
   }
 
   Region? _selectedRegion2;
-
   Region? get selectedRegion2 => _selectedRegion2;
-
   set selectedRegion2(Region? value) {
     _selectedRegion2 = value;
     _autoPickRegion = false;
@@ -240,4 +234,11 @@ class CreateOrderController extends GetxController {
     _anotherReceiver = !_anotherReceiver;
     update();
   }
+
+  ///////////////////////////////////////////////////////////////////////////////////////
+
+  createOrder(){}
+
+
+
 }

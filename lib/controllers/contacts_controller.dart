@@ -33,7 +33,12 @@ class ContactsController extends GetxController {
     update();
   }
 
+  List<DropdownMenuItem<Contact>> contactsMenu = [];
+
+  Contact? selectedContact;
+
   void getContacts() async {
+    contactsMenu = [];
     _loading = true;
     update();
     http.Response response =
@@ -43,6 +48,10 @@ class ContactsController extends GetxController {
       _contacts = dataList.map((e) => Contact.fromJson(e)).toList();
       _loading = false;
       update();
+      for (var element in _contacts) {
+        contactsMenu.add(
+            DropdownMenuItem(child: Text(element.name ?? ''), value: element));
+      }
     } else {
       ApiChecker.checkApi(response);
     }
@@ -54,7 +63,7 @@ class ContactsController extends GetxController {
       {required String name,
       required String countryCode,
       required String primaryPhone,
-       String? secondaryPhone}) async {
+      String? secondaryPhone}) async {
     _loading = true;
     update();
     http.Response response = await contactsRepo.addNewContact(
@@ -81,7 +90,7 @@ class ContactsController extends GetxController {
       required String name,
       required String countryCode,
       required String primaryPhone,
-       String? secondaryPhone}) async {
+      String? secondaryPhone}) async {
     _loading = true;
     update();
     http.Response response = await contactsRepo.updateContact(
