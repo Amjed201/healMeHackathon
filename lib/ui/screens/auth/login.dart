@@ -1,11 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/auth/otp.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,18 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
   final TextEditingController _phoneController = TextEditingController();
+
+  void sendOtp() {
+    final authController = Get.find<AuthController>();
+
+    if (authController.phone.length == 0) {
+      showToast('enterPhone'.tr);
+    } else if (authController.phone.length < 9) {
+      showToast('shortPhone'.tr);
+    } else {
+      authController.sendOtp(countryCode: '+249', phone: authController.phone);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,27 +124,21 @@ class LoginScreen extends StatelessWidget {
                           textInputAction: TextInputAction.done,
                           onEditingComplete: () {
                             authController.phone = _phoneController.text;
-                            login(context);
+                            sendOtp();
                           },
                           onChanged: (text) => authController.phone = text,
                           onFieldSubmitted: (text) =>
                               authController.phone = text,
-                          validator: (value) {
-                            if (!GetUtils.isPhoneNumber(value!)) {
-                              return 'Please enter a valid phone';
-                            } else if (value.length <= 10) {
-                              return 'Short Phone Number';
-                            } else {
-                              return "Please enter a valid phone";
-                            }
-                          },
                           textDirection: TextDirection.ltr,
                           keyboardType: TextInputType.number,
                           cursorColor: Theme.of(context).primaryColor,
                           decoration: InputDecoration(
                             suffixIcon: Padding(
-                              padding: EdgeInsets.fromLTRB(15, 15, 0, 15),
-                              child: Text('+966',style: TextStyle(fontSize: 18.sp),),
+                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                              child: Text(
+                                '+966',
+                                style: TextStyle(fontSize: 18.sp),
+                              ),
                             ),
                             fillColor: Colors.white,
                             filled: true,
@@ -163,7 +170,10 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(
                     height: 30.h,
                   ),
-                  GradientButton('login'.tr, () => login(context)),
+                  GetBuilder<AuthController>(
+                      builder: (controller) => controller.loading
+                          ? const Center(child: LoadingWidget())
+                          : GradientButton('login'.tr, () => sendOtp())),
                 ],
               ),
             )
@@ -171,14 +181,5 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void login(BuildContext context) {
-    int phoneLength = _phoneController.text.length;
-    phoneLength == 0
-        ? showToast('enterPhone'.tr, context)
-        : phoneLength < 9
-            ? showToast('shortPhone'.tr, context)
-            : Get.to(() => OtpScreen());
   }
 }

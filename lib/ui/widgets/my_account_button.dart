@@ -28,7 +28,7 @@ class MyAccountButton extends StatelessWidget {
                 Icon(
                   icon,
                   color: Colors.grey,
-                  size: 17.sp,
+                  size: 30.sp,
                 ),
                 SizedBox(
                   width: 15.w,
@@ -37,7 +37,7 @@ class MyAccountButton extends StatelessWidget {
                   label ?? "",
                   style: TextStyle(
                     color: Colors.grey,
-                    fontSize: 12.sp,
+                    fontSize: 14.sp,
                   ),
                 ),
               ],
@@ -45,7 +45,7 @@ class MyAccountButton extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios,
               color: Colors.grey,
-              size: 17.sp,
+              size: 20.sp,
             )
           ],
         ),

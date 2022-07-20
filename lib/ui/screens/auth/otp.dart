@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/ui/screens/auth/complete_info.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 
 class OtpScreen extends StatefulWidget {
@@ -23,6 +24,13 @@ class _OtpScreenState extends State<OtpScreen> {
   var _otpController = TextEditingController();
 
   final auth = Get.find<AuthController>();
+
+  void confirmOtp() {
+    if (_otpController.text.length == 5) {
+      auth.checkOtp(
+          phone: auth.phone, countryCode: '+249', otp: _otpController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,28 +144,13 @@ class _OtpScreenState extends State<OtpScreen> {
             SizedBox(
               height: 55.h,
             ),
-            GradientButton(
-              'confirmVerify'.tr,
-              () {
-                // if (_otpController.text.length == 4) {
-                //   auth.checkOtp(
-                //       code: _otpController.text, context: context);
-                // }
-                Get.to(
-                  () => InfoScreen(),
-                );
-              },
-            ),
             GetBuilder<AuthController>(
-              builder: (_) => (_.loading
-                  ? const Padding(
-                      padding: EdgeInsets.all(50.0),
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    )
-                  : const SizedBox()),
-            )
+                builder: (controller) => controller.loading
+                    ? const Center(child: LoadingWidget())
+                    : GradientButton(
+                        'confirmVerify'.tr,
+                        () => confirmOtp(),
+                      ))
           ],
         ),
       ),

@@ -19,10 +19,10 @@ class _TabsScreenState extends State<TabsScreen> {
 
   List<Widget> _buildScreens() {
     return [
-      const MyOrders(),
-      const NotificationScreen(),
-      const Placeholder(),
-      const MyProfile(),
+       MyOrders(),
+       NotificationScreen(),
+       Placeholder(),
+       MyProfile(),
     ];
   }
 

@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             secondary: const Color(0xffa49e9e),
           ),
         ),
-        home: LoginScreen(),
+        home: SplashScreen(),
       ),
     );
   }

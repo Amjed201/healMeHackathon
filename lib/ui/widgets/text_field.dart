@@ -27,7 +27,7 @@ class MyTextField extends StatelessWidget {
           }
           return null;
         },
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.emailAddress,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           fillColor: Colors.white,

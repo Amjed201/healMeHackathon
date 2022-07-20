@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/auth_controller.dart';
+import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/ui/screens/profile/contact_us_screen.dart';
 import 'package:logistic/ui/screens/profile/edit_profile_screen.dart';
 import 'package:logistic/ui/screens/profile/manage_contacts_screen.dart';
@@ -9,7 +11,9 @@ import 'package:logistic/ui/screens/profile/manage_contacts_screen.dart';
 import '../../widgets/my_account_button.dart';
 
 class MyProfile extends StatelessWidget {
-  const MyProfile({Key? key}) : super(key: key);
+  MyProfile({Key? key}) : super(key: key);
+
+  final user = Get.find<LocalStorage>().getUser();
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +30,17 @@ class MyProfile extends StatelessWidget {
         ),
         centerTitle: true,
         actions: [
-          Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: AutoSizeText(
-                'logout'.tr,
-                style: TextStyle(
-                  fontSize: 12.sp,
-                  color: Theme.of(context).primaryColor,
+          InkWell(
+            onTap: () => Get.find<AuthController>().logout(),
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                child: AutoSizeText(
+                  'logout'.tr,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
               ),
             ),
@@ -60,7 +67,7 @@ class MyProfile extends StatelessWidget {
             ),
             Center(
               child: AutoSizeText(
-                'userName'.tr,
+                user?.fullName ?? '',
                 style: TextStyle(
                   fontSize: 17.sp,
                 ),
@@ -71,7 +78,7 @@ class MyProfile extends StatelessWidget {
             ),
             Center(
               child: AutoSizeText(
-                '249123456789+',
+                user?.phoneNumber ?? '',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 14.sp,

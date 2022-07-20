@@ -13,7 +13,7 @@ class LocalizationController extends GetxController {
   bool get isLtr => _isLtr;
 
   void changeLanguage() async {
-    await Get.offAll(() => const SplashScreen());
+    await Get.offAll(() =>  SplashScreen());
     if (_locale.languageCode == 'ar') {
       Get.updateLocale(const Locale('en', 'EN'));
       _locale = const Locale('en', 'EN');

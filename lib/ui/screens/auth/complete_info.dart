@@ -4,10 +4,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:logistic/controllers/authController.dart';
+import 'package:logistic/controllers/auth_controller.dart';
+import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:logistic/ui/widgets/text_field.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class InfoScreen extends StatefulWidget {
 }
 
 class _InfoScreenState extends State<InfoScreen> {
-  final _phoneController = TextEditingController();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
 
   final auth = Get.find<AuthController>();
@@ -66,7 +68,7 @@ class _InfoScreenState extends State<InfoScreen> {
                 ),
                 Center(
                   child: MyTextField(
-                    controller: _phoneController,
+                    controller: _nameController,
                     hintText: '',
                   ),
                 ),
@@ -95,7 +97,21 @@ class _InfoScreenState extends State<InfoScreen> {
                 SizedBox(
                   height: 40.h,
                 ),
-                GradientButton('save'.tr, () => Get.to(() => TabsScreen())),
+                GetBuilder<AuthController>(
+                  builder: (controller) => controller.loading
+                      ? const LoadingWidget()
+                      : GradientButton('save'.tr, () {
+                          if (_nameController.text.length == 0) {
+                            showToast('enterName'.tr);
+                          } else {
+                            auth.registerUser(
+                                name: _nameController.text,
+                                email: _emailController.text.length == 0
+                                    ? null
+                                    : _emailController.text);
+                          }
+                        }),
+                ),
                 SizedBox(
                   height: 20.h,
                 ),

@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
+import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
+import 'package:logistic/data/models/contact.dart';
 import 'package:logistic/services/helpers.dart';
 import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
@@ -14,23 +16,27 @@ import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:logistic/ui/widgets/text_field.dart';
 
-class EditProfile extends StatefulWidget {
+class AddContact extends StatefulWidget {
+  String title;
+  Contact? contact;
+
+  AddContact(this.title, {this.contact});
+
   @override
-  State<EditProfile> createState() => _EditProfileState();
+  State<AddContact> createState() => _AddContactState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class _AddContactState extends State<AddContact> {
   final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-
-  final user = Get.find<LocalStorage>().getUser();
+  final _primaryPhoneController = TextEditingController();
+  final _secondaryPhoneController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _nameController.text = user?.fullName ?? '';
-    _emailController.text = user?.email ?? '';
+    _nameController.text = widget.contact?.name ?? '';
+    _primaryPhoneController.text = widget.contact?.primaryPhone ?? '';
+    _secondaryPhoneController.text = widget.contact?.secondaryPhone ?? '';
   }
 
   @override
@@ -42,7 +48,7 @@ class _EditProfileState extends State<EditProfile> {
         backgroundColor: Colors.white,
         elevation: 0.0,
         title: AutoSizeText(
-          'editProf'.tr,
+          widget.title.tr,
           style: TextStyle(
             fontSize: 15.sp,
           ),
@@ -54,37 +60,6 @@ class _EditProfileState extends State<EditProfile> {
         children: [
           ListView(
             children: [
-              SizedBox(
-                height: 30.h,
-              ),
-              Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 41.sp,
-                      backgroundColor: Colors.grey[300],
-                      child: Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 61.sp,
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: CircleAvatar(
-                        radius: 15.sp,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: const Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                          size: 15,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 30.h,
               ),
@@ -100,6 +75,7 @@ class _EditProfileState extends State<EditProfile> {
                         child: TextFormField(
                           controller: _nameController,
                           textInputAction: TextInputAction.next,
+                          textDirection: TextDirection.ltr,
                           onEditingComplete: () =>
                               FocusManager.instance.primaryFocus?.unfocus(),
                           keyboardType: TextInputType.text,
@@ -139,17 +115,24 @@ class _EditProfileState extends State<EditProfile> {
                         width: 380.w,
                         height: 69.h,
                         child: TextFormField(
-                          controller: _emailController,
+                          controller: _primaryPhoneController,
                           textInputAction: TextInputAction.done,
-                          onEditingComplete: () =>
-                              FocusManager.instance.primaryFocus?.unfocus(),
-                          keyboardType: TextInputType.emailAddress,
+                          textDirection: TextDirection.ltr,
+                          keyboardType: TextInputType.number,
                           cursorColor: Theme.of(context).primaryColor,
                           decoration: InputDecoration(
+                            hintText: 'phone'.tr,
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                              child: Text(
+                                '+966',
+                                style: TextStyle(fontSize: 18.sp),
+                              ),
+                            ),
                             fillColor: Colors.white,
                             filled: true,
-                            hintText: 'email'.tr,
-                            hintStyle: const TextStyle(color: Colors.grey),
+                            // hintText: 'phone'.tr,
                             contentPadding: const EdgeInsets.fromLTRB(
                                 20.0, 15.0, 20.0, 15.0),
                             enabledBorder: OutlineInputBorder(
@@ -167,11 +150,60 @@ class _EditProfileState extends State<EditProfile> {
                               ),
                             ),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12.0)),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
                           ),
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 380.w,
+                        height: 69.h,
+                        child: TextFormField(
+                          controller: _secondaryPhoneController,
+                          textInputAction: TextInputAction.done,
+                          textDirection: TextDirection.ltr,
+                          keyboardType: TextInputType.number,
+                          cursorColor: Theme.of(context).primaryColor,
+                          decoration: InputDecoration(
+                            hintText: 'secondaryPhone'.tr,
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+                              child: Text(
+                                '+966',
+                                style: TextStyle(fontSize: 18.sp),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                20.0, 15.0, 20.0, 15.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                                width: 1.0,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )
@@ -181,19 +213,32 @@ class _EditProfileState extends State<EditProfile> {
             left: 0,
             right: 0,
             bottom: 50.h,
-            child: GetBuilder<ProfileController>(
+            child: GetBuilder<ContactsController>(
               builder: (controller) => controller.loading
                   ? const LoadingWidget()
-                  : GradientButton('save'.tr, () {
-                      if (_nameController.text.length == 0) {
-                        showToast('enterName'.tr);
+                  : GradientButton('add'.tr, () {
+                      if (_nameController.text.length == 0 ||
+                          _primaryPhoneController.text.length == 0) {
+                        showToast('enterFields'.tr);
                       } else {
-                        controller.updateUser(
-                          name: _nameController.text,
-                          email: _emailController.text.isEmpty == 0
-                              ? null
-                              : _emailController.text,
-                        );
+                        widget.title == 'addContact'
+                            ? controller.addNewContact(
+                                name: _nameController.text,
+                                countryCode: '+249',
+                                primaryPhone: _primaryPhoneController.text,
+                                secondaryPhone:
+                                    _secondaryPhoneController.text.length == 0
+                                        ? null
+                                        : _secondaryPhoneController.text)
+                            : controller.updateContact(
+                                id: widget.contact?.id ?? 0,
+                                name: _nameController.text,
+                                countryCode: '+249',
+                                primaryPhone: _primaryPhoneController.text,
+                                secondaryPhone:
+                                    _secondaryPhoneController.text.length == 0
+                                        ? null
+                                        : _secondaryPhoneController.text);
                       }
                     }),
             ),
