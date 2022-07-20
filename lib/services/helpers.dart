@@ -3,8 +3,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
+import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
 import 'package:logistic/data/repository/contacts_repo.dart';
+import 'package:logistic/data/repository/zone_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
@@ -19,12 +21,14 @@ Future initControllers() async {
   //Repositories
   Get.put(AuthRepo());
   Get.put(ContactsRepo());
+  Get.put(ZoneRepo());
 
   // Controller
   Get.put(LocalizationController());
   Get.put(AuthController());
   Get.put(ProfileController());
   Get.put(ContactsController());
+  Get.put(ZoneController());
   Get.put(CreateOrderController());
 }
 

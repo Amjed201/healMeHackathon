@@ -1,20 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/zone_controller.dart';
+import 'package:logistic/data/models/city.dart';
+import 'package:logistic/data/models/region.dart';
 
 class CreateOrderController extends GetxController {
+  final zoneController = Get.find<ZoneController>();
+
   List<DropdownMenuItem<String>> paymentMethods = [
     const DropdownMenuItem(child: Text("Cash"), value: "Cash"),
     const DropdownMenuItem(child: Text("Visa"), value: "Visa"),
   ];
 
-  List<DropdownMenuItem<String>> regions = [
-    const DropdownMenuItem(child: Text("Sudan"), value: "Sdn"),
-    const DropdownMenuItem(child: Text("KSA"), value: "Ksa"),
-  ];
-  List<DropdownMenuItem<String>> cities = [
-    const DropdownMenuItem(child: Text("Khartoum"), value: "KH"),
-    const DropdownMenuItem(child: Text("Medani"), value: "MD"),
-  ];
+  List<DropdownMenuItem<Region>> _regions = [];
+
+  List<DropdownMenuItem<Region>> get regions => _regions;
+
+  set regions(List<DropdownMenuItem<Region>> value) {
+    _regions = value;
+  }
+
+  List<DropdownMenuItem<City>> _cities1 = [];
+
+  List<DropdownMenuItem<City>> get cities1 => _cities1;
+
+  set cities1(List<DropdownMenuItem<City>> value) {
+    _cities1 = value;
+    update();
+  }
+
+  List<DropdownMenuItem<City>> _cities2 = [];
+
+  List<DropdownMenuItem<City>> get cities2 => _cities2;
+
+  set cities2(List<DropdownMenuItem<City>> value) {
+    _cities2 = value;
+    update();
+  }
+
+  getZones() async {
+    await zoneController.getCities();
+    await zoneController.getRegions();
+    updateZonesList();
+  }
+
+  updateZonesList() {
+    List<Region> regionsList = zoneController.regions;
+    List<City> cityList = zoneController.cities;
+
+    regions = [];
+    for (var region in regionsList) {
+      regions.add(
+          DropdownMenuItem(child: Text(region.nameAr ?? ''), value: region));
+    }
+
+    cities1 = [];
+    cities2 = [];
+    for (var city in cityList) {
+      if (_selectedRegion1 != null) {
+        _cities1.addIf(city.regionId == _selectedRegion1?.id,
+            DropdownMenuItem(child: Text(city.nameAr ?? ''), value: city));
+      } else {
+        _cities1
+            .add(DropdownMenuItem(child: Text(city.nameAr ?? ''), value: city));
+      }
+
+      if (_selectedRegion2 != null) {
+        _cities2.addIf(city.regionId == _selectedRegion2?.id,
+            DropdownMenuItem(child: Text(city.nameAr ?? ''), value: city));
+      } else {
+        _cities2
+            .add(DropdownMenuItem(child: Text(city.nameAr ?? ''), value: city));
+      }
+    }
+
+    // _cities = zoneController.g
+  }
 
   List<DropdownMenuItem<String>> vehicles = [
     DropdownMenuItem(
@@ -90,20 +151,20 @@ class CreateOrderController extends GetxController {
     update();
   }
 
-  String? _selectedRegion1 = '';
+  Region? _selectedRegion1;
 
-  String? get selectedRegion1 => _selectedRegion1;
+  Region? get selectedRegion1 => _selectedRegion1;
 
-  set selectedRegion1(String? value) {
+  set selectedRegion1(Region? value) {
     _selectedRegion1 = value;
     update();
   }
 
-  String? _selectedRegion2 = '';
+  Region? _selectedRegion2;
 
-  String? get selectedRegion2 => _selectedRegion2;
+  Region? get selectedRegion2 => _selectedRegion2;
 
-  set selectedRegion2(String? value) {
+  set selectedRegion2(Region? value) {
     _selectedRegion2 = value;
     _autoPickRegion = false;
     update();
@@ -113,20 +174,20 @@ class CreateOrderController extends GetxController {
 
   bool get autoPickRegion => _autoPickRegion;
 
-  String? _selectedCity1 = '';
+  City? _selectedCity1;
 
-  String? get selectedCity1 => _selectedCity1;
+  City? get selectedCity1 => _selectedCity1;
 
-  set selectedCity1(String? value) {
+  set selectedCity1(City? value) {
     _selectedCity1 = value;
     update();
   }
 
-  String? _selectedCity2 = '';
+  City? _selectedCity2;
 
-  String? get selectedCity2 => _selectedCity2;
+  City? get selectedCity2 => _selectedCity2;
 
-  set selectedCity2(String? value) {
+  set selectedCity2(City? value) {
     _selectedCity2 = value;
     _autoPickCity = false;
     update();

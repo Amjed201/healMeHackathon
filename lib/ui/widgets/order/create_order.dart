@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logistic/data/models/city.dart';
+import 'package:logistic/data/models/region.dart';
 import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
 import 'package:logistic/ui/widgets/global/global_text_form.dart';
@@ -52,9 +54,13 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: DropdownButtonFormField(
+                    child: DropdownButtonFormField<Region>(
+                      onTap:(){
+                        print('pressssssssssssssssed');
+                        controller.selectedCity1=null;
+                      } ,
                       items: controller.regions,
-                      value: controller.selectedRegion1!.isNotEmpty
+                      value: controller.selectedRegion1 != null
                           ? controller.selectedRegion1
                           : null,
                       hint: Text(
@@ -64,18 +70,13 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                           color: Colors.grey,
                         ),
                       ),
-                      onChanged: (String? newValue) {
-                        controller.selectedRegion1 = newValue ?? '';
-                        controller.autoPickRegion
-                            ? controller.selectedRegion2 = newValue ?? ''
-                            : null;
+                      onChanged: (Region? newValue) {
+                        controller.selectedRegion1 = newValue;
+                        if (controller.autoPickRegion) {
+                          controller.selectedRegion2 = newValue;
+                        }
+                        controller.updateZonesList();
                       },
-                      // validator: (value) {
-                      //   if (value == null) {
-                      //     return 'Please choose a payment method';
-                      //   }
-                      //   return null;
-                      // },
                       decoration: InputDecoration(
                         fillColor: const Color(0xfff8f7fb),
                         filled: true,
@@ -96,30 +97,24 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: DropdownButtonFormField(
-                      items: controller.cities,
-                      value: controller.selectedCity1!.isNotEmpty
-                          ? controller.selectedCity1
-                          : null,
+                    child: DropdownButtonFormField<City>(
+                      items:
+                          controller.cities1 == null || controller.cities1 == []
+                              ? []
+                              : controller.cities1,
+                      value: controller.selectedCity1 == null
+                          ? null
+                          : controller.selectedCity1,
                       hint: Text(
-                        "chooseRegion".tr,
+                        "chooseCity".tr,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.grey,
                         ),
                       ),
-                      onChanged: (String? newValue) {
-                        controller.selectedCity1 = newValue ?? '';
-                        controller.autoPickCity
-                            ? controller.selectedCity2 = newValue ?? ''
-                            : null;
+                      onChanged: (City? newValue) {
+                        controller.selectedCity1 = newValue;
                       },
-                      // validator: (value) {
-                      //   if (value == null) {
-                      //     return 'Please choose a payment method';
-                      //   }
-                      //   return null;
-                      // },
                       decoration: InputDecoration(
                         fillColor: const Color(0xfff8f7fb),
                         filled: true,
@@ -161,9 +156,13 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: DropdownButtonFormField(
+                    child: DropdownButtonFormField<Region>(
+                      onTap:(){
+                        print('pressssssssssssssssed');
+                        controller.selectedCity2=null;
+                      } ,
                       items: controller.regions,
-                      value: controller.selectedRegion2!.isNotEmpty
+                      value: controller.selectedRegion2 != null
                           ? controller.selectedRegion2
                           : null,
                       hint: Text(
@@ -173,15 +172,10 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                           color: Colors.grey,
                         ),
                       ),
-                      onChanged: (String? newValue) {
-                        controller.selectedRegion2 = newValue ?? '';
+                      onChanged: (Region? newValue) {
+                        controller.selectedRegion2 = newValue;
+                        controller.updateZonesList();
                       },
-                      // validator: (value) {
-                      //   if (value == null) {
-                      //     return 'Please choose a payment method';
-                      //   }
-                      //   return null;
-                      // },
                       decoration: InputDecoration(
                         fillColor: const Color(0xfff8f7fb),
                         filled: true,
@@ -202,27 +196,24 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    child: DropdownButtonFormField(
-                      items: controller.cities,
-                      value: controller.selectedCity2!.isNotEmpty
-                          ? controller.selectedCity2
-                          : null,
+                    child: DropdownButtonFormField<City>(
+                      items:
+                          controller.cities2 == []
+                              ? []
+                              : controller.cities2,
+                      value: controller.selectedCity2 == null
+                          ? null
+                          : controller.selectedCity2,
                       hint: Text(
-                        "chooseRegion".tr,
+                        "chooseCity".tr,
                         style: TextStyle(
                           fontSize: 13.sp,
                           color: Colors.grey,
                         ),
                       ),
-                      onChanged: (String? newValue) {
-                        controller.selectedCity2 = newValue ?? '';
+                      onChanged: (City? newValue) {
+                        controller.selectedCity2 = newValue;
                       },
-                      // validator: (value) {
-                      //   if (value == null) {
-                      //     return 'Please choose a payment method';
-                      //   }
-                      //   return null;
-                      // },
                       decoration: InputDecoration(
                         fillColor: const Color(0xfff8f7fb),
                         filled: true,
