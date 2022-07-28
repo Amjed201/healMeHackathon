@@ -7,6 +7,7 @@ import 'package:logistic/data/models/city.dart';
 import 'package:logistic/data/models/country.dart';
 import 'package:logistic/data/models/region.dart';
 import 'package:logistic/data/models/town.dart';
+import 'package:logistic/data/models/vehicle.dart';
 import 'package:logistic/data/repository/zone_repo.dart';
 import 'package:logistic/services/localStorage.dart';
 
@@ -49,6 +50,13 @@ class ZoneController extends GetxController {
     update();
   }
 
+  List<Vehicle> _vehicles = [];
+  List<Vehicle> get vehicles => _vehicles;
+  set vehicles(List<Vehicle> value) {
+    _vehicles = value;
+    update();
+  }
+
   Future<List<Region>> getRegions() async {
     _loading = true;
     update();
@@ -82,4 +90,41 @@ class ZoneController extends GetxController {
     update();
     return _cities;
   }
+
+
+  ///Vehicles
+
+  Future<List<Vehicle>> getVehicles() async {
+    _loading = true;
+    update();
+    http.Response response = await
+    zoneRepo.getVehicles();
+    if (response.statusCode == 200) {
+      List dataList = json.decode(response.body);
+      _vehicles = dataList.map((e) => Vehicle.fromJson(e)).toList();
+      _loading = false;
+      update();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    _loading = false;
+    update();
+    return _vehicles;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

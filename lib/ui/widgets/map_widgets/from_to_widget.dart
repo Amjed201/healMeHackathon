@@ -14,7 +14,7 @@ class FromTo extends StatelessWidget {
         top: 18.h,
         bottom: withDriverDetails ? 0 : 18.h,
       ),
-      height: withDriverDetails ? 215.h : 150.h,
+      // height: withDriverDetails ? 215.h : 150.h,
       width: 382.w,
       decoration: BoxDecoration(
         color: Colors.white,

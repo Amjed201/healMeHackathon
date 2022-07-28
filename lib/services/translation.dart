@@ -124,6 +124,9 @@ class LocaleString extends Translations {
           "addedSuccess": "Contact added successfuly",
           "add": "Add",
           "enterFields": "Please enter all fields",
+          "calculatePrice": "Calculating Price",
+          "estPrice": "Estimated Price",
+
         },
         //ARABIC LANGUAGE
         'ar_AR': {
@@ -231,7 +234,6 @@ class LocaleString extends Translations {
           "recent": "الاحدث",
           "bestSeller": "الأفضل مبيعًا",
           "seeAll": "عرض الكل",
-          "sdg": "جنيه",
           "availableOffers": "العروض المتاحة",
           "terms": "شروط الاستخدام",
           "offerContent": "تفاصيل العرض",
@@ -261,6 +263,8 @@ class LocaleString extends Translations {
           "addedSuccess": "تمت الاضافة بنجاح",
           "add": "اضافة",
           "enterFields": "الرجاء ادخال البيانات",
+          "calculatePrice": "جاري حساب السعر",
+          "estPrice": "السعر التقريبي",
         },
       };
 }

@@ -6,6 +6,7 @@ import 'package:logistic/controllers/profile_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
 import 'package:logistic/data/repository/contacts_repo.dart';
+import 'package:logistic/data/repository/order_repo.dart';
 import 'package:logistic/data/repository/zone_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ Future initControllers() async {
   Get.put(AuthRepo());
   Get.put(ContactsRepo());
   Get.put(ZoneRepo());
+  Get.put(OrderRepo());
 
   // Controller
   Get.put(LocalizationController());

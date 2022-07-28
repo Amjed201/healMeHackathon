@@ -58,7 +58,6 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: DropdownButtonFormField<Region>(
                       onTap: () {
-                        print('pressssssssssssssssed');
                         controller.selectedCity1 = null;
                       },
                       items: controller.regions,
@@ -450,13 +449,15 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   GradientButton(
                     'confirmOrder'.tr,
                     () async {
-                      Get.back();
-                      await Future.delayed(
-                        const Duration(milliseconds: 300),
-                      );
+                      // Get.back();
                       Get.to(
                         () => const NewOrderMap(),
                       );
+                      await Future.delayed(
+                        const Duration(milliseconds: 500),
+                      );
+                      controller.calculateVehiclePrice(
+                          vehicleId: 2, distance: '100');
                     },
                   ),
                   SizedBox(

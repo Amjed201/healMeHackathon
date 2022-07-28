@@ -34,7 +34,7 @@ class _NewOrderMapState extends State<NewOrderMap> {
     // TODO: implement initState
     super.initState();
     Get.find<CreateOrderController>().selectedVehicle =
-        Get.find<CreateOrderController>().vehicles.first.value;
+        Get.find<CreateOrderController>().vehiclesDropdownList.first.value;
   }
 
   @override

@@ -5,6 +5,11 @@ import 'package:http/http.dart' as http;
 class OrderRepo {
   final apiClient = Get.find<ApiClient>();
 
+  Future<http.Response> calculatePrice(
+      {required int vehicleId, required String distance}) async {
+    return await apiClient.get('price-range/calculate/$vehicleId/$distance');
+  }
+
   Future<http.Response> createOrder(
       {required String countryCode,
       required String phone,

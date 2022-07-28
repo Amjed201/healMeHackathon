@@ -17,8 +17,13 @@ class ZoneRepo {
     return await apiClient.get('city');
   }
 
-
   Future<http.Response> getAllTowns() async {
     return await apiClient.get('town');
+  }
+
+  ///Vehicles
+
+  Future<http.Response> getVehicles() async {
+    return await apiClient.get('vehicle-type');
   }
 }

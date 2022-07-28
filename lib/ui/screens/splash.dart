@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     checkUser();
 
-    Get.find<CreateOrderController>().getZones();
+    Get.find<CreateOrderController>().getZonesAndVehicles();
     Get.find<ContactsController>().getContacts();
   }
 

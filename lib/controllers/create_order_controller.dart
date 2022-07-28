@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/zone_controller.dart';
+import 'package:logistic/data/api/api_checker.dart';
 import 'package:logistic/data/models/city.dart';
 import 'package:logistic/data/models/region.dart';
+import 'package:http/http.dart' as http;
+import 'package:logistic/data/models/vehicle.dart';
+import 'package:logistic/data/repository/order_repo.dart';
 
 class CreateOrderController extends GetxController {
+  final orderRepo = Get.find<OrderRepo>();
   final zoneController = Get.find<ZoneController>();
 
   List<DropdownMenuItem<String>> paymentMethods = [
@@ -38,10 +45,32 @@ class CreateOrderController extends GetxController {
     update();
   }
 
-  getZones() async {
+  getZonesAndVehicles() async {
     await zoneController.getCities();
     await zoneController.getRegions();
+    await zoneController.getVehicles();
+
     updateZonesList();
+    setVehiclesDropdown();
+  }
+
+  setVehiclesDropdown() {
+    List<Vehicle> vehicles = Get.find<ZoneController>().vehicles;
+    for (var vehicle in vehicles) {
+      vehiclesDropdownList.add(DropdownMenuItem(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(vehicle.vehicleNameEn ?? ''),
+              SizedBox(
+                height: 40,
+                width: 76,
+                child: Image.asset('assets/images/car_placeholder.png'),
+              ),
+            ],
+          ),
+          value: vehicle));
+    }
   }
 
   updateZonesList() {
@@ -73,91 +102,45 @@ class CreateOrderController extends GetxController {
             .add(DropdownMenuItem(child: Text(city.nameAr ?? ''), value: city));
       }
     }
-
-    // _cities = zoneController.g
   }
 
-  List<DropdownMenuItem<String>> vehicles = [
-    DropdownMenuItem(
-        child: Row(
-          children: [
-            SizedBox(
-              height: 52,
-              width: 76,
-              child: Image.asset('assets/images/car_placeholder.png'),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Van'.tr,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-                Text(
-                  'Van'.tr,
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        value: "Van"),
-    DropdownMenuItem(
-        child: Row(
-          children: [
-            SizedBox(
-              height: 52,
-              width: 76,
-              child: Image.asset('assets/images/car_placeholder.png'),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Column(
-              children: [
-                Text(
-                  'Lorry'.tr,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-                Text(
-                  'Lorry'.tr,
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        value: "Lorry")
-  ];
+  List<DropdownMenuItem<Vehicle>> _vehiclesDropdownList = [];
 
-  String? _selectedVehicle = '';
-  String? get selectedVehicle => _selectedVehicle;
-  set selectedVehicle(String? value) {
+  List<DropdownMenuItem<Vehicle>> get vehiclesDropdownList =>
+      _vehiclesDropdownList;
+
+  set vehiclesDropdownList(List<DropdownMenuItem<Vehicle>> value) {
+    _vehiclesDropdownList = value;
+  }
+
+  Vehicle? _selectedVehicle;
+
+  Vehicle? get selectedVehicle => _selectedVehicle;
+
+  set selectedVehicle(Vehicle? value) {
     _selectedVehicle = value;
     // update();
   }
 
+  changeVehicle(Vehicle vehicle) {
+    selectedVehicle = vehicle;
+    update();
+    calculateVehiclePrice(vehicleId: vehicle.id ?? 0, distance: '40');
+  }
+
   Region? _selectedRegion1;
+
   Region? get selectedRegion1 => _selectedRegion1;
+
   set selectedRegion1(Region? value) {
     _selectedRegion1 = value;
     update();
   }
 
   Region? _selectedRegion2;
+
   Region? get selectedRegion2 => _selectedRegion2;
+
   set selectedRegion2(Region? value) {
     _selectedRegion2 = value;
     _autoPickRegion = false;
@@ -237,8 +220,29 @@ class CreateOrderController extends GetxController {
 
   ///////////////////////////////////////////////////////////////////////////////////////
 
-  createOrder(){}
+  bool _loading = false;
 
+  bool get loading => _loading;
 
+  String? _price;
 
+  String? get price => _price;
+
+  void calculateVehiclePrice(
+      {required int vehicleId, required String distance}) async {
+    _loading = true;
+    update();
+    http.Response response = await orderRepo.calculatePrice(
+        vehicleId: vehicleId, distance: distance);
+    Map<String, dynamic> responseMap = json.decode(response.body);
+    if (response.statusCode == 200) {
+      _price = responseMap["price"].toString();
+      _loading = false;
+      update();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    _loading = false;
+    update();
+  }
 }
