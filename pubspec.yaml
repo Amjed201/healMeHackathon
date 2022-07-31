@@ -38,7 +38,7 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   auto_size_text:
   get: ^4.6.5
-  google_maps_flutter: ^2.0.9
+  google_maps_flutter: ^2.1.10
   location: ^4.4.0
   fluttertoast: ^8.0.8
   http:
@@ -72,7 +72,7 @@ dependencies:
   firebase_messaging_platform_interface: 3.1.6
   sliding_up_panel: ^2.0.0+1
   modal_bottom_sheet: ^2.0.1
-
+  flutter_google_places: ^0.3.0
 
 
 dev_dependencies:
