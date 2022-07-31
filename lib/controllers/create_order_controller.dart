@@ -219,6 +219,7 @@ class CreateOrderController extends GetxController {
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////
+  ///price calculation
 
   bool _loading = false;
 
@@ -245,4 +246,8 @@ class CreateOrderController extends GetxController {
     _loading = false;
     update();
   }
+
+
+
+
 }

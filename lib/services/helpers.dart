@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logistic/controllers/Location_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
@@ -32,6 +33,7 @@ Future initControllers() async {
   Get.put(ContactsController());
   Get.put(ZoneController());
   Get.put(CreateOrderController());
+  Get.put(LocationController());
 }
 
 void showToast(String msg, {bool isError = false}) => Fluttertoast.showToast(

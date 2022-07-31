@@ -4,8 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logistic/ui/screens/orders/my_orders.dart';
 import 'package:logistic/ui/screens/notification.dart';
 import 'package:logistic/ui/screens/profile/my_profile_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:get/get.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 // ignore: must_be_immutable
 class TabsScreen extends StatefulWidget {
