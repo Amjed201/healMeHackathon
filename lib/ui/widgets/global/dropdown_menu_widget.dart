@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/create_order_controller.dart';
 
 class DropDownWidget extends StatelessWidget {
   final List<DropdownMenuItem<String>> list;
   final String? label;
   final double? padding;
+
   const DropDownWidget({Key? key, required this.list, this.label, this.padding})
       : super(key: key);
 
@@ -22,7 +24,9 @@ class DropDownWidget extends StatelessWidget {
             color: Colors.grey,
           ),
         ),
-        onChanged: (String? newValue) {},
+        onChanged: (String? newValue) {
+          Get.find<CreateOrderController>().selectedPayment = newValue ?? '';
+        },
         validator: (value) {
           if (value == null) {
             return 'Please choose a payment method';

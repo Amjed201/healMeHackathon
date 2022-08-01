@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -34,9 +35,11 @@ class FromTo extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Get.to(() => PickLocation(
-                              isEndLocation: false,
-                            ));
+                        // Get.to(() => PickLocation(
+                        //       isEndLocation: false,
+                        //     ));
+                        Get.find<LocationController>()
+                            .pickLocation(context, isStartLocation: true);
                       },
                       child: const StartLocationWidget()),
                   !controller.startLocationPicked
@@ -52,7 +55,13 @@ class FromTo extends StatelessWidget {
                           ? SizedBox(
                               height: 0.h,
                             )
-                          : const EndLocationWidget()
+                          : InkWell(
+                              onTap: () {
+                                Get.find<LocationController>().pickLocation(
+                                    context,
+                                    isStartLocation: false);
+                              },
+                              child: const EndLocationWidget())
                 ],
               ),
             ),
@@ -158,22 +167,33 @@ class StartLocationWidget extends StatelessWidget {
         SizedBox(
           width: 20.w,
         ),
-        Column(
-          children: [
-            Text(
-              "completeInfo".tr,
-              style: TextStyle(
-                fontSize: 12.sp,
-              ),
-            ),
-            Text(
-              "completeInfo".tr,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: Colors.grey,
-              ),
-            ),
-          ],
+        GetBuilder<LocationController>(
+          builder: (controller) => controller.startLocationName != ''
+              ? Expanded(
+                  child: AutoSizeText(
+                    controller.startLocationName,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                )
+              : Column(
+                  children: [
+                    Text(
+                      "pick start".tr,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                    Text(
+                      "location".tr,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ],
     );
@@ -213,22 +233,33 @@ class EndLocationWidget extends StatelessWidget {
         SizedBox(
           width: 20.w,
         ),
-        Column(
-          children: [
-            Text(
-              "completeInfo".tr,
-              style: TextStyle(
-                fontSize: 12.sp,
-              ),
-            ),
-            Text(
-              "completeInfo".tr,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: Colors.grey,
-              ),
-            ),
-          ],
+        GetBuilder<LocationController>(
+          builder: (controller) => controller.endLocationName != ''
+              ? Expanded(
+            child: AutoSizeText(
+                    controller.endLocationName,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
+                  ),
+              )
+              : Column(
+                  children: [
+                    Text(
+                      "pick end".tr,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                    Text(
+                      "location".tr,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ],
     );

@@ -8,8 +8,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:logistic/controllers/Location_controller.dart';
 import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
+import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/orders/requests_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
@@ -76,12 +78,13 @@ class _NewOrderMapState extends State<NewOrderMap> {
               SizedBox(
                 height: 20.h,
               ),
-              GradientButton(
-                'continue'.tr,
-                () => Get.to(
-                  () => const RequestScreen(),
-                ),
-              ),
+              GradientButton('continue'.tr,
+                  () => Get.find<CreateOrderController>().sendOrder()
+
+                  // Get.to(
+
+                  // () => const RequestScreen(),
+                  ),
               SizedBox(
                 height: 30.h,
               ),

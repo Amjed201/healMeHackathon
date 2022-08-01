@@ -8,6 +8,7 @@ import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/data/models/city.dart';
 import 'package:logistic/data/models/contact.dart';
 import 'package:logistic/data/models/region.dart';
+import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
 import 'package:logistic/ui/widgets/global/global_text_form.dart';
@@ -49,7 +50,6 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                           color: Colors.grey,
                         ),
                       ],
-
                     ),
                   ),
                   SizedBox(
@@ -450,15 +450,24 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   GradientButton(
                     'confirmOrder'.tr,
                     () async {
-                      // Get.back();
-                      Get.to(
-                        () => const NewOrderMap(),
-                      );
-                      await Future.delayed(
-                        const Duration(milliseconds: 500),
-                      );
-                      controller.calculateVehiclePrice(
-                          vehicleId: 2, distance: '100');
+                      if (controller.selectedCity1 == null ||
+                          controller.selectedCity2 == null ||
+                          controller.selectedRegion1 == null ||
+                          controller.selectedRegion2 == null ||
+                          controller.selectedPayment == null ||
+                          controller.startTime == null ||
+                          controller.startDate == null) {
+                        showToast('الرجاء ملأ الحقول ');
+                      } else {
+                        Get.to(
+                          () => const NewOrderMap(),
+                        );
+                        await Future.delayed(
+                          const Duration(milliseconds: 500),
+                        );
+                        controller.calculateVehiclePrice(
+                            vehicleId: 2, distance: '100');
+                      }
                     },
                   ),
                   SizedBox(

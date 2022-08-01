@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/Location_controller.dart';
+import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/api/api_checker.dart';
 import 'package:logistic/data/models/city.dart';
@@ -9,6 +11,9 @@ import 'package:logistic/data/models/region.dart';
 import 'package:http/http.dart' as http;
 import 'package:logistic/data/models/vehicle.dart';
 import 'package:logistic/data/repository/order_repo.dart';
+import 'package:logistic/services/helpers.dart';
+import 'package:logistic/services/localStorage.dart';
+import 'package:logistic/ui/screens/tabs_screen.dart';
 
 class CreateOrderController extends GetxController {
   final orderRepo = Get.find<OrderRepo>();
@@ -19,6 +24,21 @@ class CreateOrderController extends GetxController {
     const DropdownMenuItem(child: Text("Visa"), value: "Visa"),
   ];
 
+  String? _selectedPayment;
+
+  set selectedPayment(String? value) {
+    _selectedPayment = value;
+  }
+
+  String _orderNotes = '';
+
+  String get orderNotes => _orderNotes;
+
+  set orderNotes(String value) {
+    _orderNotes = value;
+  }
+
+  String? get selectedPayment => _selectedPayment;
   List<DropdownMenuItem<Region>> _regions = [];
 
   List<DropdownMenuItem<Region>> get regions => _regions;
@@ -55,7 +75,9 @@ class CreateOrderController extends GetxController {
   }
 
   setVehiclesDropdown() {
-    List<Vehicle> vehicles = Get.find<ZoneController>().vehicles;
+    List<Vehicle> vehicles = Get
+        .find<ZoneController>()
+        .vehicles;
     for (var vehicle in vehicles) {
       vehiclesDropdownList.add(DropdownMenuItem(
           child: Row(
@@ -201,7 +223,7 @@ class CreateOrderController extends GetxController {
       final TimeOfDay? timePicked = await showTimePicker(
           context: context,
           initialTime:
-              TimeOfDay(hour: datePicked.hour, minute: datePicked.minute));
+          TimeOfDay(hour: datePicked.hour, minute: datePicked.minute));
       if (timePicked != null) {
         _startTime = timePicked;
         update();
@@ -247,7 +269,52 @@ class CreateOrderController extends GetxController {
     update();
   }
 
+  ////////////////////////////////////
 
+  void sendOrder() async {
+    print('ddddddddddddddddddddddddddd');
+    LocationController location = Get.find<LocationController>();
 
+    _loading = true;
+    update();
 
+    http.Response response = await orderRepo.createOrder(
+        token: Get.find<LocalStorage>().getToken()!,
+        pickupTime: '2020-01-01T00:00:00.000Z',
+        paymentType:
+        _selectedPayment == 'Cash' ? 'CashOnDropOff' : 'CreditCard',
+        pickupCityId: _selectedCity1?.id,
+        pickupRegionId: _selectedRegion1?.id,
+        dropOffCityId: _selectedCity2?.id,
+        dropOffRegionId: selectedRegion2?.id,
+
+        ///make contact id optional
+        contactId: Get
+            .find<ContactsController>()
+            .selectedContact == null
+            ? 1
+            : Get
+            .find<ContactsController>()
+            .selectedContact
+            ?.id!,
+
+        ///make details optional
+        details:
+        detailsController.text == 'empty' ? '' : detailsController.text,
+        pickupLat: location.startLocationLatLng?.latitude.toString(),
+        pickupLng: location.startLocationLatLng?.longitude.toString(),
+        dropOffLng: location.endLocationLatLng?.longitude.toString(),
+        dropOffLat: location.endLocationLatLng?.latitude.toString(),
+        vehicleType: _selectedVehicle?.id);
+    if (response.statusCode == 200) {
+      _loading = false;
+      update();
+      showToast('addedSuccess'.tr);
+      Get.offAll(() => TabsScreen());
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    _loading = false;
+    update();
+  }
 }

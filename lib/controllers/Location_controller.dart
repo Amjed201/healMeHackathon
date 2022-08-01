@@ -4,8 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'dart:io' show Platform;
+import 'package:logistic/services/helpers.dart';
 
 class LocationController extends GetxController {
   bool _startLocationPicked = false;
@@ -16,9 +17,26 @@ class LocationController extends GetxController {
 
   bool get endLocationPicked => _endLocationPicked;
 
+  String _startLocationName = '';
+
+  String get startLocationName => _startLocationName;
+
+  LatLng? _startLocationLatLng;
+
+  LatLng? get startLocationLatLng => _startLocationLatLng;
+
+  LatLng? _endLocationLatLng;
+
+  LatLng? get endLocationLatLng => _endLocationLatLng;
+
+  String _endLocationName = '';
+
+  String get endLocationName => _endLocationName;
+
   final kGoogleApiKey = "AIzaSyCgBcmRxPDyddm0cL8jqRm9ZMGKRtFpw78";
 
-  void pickStartLocation(BuildContext context) async {
+  void pickLocation(BuildContext context,
+      {required bool isStartLocation}) async {
     Prediction? p = await PlacesAutocomplete.show(
         offset: 0,
         radius: 1000,
@@ -32,11 +50,33 @@ class LocationController extends GetxController {
         language: "en",
         components: [Component(Component.country, "sa")]);
 
-    displayPrediction(p);
-    print(p?.description);
-
-    _startLocationPicked = _startLocationPicked;
-    update();
+    ///get LatLng
+    GoogleMapsPlaces _places = GoogleMapsPlaces(
+      apiKey: kGoogleApiKey,
+    );
+    if (p != null) {
+      if (isStartLocation) {
+        _startLocationName = p.description ?? '';
+        _startLocationPicked = true;
+        update();
+        PlacesDetailsResponse detail =
+            await _places.getDetailsByPlaceId(p.placeId ?? '');
+        final lat = detail.result.geometry?.location.lat;
+        final lng = detail.result.geometry?.location.lng;
+        LatLng latLng = LatLng(lat!, lng!);
+        _startLocationLatLng = latLng;
+      } else {
+        _endLocationName = p.description ?? '';
+        _endLocationPicked = true;
+        update();
+        PlacesDetailsResponse detail =
+            await _places.getDetailsByPlaceId(p.placeId ?? '');
+        final lat = detail.result.geometry?.location.lat;
+        final lng = detail.result.geometry?.location.lng;
+        LatLng latLng = LatLng(lat!, lng!);
+        _endLocationLatLng = latLng;
+      }
+    }
   }
 
   Future<Null> displayPrediction(Prediction? p) async {
@@ -51,12 +91,7 @@ class LocationController extends GetxController {
       final lat = detail.result.geometry?.location.lat;
       final lng = detail.result.geometry?.location.lng;
 
-      Get.snackbar("${p.description} - $lat/$lng", '');
+      showToast("${p.description} - $lat/$lng");
     }
-  }
-
-  void pickEndLocation() {
-    _endLocationPicked = true;
-    update();
   }
 }

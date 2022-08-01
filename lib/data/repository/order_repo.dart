@@ -11,21 +11,50 @@ class OrderRepo {
   }
 
   Future<http.Response> createOrder(
-      {required String countryCode,
-      required String phone,
-      required String otp}) async {
+      {  String? paymentType,
+       int? pickupCityId,
+       int?  pickupRegionId,
+       int? dropOffCityId,
+       int? dropOffRegionId,
+       String? pickupTime = "2020-01-01T00:00:00.000Z",
+       int? contactId,
+       String? details,
+       String? pickupLat,
+       String? pickupLng,
+       String? dropOffLat,
+       String? dropOffLng,
+       int? vehicleType,
+       required String token,
+
+
+      }) async {
     return await apiClient.post('order/create-order', {
-      "paymentType": "cash",
-      "pickupCity": "Khartoum",
-      "pickupTown": "Khartoum",
-      "dropOffCity": "Khartoum",
-      "dropOffTown": "Khartoum",
+      "paymentType": paymentType,
+      "pickupCity": pickupCityId,
+      "pickupRegion": pickupRegionId,
+      "dropOffCity": dropOffCityId,
+      "dropOffRegion": dropOffRegionId,
       "pickupTime": "2020-01-01T00:00:00.000Z",
-      "dropOffContactName": 2,
-      "details": "details",
-      "locationLng": "locationLng",
-      "locationLat": "locationLat",
+      "dropOffContact": contactId,
+      "details": details,
+      "pickupLocationLng": pickupLng,
+      "pickupLocationLat": pickupLat,
+      "dropOffLocationLng": dropOffLng,
+      "dropOffLocationLat": dropOffLat,
       "vehicleType": 1
-    });
+    },token: token);
   }
+  //  "paymentType": "CashOnPickup",
+//   "pickupRegion": 1,
+//   "pickupCity": 1,
+//   "dropOffRegion": 1,
+//   "dropOffCity": 1,
+//   "pickupTime": "2020-01-01T00:00:00.000Z",
+//   "dropOffContact": 1,
+//   "details": "details",
+//   "pickupLocationLng": "locationLng",
+//   "pickupLocationLat": "locationLat",
+//   "dropOffLocationLng": "locationLng",
+//   "dropOffLocationLat": "locationLat",
+//   "vehicleType": 1
 }

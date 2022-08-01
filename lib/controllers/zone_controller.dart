@@ -57,6 +57,7 @@ class ZoneController extends GetxController {
     update();
   }
 
+
   Future<List<Region>> getRegions() async {
     _loading = true;
     update();
