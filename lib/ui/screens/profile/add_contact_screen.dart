@@ -223,6 +223,7 @@ class _AddContactState extends State<AddContact> {
                       } else {
                         widget.title == 'addContact'
                             ? controller.addNewContact(
+                          addFromOrder: false,
                                 name: _nameController.text,
                                 countryCode: '+249',
                                 primaryPhone: _primaryPhoneController.text,

@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -17,9 +18,11 @@ import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/map_widgets/vechial_details_on_map.dart';
-import 'package:logistic/ui/widgets/notificationButton.dart';
-import 'package:logistic/ui/widgets/settingsButton.dart';
-import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'dart:collection';
+import 'dart:collection';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:flutter/services.dart';
 
 class NewOrderMap extends StatefulWidget {
   const NewOrderMap({Key? key}) : super(key: key);
@@ -43,55 +46,80 @@ class _NewOrderMapState extends State<NewOrderMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SafeArea(
-          child: Stack(
-        children: [
-          GoogleMap(
-            initialCameraPosition: const CameraPosition(
-              target: LatLng(
-                15.5594,
-                32.5549,
-              ),
-              zoom: 18,
-            ),
-            zoomControlsEnabled: false,
-            myLocationButtonEnabled: false,
-            myLocationEnabled: false,
-            padding: EdgeInsets.symmetric(vertical: 240.h),
-            // markers: _markers,
-            onMapCreated: (GoogleMapController controller) {
-              // _controller = controller;
-              // mapController.loading = false;
-              // setMarker();
-            },
-          ),
-          Column(
-            children: [
-              SizedBox(
-                height: 50.h,
-              ),
-              const FromTo(
-                withDriverDetails: false,
-              ),
-              const Spacer(),
-              VechialDetailsOnMap(),
-              SizedBox(
-                height: 20.h,
-              ),
-              GradientButton('continue'.tr,
-                  () => Get.find<CreateOrderController>().sendOrder()
-
-                  // Get.to(
-
-                  // () => const RequestScreen(),
+      body: GetBuilder<LocationController>(
+        builder: (controller) => SafeArea(
+            child: Stack(
+          children: [
+            GoogleMap(
+                initialCameraPosition: const CameraPosition(
+                  target: LatLng(
+                    15.5594,
+                    32.5549,
                   ),
-              SizedBox(
-                height: 30.h,
-              ),
-            ],
-          ),
-        ],
-      )),
+                  zoom: 18,
+                ),
+                onLongPress: (LatLng? position) {
+                  if (controller.startLocationLatLng == null) {
+                    controller.startLocationLatLng = position!;
+                    controller.pickLocation(context, position,
+                        isStartLocation: true);
+
+                    controller.update();
+                  } else {
+                    controller.endLocationLatLng = position!;
+                    controller.pickLocation(context, position,
+                        isStartLocation: false);
+                    controller.update();
+                  }
+                },
+                zoomControlsEnabled: false,
+                myLocationButtonEnabled: false,
+                myLocationEnabled: false,
+                padding: EdgeInsets.symmetric(vertical: 240.h),
+                markers: Set<Marker>.of(controller.markers.values),
+                polylines: Set<Polyline>.of(controller.polylines.values),
+                onMapCreated: _onMapCreated),
+            Column(
+              children: [
+                SizedBox(
+                  height: 50.h,
+                ),
+                const FromTo(
+                  withDriverDetails: false,
+                ),
+                const Spacer(),
+                VechialDetailsOnMap(),
+                SizedBox(
+                  height: 20.h,
+                ),
+                GradientButton('continue'.tr, () {
+                  if (Get.find<LocationController>().startLocationPicked ==
+                          false ||
+                      Get.find<LocationController>().endLocationPicked ==
+                          false) {
+                    showToast('اختر الموقع');
+                  } else {
+                    Get.find<CreateOrderController>().sendOrder();
+                  }
+                }),
+                SizedBox(
+                  height: 30.h,
+                ),
+              ],
+            ),
+          ],
+        )),
+      ),
     );
+  }
+
+  void _onMapCreated(GoogleMapController controller) async {
+    Get.find<LocationController>().mapController = controller;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Get.find<LocationController>().mapController.dispose();
   }
 }

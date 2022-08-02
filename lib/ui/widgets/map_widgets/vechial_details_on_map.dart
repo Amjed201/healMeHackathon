@@ -62,7 +62,7 @@ class VechialDetailsOnMap extends StatelessWidget {
                     ],
                   )
                 : Text(
-                    '${controller.price} رس ',
+                    '${controller.price??''} رس ',
                     style: TextStyle(
                       fontSize: 25.sp,
                       color: Theme.of(context).secondaryHeaderColor,

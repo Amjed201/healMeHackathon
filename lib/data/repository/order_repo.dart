@@ -6,7 +6,7 @@ class OrderRepo {
   final apiClient = Get.find<ApiClient>();
 
   Future<http.Response> calculatePrice(
-      {required int vehicleId, required String distance}) async {
+      {required int vehicleId, required double distance}) async {
     return await apiClient.get('price-range/calculate/$vehicleId/$distance');
   }
 

@@ -67,7 +67,7 @@ class _PickLocationState extends State<PickLocation> {
             right: 0,
             child: GradientButton(
               'location'.tr,
-              () => Get.find<LocationController>().pickLocation(context,
+              () => Get.find<LocationController>().searchLocation(context,
                   isStartLocation:true),
             ),
           ),

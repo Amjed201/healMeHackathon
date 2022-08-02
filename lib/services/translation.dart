@@ -126,6 +126,9 @@ class LocaleString extends Translations {
           "enterFields": "Please enter all fields",
           "calculatePrice": "Calculating Price",
           "estPrice": "Estimated Price",
+          "pick": "Pick",
+          "startPoint": "Origin point",
+          "endPoint": "Drop Off Price",
 
         },
         //ARABIC LANGUAGE
@@ -265,6 +268,9 @@ class LocaleString extends Translations {
           "enterFields": "الرجاء ادخال البيانات",
           "calculatePrice": "جاري حساب السعر",
           "estPrice": "السعر التقريبي",
+          "pick": "اختر",
+          "startPoint": "نقطة البداية",
+          "endPoint": "نقطة النهاية",
         },
       };
 }

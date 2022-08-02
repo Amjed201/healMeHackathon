@@ -35,11 +35,8 @@ class FromTo extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        // Get.to(() => PickLocation(
-                        //       isEndLocation: false,
-                        //     ));
                         Get.find<LocationController>()
-                            .pickLocation(context, isStartLocation: true);
+                            .searchLocation(context, isStartLocation: true);
                       },
                       child: const StartLocationWidget()),
                   !controller.startLocationPicked
@@ -57,7 +54,7 @@ class FromTo extends StatelessWidget {
                             )
                           : InkWell(
                               onTap: () {
-                                Get.find<LocationController>().pickLocation(
+                                Get.find<LocationController>().searchLocation(
                                     context,
                                     isStartLocation: false);
                               },
@@ -65,68 +62,6 @@ class FromTo extends StatelessWidget {
                 ],
               ),
             ),
-            // SizedBox(
-            //   height: withDriverDetails ? 19.h : 0,
-            // ),
-            // !withDriverDetails
-            //     ? const SizedBox()
-            //     : Container(
-            //       padding: EdgeInsets.symmetric(horizontal: 15.w),
-            //       decoration: BoxDecoration(
-            //         color: Theme.of(context).primaryColor,
-            //         borderRadius: const BorderRadius.only(
-            //           bottomLeft: Radius.circular(10),
-            //           bottomRight: Radius.circular(10),
-            //         ),
-            //       ),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Row(
-            //             children: [
-            //               CircleAvatar(
-            //                 backgroundColor: Colors.grey[300],
-            //                 radius: (43 / 2).h,
-            //                 child: Icon(
-            //                   Icons.person,
-            //                   size: 30.h,
-            //                   color: Colors.grey,
-            //                 ),
-            //               ),
-            //               SizedBox(
-            //                 width: 12.w,
-            //               ),
-            //               Column(
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   Text(
-            //                     'completeInfo'.tr,
-            //                     style: TextStyle(
-            //                       color: Colors.white,
-            //                       fontSize: 12.sp,
-            //                     ),
-            //                   ),
-            //                   Text(
-            //                     'completeInfo'.tr,
-            //                     style: TextStyle(
-            //                       color: Colors.grey[400],
-            //                       fontSize: 12.sp,
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ],
-            //           ),
-            //           Text(
-            //             'completeInfo'.tr,
-            //             style: TextStyle(
-            //               color: Colors.white,
-            //               fontSize: 12.sp,
-            //             ),
-            //           )
-            //         ],
-            //       ),
-            //     ),
           ],
         ),
       ),
@@ -145,7 +80,7 @@ class StartLocationWidget extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(360),
+            borderRadius: BorderRadius.circular(36),
             border: Border.all(
               width: 1.w,
               color: Colors.grey[400]!,
@@ -168,32 +103,17 @@ class StartLocationWidget extends StatelessWidget {
           width: 20.w,
         ),
         GetBuilder<LocationController>(
-          builder: (controller) => controller.startLocationName != ''
-              ? Expanded(
-                  child: AutoSizeText(
-                    controller.startLocationName,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                )
-              : Column(
-                  children: [
-                    Text(
-                      "pick start".tr,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                    Text(
-                      "location".tr,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+          builder: (controller) => Expanded(
+              child: AutoSizeText(
+            controller.startLocationPicked
+                ? controller.startLocationName
+                : 'pick'.tr + '  ' + 'startPoint'.tr,
+            style: TextStyle(
+                fontSize: 12.sp,
+                color: controller.startLocationPicked
+                    ? Colors.black
+                    : Colors.grey[600]),
+          )),
         ),
       ],
     );
@@ -234,32 +154,17 @@ class EndLocationWidget extends StatelessWidget {
           width: 20.w,
         ),
         GetBuilder<LocationController>(
-          builder: (controller) => controller.endLocationName != ''
-              ? Expanded(
-            child: AutoSizeText(
-                    controller.endLocationName,
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                    ),
-                  ),
-              )
-              : Column(
-                  children: [
-                    Text(
-                      "pick end".tr,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                    Text(
-                      "location".tr,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
+          builder: (controller) => Expanded(
+              child: AutoSizeText(
+            controller.endLocationPicked
+                ? controller.endLocationName
+                : 'pick'.tr + '  ' + 'endPoint'.tr,
+            style: TextStyle(
+                fontSize: 12.sp,
+                color: controller.endLocationPicked
+                    ? Colors.black
+                    : Colors.grey[600]),
+          )),
         ),
       ],
     );

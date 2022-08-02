@@ -59,11 +59,14 @@ class ContactsController extends GetxController {
     update();
   }
 
-  void addNewContact(
+  Future<void> addNewContact(
       {required String name,
       required String countryCode,
       required String primaryPhone,
-      String? secondaryPhone}) async {
+      required String? secondaryPhone,
+      required bool addFromOrder,
+
+      }) async {
     _loading = true;
     update();
     http.Response response = await contactsRepo.addNewContact(
@@ -81,8 +84,10 @@ class ContactsController extends GetxController {
     }
     _loading = false;
     update();
-    getContacts();
-    Get.back();
+    if(!addFromOrder) {
+      getContacts();
+      Get.back();
+    }
   }
 
   void updateContact(

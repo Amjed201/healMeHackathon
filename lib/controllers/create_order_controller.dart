@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logistic/controllers/Location_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
@@ -13,6 +15,7 @@ import 'package:logistic/data/models/vehicle.dart';
 import 'package:logistic/data/repository/order_repo.dart';
 import 'package:logistic/services/helpers.dart';
 import 'package:logistic/services/localStorage.dart';
+import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 
 class CreateOrderController extends GetxController {
@@ -75,9 +78,7 @@ class CreateOrderController extends GetxController {
   }
 
   setVehiclesDropdown() {
-    List<Vehicle> vehicles = Get
-        .find<ZoneController>()
-        .vehicles;
+    List<Vehicle> vehicles = Get.find<ZoneController>().vehicles;
     for (var vehicle in vehicles) {
       vehiclesDropdownList.add(DropdownMenuItem(
           child: Row(
@@ -147,7 +148,7 @@ class CreateOrderController extends GetxController {
   changeVehicle(Vehicle vehicle) {
     selectedVehicle = vehicle;
     update();
-    calculateVehiclePrice(vehicleId: vehicle.id ?? 0, distance: '40');
+    calculateVehiclePrice(vehicleId: vehicle.id ?? 0);
   }
 
   Region? _selectedRegion1;
@@ -223,7 +224,7 @@ class CreateOrderController extends GetxController {
       final TimeOfDay? timePicked = await showTimePicker(
           context: context,
           initialTime:
-          TimeOfDay(hour: datePicked.hour, minute: datePicked.minute));
+              TimeOfDay(hour: datePicked.hour, minute: datePicked.minute));
       if (timePicked != null) {
         _startTime = timePicked;
         update();
@@ -240,6 +241,49 @@ class CreateOrderController extends GetxController {
     update();
   }
 
+  void confirmOrder() async {
+    if (_selectedCity1 == null ||
+        _selectedCity2 == null ||
+        _selectedRegion1 == null ||
+        _selectedRegion2 == null ||
+        _selectedPayment == null ||
+        _startTime == null ||
+        _startDate == null ||
+        detailsController.text == '') {
+      showToast('الرجاء ملأ الحقول ');
+    } else {
+      ///add contact first then go to map screen
+      if (_anotherReceiver) {
+        createNewContact();
+      } else {
+        Get.to(() => const NewOrderMap());
+      }
+    }
+  }
+
+  void createNewContact() async {
+    if (reciverController.text.length == 0 ||
+        reciverPhoneController.text.length == 0) {
+      showToast('الرجاء ملأ الحقول ');
+    } else {
+      _loading = true;
+      update();
+      await Get.find<ContactsController>().addNewContact(
+          addFromOrder: true,
+          name: reciverController.text,
+          countryCode: '+249',
+          primaryPhone: reciverPhoneController.text,
+          secondaryPhone: reciverPhoneController2.text.length == 0
+              ? null
+              : reciverPhoneController2.text);
+      _loading = false;
+      update();
+      Get.to(
+        () => const NewOrderMap(),
+      );
+    }
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////////
   ///price calculation
 
@@ -251,12 +295,19 @@ class CreateOrderController extends GetxController {
 
   String? get price => _price;
 
-  void calculateVehiclePrice(
-      {required int vehicleId, required String distance}) async {
+  void calculateVehiclePrice({required int vehicleId}) async {
+    LatLng originLoc = Get.find<LocationController>().startLocationLatLng!;
+    LatLng destinationLoc = Get.find<LocationController>().endLocationLatLng!;
+
+    double distanceInMeters = Geolocator.distanceBetween(originLoc.latitude,
+        originLoc.longitude, destinationLoc.latitude, destinationLoc.longitude);
+
+    print('DIstance is :          $distanceInMeters');
+
     _loading = true;
     update();
     http.Response response = await orderRepo.calculatePrice(
-        vehicleId: vehicleId, distance: distance);
+        vehicleId: vehicleId, distance: distanceInMeters);
     Map<String, dynamic> responseMap = json.decode(response.body);
     if (response.statusCode == 200) {
       _price = responseMap["price"].toString();
@@ -274,33 +325,31 @@ class CreateOrderController extends GetxController {
   void sendOrder() async {
     print('ddddddddddddddddddddddddddd');
     LocationController location = Get.find<LocationController>();
-
+    _startDate = DateTime(_startDate!.year, _startDate!.month, _startDate!.day,
+        _startTime!.hour, _startTime!.minute);
     _loading = true;
     update();
+
+    print(_startDate?.toUtc().toIso8601String());
 
     http.Response response = await orderRepo.createOrder(
         token: Get.find<LocalStorage>().getToken()!,
         pickupTime: '2020-01-01T00:00:00.000Z',
         paymentType:
-        _selectedPayment == 'Cash' ? 'CashOnDropOff' : 'CreditCard',
+            _selectedPayment == 'Cash' ? 'CashOnDropOff' : 'CreditCard',
         pickupCityId: _selectedCity1?.id,
         pickupRegionId: _selectedRegion1?.id,
         dropOffCityId: _selectedCity2?.id,
         dropOffRegionId: selectedRegion2?.id,
 
         ///make contact id optional
-        contactId: Get
-            .find<ContactsController>()
-            .selectedContact == null
+        contactId: Get.find<ContactsController>().selectedContact == null
             ? 1
-            : Get
-            .find<ContactsController>()
-            .selectedContact
-            ?.id!,
+            : Get.find<ContactsController>().selectedContact?.id!,
 
         ///make details optional
         details:
-        detailsController.text == 'empty' ? '' : detailsController.text,
+            detailsController.text == 'empty' ? '' : detailsController.text,
         pickupLat: location.startLocationLatLng?.latitude.toString(),
         pickupLng: location.startLocationLatLng?.longitude.toString(),
         dropOffLng: location.endLocationLatLng?.longitude.toString(),

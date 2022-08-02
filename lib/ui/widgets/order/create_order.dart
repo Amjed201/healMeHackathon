@@ -13,6 +13,7 @@ import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/widgets/global/dropdown_menu_widget.dart';
 import 'package:logistic/ui/widgets/global/global_text_form.dart';
 import 'package:logistic/ui/widgets/global/intermittent_line.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 
 import '../../../controllers/create_order_controller.dart';
 import '../commonButton.dart';
@@ -385,7 +386,7 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                             Center(
                               child: GlobalTextForm(
                                 isEnabled: true,
-                                controller: controller.reciverPhoneController,
+                                controller: controller.reciverPhoneController2,
                                 label: 'reciverPhone2',
                                 color: const Color(0xfff8f7fb),
                                 w: 380.w,
@@ -396,7 +397,7 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                             ),
                           ],
                         )
-                      : SizedBox(),
+                      : const SizedBox(),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: TextFormField(
@@ -447,29 +448,12 @@ class CreateOrderSheet extends GetView<CreateOrderController> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  GradientButton(
-                    'confirmOrder'.tr,
-                    () async {
-                      if (controller.selectedCity1 == null ||
-                          controller.selectedCity2 == null ||
-                          controller.selectedRegion1 == null ||
-                          controller.selectedRegion2 == null ||
-                          controller.selectedPayment == null ||
-                          controller.startTime == null ||
-                          controller.startDate == null) {
-                        showToast('الرجاء ملأ الحقول ');
-                      } else {
-                        Get.to(
-                          () => const NewOrderMap(),
-                        );
-                        await Future.delayed(
-                          const Duration(milliseconds: 500),
-                        );
-                        controller.calculateVehiclePrice(
-                            vehicleId: 2, distance: '100');
-                      }
-                    },
-                  ),
+                  controller.loading
+                      ? const LoadingWidget()
+                      : GradientButton(
+                          'confirmOrder'.tr,
+                          () => controller.confirmOrder(),
+                        ),
                   SizedBox(
                     height: 20.h,
                   ),
