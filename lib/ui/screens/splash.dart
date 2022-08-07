@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
+import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/models/user.dart';
 import 'package:logistic/services/localStorage.dart';
@@ -25,13 +28,14 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     checkUser();
-
     Get.find<CreateOrderController>().getZonesAndVehicles();
     Get.find<ContactsController>().getContacts();
+    Get.find<MyOrdersController>().getOrders();
   }
 
   checkUser() async {
     String? token = Get.find<LocalStorage>().getToken();
+    log(token??'');
     User? user = Get.find<LocalStorage>().getUser();
     await Future.delayed(const Duration(seconds: 2));
     if (token != null) {

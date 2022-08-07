@@ -12,14 +12,14 @@ import 'package:logistic/data/models/city.dart';
 import 'package:logistic/data/models/region.dart';
 import 'package:http/http.dart' as http;
 import 'package:logistic/data/models/vehicle.dart';
-import 'package:logistic/data/repository/order_repo.dart';
+import 'package:logistic/data/repository/create_order_repo.dart';
 import 'package:logistic/services/helpers.dart';
 import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/ui/screens/orders/new_order_map.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 
 class CreateOrderController extends GetxController {
-  final orderRepo = Get.find<OrderRepo>();
+  final orderRepo = Get.find<CreateOrderRepo>();
   final zoneController = Get.find<ZoneController>();
 
   List<DropdownMenuItem<String>> paymentMethods = [

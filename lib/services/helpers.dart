@@ -3,11 +3,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logistic/controllers/Location_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
+import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
 import 'package:logistic/data/repository/contacts_repo.dart';
-import 'package:logistic/data/repository/order_repo.dart';
+import 'package:logistic/data/repository/create_order_repo.dart';
 import 'package:logistic/data/repository/zone_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,8 @@ import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/controllers/localizationController.dart';
 import 'package:logistic/data/api/apiService.dart';
 import 'package:logistic/services/localStorage.dart';
+
+import '../data/repository/orders_repo.dart';
 
 Future initControllers() async {
   await Get.put(LocalStorage()).load();
@@ -24,7 +27,8 @@ Future initControllers() async {
   Get.put(AuthRepo());
   Get.put(ContactsRepo());
   Get.put(ZoneRepo());
-  Get.put(OrderRepo());
+  Get.put(MyOrdersRepo());
+  Get.put(CreateOrderRepo());
 
   // Controller
   Get.put(LocalizationController());
@@ -32,6 +36,7 @@ Future initControllers() async {
   Get.put(ProfileController());
   Get.put(ContactsController());
   Get.put(ZoneController());
+  Get.put(MyOrdersController());
   Get.put(CreateOrderController());
   Get.put(LocationController());
 }

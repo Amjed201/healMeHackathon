@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:logistic/data/api/apiService.dart';
 import 'package:http/http.dart' as http;
 
-class OrderRepo {
+class CreateOrderRepo {
   final apiClient = Get.find<ApiClient>();
 
   Future<http.Response> calculatePrice(

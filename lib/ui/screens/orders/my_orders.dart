@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/my_orders_controller.dart';
+import 'package:logistic/data/models/order.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/order/order_details_on_map.dart';
@@ -71,61 +73,58 @@ class RunningOrdersWidget extends StatefulWidget {
 }
 
 class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(1970, 8),
-        lastDate: DateTime(2023));
-    if (picked != null) {
-      // setState(() {
-      //   birthDate = picked;
-      //   _birthController.text = DateFormat('y-MM-d').format(birthDate!);
-      // });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => const SuspendedAccount(),
-                  );
-                },
-                child: Icon(
-                  Icons.pending_actions,
-                  size: 50,
-                  color: Theme.of(context).focusColor,
+    return GetBuilder<MyOrdersController>(builder: (controller) {
+      return controller.runningOrders.isNotEmpty
+          ? Stack(
+              children: [
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SuspendedAccount(),
+                          );
+                        },
+                        child: Icon(
+                          Icons.pending_actions,
+                          size: 50,
+                          color: Theme.of(context).focusColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        'noCurrentOrders'.tr,
+                        style: TextStyle(color: Theme.of(context).focusColor),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              AutoSizeText(
-                'noCurrentOrders'.tr,
-                style: TextStyle(color: Theme.of(context).focusColor),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 50.h,
-          child: GradientButton(
-            'newOrder'.tr,
-            () => Get.to(
-              () => const CreateOrderSheet(),
-            ),
-          ),
-        ),
-      ],
-    );
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 50.h,
+                  child: GradientButton(
+                    'newOrder'.tr,
+                    () => Get.to(
+                      () => const CreateOrderSheet(),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                Order order = controller.runningOrders[index];
+                return OrderCard(
+                    order: order, withDriverDetails: order.assignedBid != null);
+              },
+              itemCount: controller.runningOrders.length,
+            );
+    });
   }
 }
 
@@ -134,19 +133,279 @@ class HistoryOrdersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: GestureDetector(
-            onTap: () => Get.to(() => const OrderDetailsOnMap()),
-            child: const FromTo(
-              withDriverDetails: true,
+    return GetBuilder<MyOrdersController>(builder: (controller) {
+      return controller.previousOrders.isNotEmpty
+          ? Stack(
+              children: [
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SuspendedAccount(),
+                          );
+                        },
+                        child: Icon(
+                          Icons.pending_actions,
+                          size: 50,
+                          color: Theme.of(context).focusColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        'noCurrentOrders'.tr,
+                        style: TextStyle(color: Theme.of(context).focusColor),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 50.h,
+                  child: GradientButton(
+                    'newOrder'.tr,
+                    () => Get.to(
+                      () => const CreateOrderSheet(),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                Order order = controller.previousOrders[index];
+                return OrderCard(
+                    order: order, withDriverDetails: order.assignedBid != null);
+              },
+              itemCount: controller.previousOrders.length,
+            );
+    });
+  }
+}
+
+class OrderCard extends StatelessWidget {
+  final bool withDriverDetails;
+  final Order order;
+
+  const OrderCard(
+      {Key? key, required this.order, required this.withDriverDetails})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 18.h,
+          bottom: withDriverDetails ? 0 : 18.h,
+        ),
+        height: withDriverDetails ? 215.h : 150.h,
+        width: 382.w,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
             ),
-          ),
-        );
-      },
+          ],
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 15.w,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(360),
+                          border: Border.all(
+                            width: 1.w,
+                            color: Colors.grey[400]!,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 13,
+                          child: CircleAvatar(
+                            backgroundColor:
+                                Theme.of(context).secondaryHeaderColor,
+                            radius: 10.w,
+                            child: CircleAvatar(
+                              radius: 4.w,
+                              backgroundColor: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 1.h),
+                        height: 5.h,
+                        width: 2.w,
+                        color: Colors.grey[400],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 1.h),
+                        height: 5.h,
+                        width: 2.w,
+                        color: Colors.grey[400],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 1.h),
+                        height: 5.h,
+                        width: 2.w,
+                        color: Colors.grey[400],
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 1.h),
+                        height: 5.h,
+                        width: 2.w,
+                        color: Colors.grey[400],
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(360),
+                          border: Border.all(
+                            width: 1.w,
+                            color: Colors.grey[200]!,
+                          ),
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey[200],
+                          radius: 13,
+                          child: CircleAvatar(
+                            radius: 10.w,
+                            backgroundColor: Colors.white,
+                            child: CircleAvatar(
+                              radius: 3.w,
+                              backgroundColor:
+                                  Theme.of(context).secondaryHeaderColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 16.w,
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        order.pickupLocationLat ?? '',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      Text(
+                        "startPoint".tr,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 32.h,
+                      ),
+                      Text(
+                        order.dropOffLocationLat ?? '',
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                        ),
+                      ),
+                      Text(
+                        "endPoint".tr,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: withDriverDetails ? 19.h : 0,
+            ),
+            !withDriverDetails
+                ? const SizedBox()
+                : Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.grey[300],
+                                radius: (43 / 2).h,
+                                child: Icon(
+                                  Icons.person,
+                                  size: 30.h,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 12.w,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'driver name',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                  Text(
+                                    'vehicle'.tr + order.vehicleType.toString(),
+                                    style: TextStyle(
+                                      color: Colors.grey[400],
+                                      fontSize: 12.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Text(
+                            'status'.tr,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12.sp,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+          ],
+        ),
+      ),
     );
   }
 }
