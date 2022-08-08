@@ -77,7 +77,7 @@ class OrderDetailsWidget extends StatelessWidget {
               ),
             ),
             Text(
-              'completeInfo'.tr,
+              'note'.tr,
               style: TextStyle(
                 fontSize: 12.sp,
               ),

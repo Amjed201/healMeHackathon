@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:logistic/data/models/order.dart';
+import 'package:logistic/ui/screens/orders/my_orders.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
@@ -12,7 +14,9 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'order_details_widget.dart';
 
 class OrderDetailsOnMap extends StatefulWidget {
-  const OrderDetailsOnMap({Key? key}) : super(key: key);
+  Order order;
+
+   OrderDetailsOnMap(this.order, {Key? key}) : super(key: key);
 
   @override
   State<OrderDetailsOnMap> createState() => _OrderDetailsOnMapState();
@@ -29,7 +33,7 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: AutoSizeText(
-          'completeInfo'.tr,
+          'orderDetails'.tr,
           style: TextStyle(
             fontSize: 15.sp,
           ),
@@ -41,6 +45,7 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: AutoSizeText(
                 'cancelOrder'.tr,
+                style: TextStyle(color: Colors.red[700]),
               ),
             ),
           ),
@@ -52,7 +57,7 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
             SlidingUpPanel(
               color: Colors.transparent,
               controller: panelController,
-              maxHeight: 560.h,
+              maxHeight: 575.h,
               minHeight: 150.h,
               body: GoogleMap(
                 initialCameraPosition: const CameraPosition(
@@ -151,14 +156,7 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    FromTo(
-                      withDriverDetails: false,
-                    ),
-                  ],
-                ),
+                OrderCard(order: widget.order, withDriverDetails: false)
               ],
             ),
           ],

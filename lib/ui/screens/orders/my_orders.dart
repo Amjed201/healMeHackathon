@@ -122,7 +122,7 @@ class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
                   onTap: () {
                     order.assignedBid == null
                         ? Get.to(() => RequestScreen(order.id!))
-                        : Get.to(() => OrderDetailsOnMap());
+                        : Get.to(() => OrderDetailsOnMap(order));
                   },
                   child: OrderCard(
                       order: order,

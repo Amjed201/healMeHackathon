@@ -35,13 +35,13 @@ class DriverDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'completeInfo'.tr,
+                      'driver name'.tr,
                       style: TextStyle(
                         fontSize: 12.sp,
                       ),
                     ),
                     Text(
-                      'completeInfo'.tr,
+                      'car type'.tr,
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: Colors.grey,
