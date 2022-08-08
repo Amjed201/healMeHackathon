@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logistic/controllers/Location_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
+import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/api/api_checker.dart';
 import 'package:logistic/data/models/city.dart';
@@ -322,12 +323,14 @@ class CreateOrderController extends GetxController {
 
   ////////////////////////////////////
 
+  bool _orderLoading = false;
+  get orderLoading => _orderLoading;
   void sendOrder() async {
     print('ddddddddddddddddddddddddddd');
     LocationController location = Get.find<LocationController>();
     _startDate = DateTime(_startDate!.year, _startDate!.month, _startDate!.day,
         _startTime!.hour, _startTime!.minute);
-    _loading = true;
+    _orderLoading = true;
     update();
 
     print(_startDate?.toUtc().toIso8601String());
@@ -356,14 +359,15 @@ class CreateOrderController extends GetxController {
         dropOffLat: location.endLocationLatLng?.latitude.toString(),
         vehicleType: _selectedVehicle?.id);
     if (response.statusCode == 200) {
-      _loading = false;
+      await Get.find<MyOrdersController>().getRunningOrders();
+      _orderLoading = false;
       update();
-      showToast('addedSuccess'.tr);
+      showToast('addedSuccess'.tr,longerDuration: true);
       Get.offAll(() => TabsScreen());
     } else {
       ApiChecker.checkApi(response);
     }
-    _loading = false;
+    _orderLoading = false;
     update();
   }
 }

@@ -129,6 +129,8 @@ class LocaleString extends Translations {
           "pick": "Pick",
           "startPoint": "Origin point",
           "endPoint": "Drop Off Price",
+          "noBids": "No bids available now",
+
 
         },
         //ARABIC LANGUAGE
@@ -271,6 +273,7 @@ class LocaleString extends Translations {
           "pick": "اختر",
           "startPoint": "نقطة البداية",
           "endPoint": "نقطة النهاية",
+          "noBids": "لا توجد عروض حاليا",
         },
       };
 }

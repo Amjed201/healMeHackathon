@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/data/models/order.dart';
+import 'package:logistic/ui/screens/orders/requests_screen.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/order/order_details_on_map.dart';
@@ -32,35 +33,48 @@ class MyOrders extends StatelessWidget {
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: DefaultTabController(
-        length: 2,
-        child: Column(
-          children: [
-            TabBar(
-              indicatorColor: Theme.of(context).secondaryHeaderColor,
-              labelColor: Theme.of(context).secondaryHeaderColor,
-              unselectedLabelColor: Colors.grey[600],
-              indicatorWeight: 3,
-              tabs: [
-                Tab(
-                  text: "runningOrders".tr,
-                ),
-                Tab(
-                  text: "historyOrders".tr,
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            const Expanded(
-              child: TabBarView(
-                children: [RunningOrdersWidget(), HistoryOrdersWidget()],
+      body: Stack(children: [
+        DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              TabBar(
+                indicatorColor: Theme.of(context).secondaryHeaderColor,
+                labelColor: Theme.of(context).secondaryHeaderColor,
+                unselectedLabelColor: Colors.grey[600],
+                indicatorWeight: 3,
+                tabs: [
+                  Tab(
+                    text: "runningOrders".tr,
+                  ),
+                  Tab(
+                    text: "historyOrders".tr,
+                  ),
+                ],
               ),
-            )
-          ],
+              SizedBox(
+                height: 10.h,
+              ),
+              const Expanded(
+                child: TabBarView(
+                  children: [RunningOrdersWidget(), HistoryOrdersWidget()],
+                ),
+              )
+            ],
+          ),
         ),
-      ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 50.h,
+          child: GradientButton(
+            'newOrder'.tr,
+            () => Get.to(
+              () => const CreateOrderSheet(),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }
@@ -76,51 +90,44 @@ class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyOrdersController>(builder: (controller) {
-      return controller.runningOrders.isNotEmpty
-          ? Stack(
-              children: [
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const SuspendedAccount(),
-                          );
-                        },
-                        child: Icon(
-                          Icons.pending_actions,
-                          size: 50,
-                          color: Theme.of(context).focusColor,
-                        ),
-                      ),
-                      AutoSizeText(
-                        'noCurrentOrders'.tr,
-                        style: TextStyle(color: Theme.of(context).focusColor),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 50.h,
-                  child: GradientButton(
-                    'newOrder'.tr,
-                    () => Get.to(
-                      () => const CreateOrderSheet(),
+      return controller.runningOrders.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const SuspendedAccount(),
+                      );
+                    },
+                    child: Icon(
+                      Icons.pending_actions,
+                      size: 50,
+                      color: Theme.of(context).focusColor,
                     ),
                   ),
-                ),
-              ],
+                  AutoSizeText(
+                    'noCurrentOrders'.tr,
+                    style: TextStyle(color: Theme.of(context).focusColor),
+                  ),
+                ],
+              ),
             )
           : ListView.builder(
               itemBuilder: (context, index) {
                 Order order = controller.runningOrders[index];
-                return OrderCard(
-                    order: order, withDriverDetails: order.assignedBid != null);
+                return InkWell(
+                  onTap: () {
+                    order.assignedBid == null
+                        ? Get.to(() => RequestScreen(order.id!))
+                        : Get.to(() => OrderDetailsOnMap());
+                  },
+                  child: OrderCard(
+                      order: order,
+                      withDriverDetails: order.assignedBid != null),
+                );
               },
               itemCount: controller.runningOrders.length,
             );
@@ -134,45 +141,30 @@ class HistoryOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyOrdersController>(builder: (controller) {
-      return controller.previousOrders.isNotEmpty
-          ? Stack(
-              children: [
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const SuspendedAccount(),
-                          );
-                        },
-                        child: Icon(
-                          Icons.pending_actions,
-                          size: 50,
-                          color: Theme.of(context).focusColor,
-                        ),
-                      ),
-                      AutoSizeText(
-                        'noCurrentOrders'.tr,
-                        style: TextStyle(color: Theme.of(context).focusColor),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 50.h,
-                  child: GradientButton(
-                    'newOrder'.tr,
-                    () => Get.to(
-                      () => const CreateOrderSheet(),
+      return controller.previousOrders.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const SuspendedAccount(),
+                      );
+                    },
+                    child: Icon(
+                      Icons.pending_actions,
+                      size: 50,
+                      color: Theme.of(context).focusColor,
                     ),
                   ),
-                ),
-              ],
+                  AutoSizeText(
+                    'noCurrentOrders'.tr,
+                    style: TextStyle(color: Theme.of(context).focusColor),
+                  ),
+                ],
+              ),
             )
           : ListView.builder(
               itemBuilder: (context, index) {

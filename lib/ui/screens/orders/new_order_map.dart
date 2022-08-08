@@ -16,6 +16,7 @@ import 'package:logistic/services/helpers.dart';
 import 'package:logistic/ui/screens/orders/requests_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/map_widgets/vechial_details_on_map.dart';
 import 'dart:collection';
@@ -38,8 +39,14 @@ class _NewOrderMapState extends State<NewOrderMap> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Get.find<CreateOrderController>().selectedVehicle =
-        Get.find<CreateOrderController>().vehiclesDropdownList.first.value;
+    Get
+        .find<CreateOrderController>()
+        .selectedVehicle =
+        Get
+            .find<CreateOrderController>()
+            .vehiclesDropdownList
+            .first
+            .value;
   }
 
   @override
@@ -47,79 +54,95 @@ class _NewOrderMapState extends State<NewOrderMap> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: GetBuilder<LocationController>(
-        builder: (controller) => SafeArea(
-            child: Stack(
-          children: [
-            GoogleMap(
-                initialCameraPosition: const CameraPosition(
-                  target: LatLng(
-                    15.5594,
-                    32.5549,
-                  ),
-                  zoom: 18,
-                ),
-                onLongPress: (LatLng? position) {
-                  if (controller.startLocationLatLng == null) {
-                    controller.startLocationLatLng = position!;
-                    controller.pickLocation(context, position,
-                        isStartLocation: true);
+        builder: (locationController) =>
+            GetBuilder<CreateOrderController>(builder: (orderController) {
+              return
+                orderController.orderLoading?
+                    const LoadingWidget():
+                SafeArea(
+                  child: Stack(
+                    children: [
+                      GoogleMap(
+                          initialCameraPosition: const CameraPosition(
+                            target: LatLng(
+                              15.5594,
+                              32.5549,
+                            ),
+                            zoom: 18,
+                          ),
+                          onLongPress: (LatLng? position) {
+                            if (locationController.startLocationLatLng == null) {
+                              locationController.startLocationLatLng = position!;
+                              locationController.pickLocation(context, position,
+                                  isStartLocation: true);
 
-                    controller.update();
-                  } else {
-                    controller.endLocationLatLng = position!;
-                    controller.pickLocation(context, position,
-                        isStartLocation: false);
-                    controller.update();
-                  }
-                },
-                zoomControlsEnabled: false,
-                myLocationButtonEnabled: false,
-                myLocationEnabled: false,
-                padding: EdgeInsets.symmetric(vertical: 240.h),
-                markers: Set<Marker>.of(controller.markers.values),
-                polylines: Set<Polyline>.of(controller.polylines.values),
-                onMapCreated: _onMapCreated),
-            Column(
-              children: [
-                SizedBox(
-                  height: 50.h,
-                ),
-                const FromTo(
-                  withDriverDetails: false,
-                ),
-                const Spacer(),
-                VechialDetailsOnMap(),
-                SizedBox(
-                  height: 20.h,
-                ),
-                GradientButton('continue'.tr, () {
-                  if (Get.find<LocationController>().startLocationPicked ==
-                          false ||
-                      Get.find<LocationController>().endLocationPicked ==
-                          false) {
-                    showToast('اختر الموقع');
-                  } else {
-                    Get.find<CreateOrderController>().sendOrder();
-                  }
-                }),
-                SizedBox(
-                  height: 30.h,
-                ),
-              ],
-            ),
-          ],
-        )),
+                              locationController.update();
+                            } else {
+                              locationController.endLocationLatLng = position!;
+                              locationController.pickLocation(context, position,
+                                  isStartLocation: false);
+                              locationController.update();
+                            }
+                          },
+                          zoomControlsEnabled: false,
+                          myLocationButtonEnabled: false,
+                          myLocationEnabled: false,
+                          padding: EdgeInsets.symmetric(vertical: 240.h),
+                          markers: Set<Marker>.of(locationController.markers.values),
+                          polylines: Set<Polyline>.of(
+                              locationController.polylines.values),
+                          onMapCreated: _onMapCreated),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 50.h,
+                          ),
+                          const FromTo(
+                            withDriverDetails: false,
+                          ),
+                          const Spacer(),
+                          VechialDetailsOnMap(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          GradientButton('continue'.tr, () {
+                            if (Get
+                                .find<LocationController>()
+                                .startLocationPicked ==
+                                false ||
+                                Get
+                                    .find<LocationController>()
+                                    .endLocationPicked ==
+                                    false) {
+                              showToast('اختر الموقع');
+                            } else {
+                              Get.find<CreateOrderController>().sendOrder();
+                            }
+                          }),
+                          SizedBox(
+                            height: 30.h,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ));
+            }),
       ),
     );
   }
 
   void _onMapCreated(GoogleMapController controller) async {
-    Get.find<LocationController>().mapController = controller;
+    Get
+        .find<LocationController>()
+        .mapController = controller;
   }
 
   @override
   void dispose() {
     super.dispose();
-    Get.find<LocationController>().mapController.dispose();
+    Get
+        .find<LocationController>()
+        .mapController
+        .dispose();
   }
 }

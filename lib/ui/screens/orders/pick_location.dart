@@ -77,11 +77,9 @@ class _PickLocationState extends State<PickLocation> {
             right: 0,
             child: GradientButton(
               'continue'.tr,
-              () => Get.to(
-                () => const RequestScreen(),
+              () {}
               ),
             ),
-          )
         ],
       )),
     );

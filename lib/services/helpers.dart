@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logistic/controllers/Location_controller.dart';
+import 'package:logistic/controllers/bid_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
+import 'package:logistic/data/repository/bid_repo.dart';
 import 'package:logistic/data/repository/contacts_repo.dart';
 import 'package:logistic/data/repository/create_order_repo.dart';
 import 'package:logistic/data/repository/zone_repo.dart';
@@ -29,6 +31,7 @@ Future initControllers() async {
   Get.put(ZoneRepo());
   Get.put(MyOrdersRepo());
   Get.put(CreateOrderRepo());
+  Get.put(BidRepo());
 
   // Controller
   Get.put(LocalizationController());
@@ -39,15 +42,18 @@ Future initControllers() async {
   Get.put(MyOrdersController());
   Get.put(CreateOrderController());
   Get.put(LocationController());
+  Get.put(BidController());
 }
 
-void showToast(String msg, {bool isError = false}) => Fluttertoast.showToast(
-    msg: msg,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.BOTTOM,
-    backgroundColor: isError ? Colors.red[800] : const Color(0xff387E7E),
-    textColor: Colors.white,
-    fontSize: 16.0);
+void showToast(String msg,
+        {bool longerDuration = false, bool isError = false}) =>
+    Fluttertoast.showToast(
+        msg: msg,
+        toastLength: longerDuration ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: isError ? Colors.red[800] : const Color(0xff387E7E),
+        textColor: Colors.white,
+        fontSize: 16.0);
 
 void launchPhone(String url) async {
   if (!await launch('tel:' + url)) throw 'Could not launch $url';

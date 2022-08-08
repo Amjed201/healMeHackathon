@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
+import 'package:logistic/controllers/bid_controller.dart';
+import 'package:logistic/data/models/bid.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
 import 'package:logistic/ui/widgets/order/dotted_divider.dart';
 import 'package:logistic/ui/widgets/request_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class OrderRequestDetails extends StatefulWidget {
-  const OrderRequestDetails({Key? key}) : super(key: key);
+class RequestDetailsScreen extends StatefulWidget {
+  Bid bid;
+
+  RequestDetailsScreen(this.bid, {Key? key}) : super(key: key);
 
   @override
-  State<OrderRequestDetails> createState() => _OrderRequestDetailsState();
+  State<RequestDetailsScreen> createState() => _RequestDetailsScreenState();
 }
 
-class _OrderRequestDetailsState extends State<OrderRequestDetails> {
+class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,7 @@ class _OrderRequestDetailsState extends State<OrderRequestDetails> {
           leading: const PopButton(),
           centerTitle: true,
           title: AutoSizeText(
-            'الطلب #123'.tr,
+            '#${widget}',
             style: TextStyle(
               color: Colors.black,
               fontSize: 18.sp,
