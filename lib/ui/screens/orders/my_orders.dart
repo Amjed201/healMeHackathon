@@ -298,7 +298,7 @@ class OrderCard extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        order.pickupLocationLat ?? '',
+                        order.cityPickup?.nameAr ?? '',
                         style: TextStyle(
                           fontSize: 12.sp,
                         ),
@@ -314,7 +314,7 @@ class OrderCard extends StatelessWidget {
                         height: 32.h,
                       ),
                       Text(
-                        order.dropOffLocationLat ?? '',
+                        order.cityDropOff?.nameAr ?? '',
                         style: TextStyle(
                           fontSize: 12.sp,
                         ),

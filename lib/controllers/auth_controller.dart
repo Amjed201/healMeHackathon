@@ -12,6 +12,8 @@ import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/ui/screens/auth/complete_info.dart';
 import 'package:logistic/ui/screens/auth/login.dart';
 import 'package:logistic/ui/screens/auth/otp.dart';
+import 'package:logistic/ui/screens/splash.dart';
+import 'package:logistic/ui/screens/splash.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
 
 class AuthController extends GetxController {
@@ -72,7 +74,7 @@ class AuthController extends GetxController {
       _loading = false;
       update();
       //check whether the user have registered or not
-      Get.offAll(() => user.fullName == null ? InfoScreen() : TabsScreen());
+      Get.offAll(() => user.fullName == null ? InfoScreen() : SplashScreen());
     } else {
       ApiChecker.checkApi(response);
     }
@@ -94,7 +96,7 @@ class AuthController extends GetxController {
       storage.setUser(user);
       _loading = false;
       update();
-      Get.offAll(() => TabsScreen());
+      Get.offAll(() => SplashScreen());
     } else {
       ApiChecker.checkApi(response);
     }

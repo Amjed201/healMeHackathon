@@ -67,7 +67,6 @@ class MyOrdersController extends GetxController {
       List dataList = jsonMap["orders"];
       _previousOrders = dataList.map((e) => Order.fromJson(e)).toList();
       _loading = false;
-      _loading = false;
       update();
       Get.back();
     } else {
