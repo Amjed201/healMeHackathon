@@ -2,9 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/data/models/bid.dart';
 
 class RequestCard extends StatelessWidget {
-  const RequestCard({Key? key}) : super(key: key);
+  Bid bid;
+
+   RequestCard(this.bid,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +112,7 @@ class RequestCard extends StatelessWidget {
                   ),
                 ),
                 AutoSizeText(
-                  '1300 رس'.tr,
+                  '${bid.price} SR',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.sp,

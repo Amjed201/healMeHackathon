@@ -5,16 +5,20 @@ import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/controllers/bid_controller.dart';
 import 'package:logistic/data/models/bid.dart';
+import 'package:logistic/data/models/order.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:logistic/ui/widgets/order/dotted_divider.dart';
 import 'package:logistic/ui/widgets/request_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RequestDetailsScreen extends StatefulWidget {
   Bid bid;
+  Order order;
 
-  RequestDetailsScreen(this.bid, {Key? key}) : super(key: key);
+  RequestDetailsScreen({required this.bid, required this.order, Key? key})
+      : super(key: key);
 
   @override
   State<RequestDetailsScreen> createState() => _RequestDetailsScreenState();
@@ -33,7 +37,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
           leading: const PopButton(),
           centerTitle: true,
           title: AutoSizeText(
-            '#${widget}',
+            'تفاصيل العرض' + ' #${widget.bid.orderId}',
             style: TextStyle(
               color: Colors.black,
               fontSize: 18.sp,
@@ -142,7 +146,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'completeInfo'.tr,
+                        widget.order.orderTiming?.startedAt??'completeInfo'.tr,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12.sp,
@@ -175,14 +179,14 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'completeInfo'.tr,
+                            'startPoint'.tr,
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 12.sp,
                             ),
                           ),
                           Text(
-                            'completeInfo'.tr,
+                            widget.order.cityPickup?.nameAr ?? '',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12.sp,
@@ -201,7 +205,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        'completeInfo'.tr,
+                        widget.order.orderTiming?.startedAt??'completeInfo'.tr,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 12.sp,
@@ -234,14 +238,14 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'completeInfo'.tr,
+                            'endPoint'.tr,
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 12.sp,
                             ),
                           ),
                           Text(
-                            'completeInfo'.tr,
+                            widget.order.cityDropOff?.nameAr ?? '',
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 12.sp,
@@ -255,30 +259,36 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                   DottedDivider(
                     length: 10,
                   ),
-                  const Divider(
-                    thickness: 1,
-                  ),
-                  Center(
-                    child: AutoSizeText(
-                      'حمولة جزئية'.tr,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp,
-                      ),
-                    ),
-                  ),
-                  Center(
-                    child: AutoSizeText(
-                      'سيتم تحميل حمولتك مع حمولة اخرى'.tr,
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    thickness: 1,
-                  ),
+                  widget.bid.isPartial!
+                      ? Column(
+                          children: [
+                            const Divider(
+                              thickness: 1,
+                            ),
+                            Center(
+                              child: AutoSizeText(
+                                'حمولة جزئية'.tr,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                            ),
+                            Center(
+                              child: AutoSizeText(
+                                'سيتم تحميل حمولتك مع حمولة اخرى'.tr,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 12.sp,
+                                ),
+                              ),
+                            ),
+                            const Divider(
+                              thickness: 1,
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
 
                   AutoSizeText(
                     'السعر'.tr,
@@ -288,7 +298,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     ),
                   ),
                   AutoSizeText(
-                    '1,400 رس'.tr,
+                    '${widget.bid.price!}',
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
@@ -301,37 +311,53 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
               const Spacer(),
 
               //accept button
-              Container(
-                height: 80.h,
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                      colors: [Color(0xff387D7E), Color(0xff27595A)],
-                      begin: Alignment.topRight,
-                      end: Alignment.bottomLeft),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AutoSizeText(
-                      'acceptOrder'.tr,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                    AutoSizeText(
-                      '1300 رس'.tr,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18.sp,
-                      ),
-                    )
-                  ],
-                ),
+              GetBuilder<BidController>(
+                builder: (controller) {
+                  return controller.loading
+                      ? LoadingWidget()
+                      : InkWell(
+                          onTap: () {
+                            controller.acceptOrder(
+                                bidId: widget.bid.id ?? 0,
+                                orderId: widget.bid.orderId ?? 0);
+                          },
+                          child: Container(
+                            height: 80.h,
+                            padding: const EdgeInsets.all(20),
+                            margin: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xff387D7E),
+                                    Color(0xff27595A)
+                                  ],
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomLeft),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AutoSizeText(
+                                  'acceptOrder'.tr,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                                AutoSizeText(
+                                  '1300 رس'.tr,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 18.sp,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                },
               )
             ],
           ),

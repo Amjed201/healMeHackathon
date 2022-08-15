@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/controllers/bid_controller.dart';
+import 'package:logistic/data/models/order.dart';
 import 'package:logistic/ui/screens/orders/request_details_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
@@ -12,9 +13,9 @@ import 'package:logistic/ui/widgets/request_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RequestScreen extends StatefulWidget {
-  int orderId;
+  Order order;
 
-  RequestScreen(this.orderId, {Key? key}) : super(key: key);
+  RequestScreen(this.order, {Key? key}) : super(key: key);
 
   @override
   State<RequestScreen> createState() => _RequestScreenState();
@@ -25,9 +26,8 @@ class _RequestScreenState extends State<RequestScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Get.find<BidController>().getBids(widget.orderId);
+    Get.find<BidController>().getBids(widget.order.id??0);
   }
 
   PreferredSizeWidget getCancelAppBar() {
@@ -191,24 +191,27 @@ class _RequestScreenState extends State<RequestScreen> {
         backgroundColor: Color(0xffFBFBFB),
         resizeToAvoidBottomInset: true,
         appBar: getCancelAppBar(),
-        body: GetBuilder<BidController>(builder: (controller) {
-          return SafeArea(
-            child: GetBuilder<BidController>(builder: (controller) {
-              return controller.loading
-                  ? const LoadingWidget()
-                  : controller.bids.isEmpty
-                      ? Center(
-                          child: Text('noBids'.tr),
-                        )
-                      : ListView.builder(
-                          itemCount: controller.bids.length,
-                          itemBuilder: (context, index) => InkWell(
-                              onTap: () => Get.to(() =>
-                                  RequestDetailsScreen(controller.bids[index])),
-                              child: const RequestCard()),
-                        );
-            }),
-          );
-        }));
+        body: SafeArea(
+          child: GetBuilder<BidController>(builder: (controller) {
+            return controller.loading
+                ? const LoadingWidget()
+                : controller.bids.isEmpty
+                    ? Center(
+                        child: Text('noBids'.tr),
+                      )
+                    : ListView.builder(
+                        itemCount: controller.bids.length,
+                        itemBuilder: (context, index) => InkWell(
+                            onTap: () => Get.to(() =>
+                                RequestDetailsScreen(
+                                 bid:
+                                    controller.bids[index],
+                                  order: widget.order,
+
+                                )),
+                            child: RequestCard(controller.bids[index])),
+                      );
+          }),
+        ));
   }
 }

@@ -121,7 +121,7 @@ class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
                 return InkWell(
                   onTap: () {
                     order.assignedBid == null
-                        ? Get.to(() => RequestScreen(order.id!))
+                        ? Get.to(() => RequestScreen(order))
                         : Get.to(() => OrderDetailsOnMap(order));
                   },
                   child: OrderCard(

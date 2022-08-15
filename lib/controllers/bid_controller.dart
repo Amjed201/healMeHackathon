@@ -40,12 +40,27 @@ class BidController extends GetxController {
     http.Response response =
     await bidRepo.getBidsForOrder(orderId: orderId,token: storage.getToken()!);
     if (response.statusCode == 200) {
-      Map jsonMap = json.decode(response.body);
-      List dataList = jsonMap["bids"];
-      // _bids = dataList.map((e) => Bid.fromJson(e)).toList();
+      List dataList = json.decode(response.body);
+      _bids = dataList.map((e) => Bid.fromJson(e)).toList();
       _loading = false;
       update();
-      Get.back();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    _loading = false;
+    update();
+  }
+
+
+  Future<void> acceptOrder({required int orderId,required int bidId}) async {
+    _loading = true;
+    update();
+    http.Response response =
+    await bidRepo.acceptBidForOrder(orderId: orderId,bidId: bidId,token: storage.getToken()!);
+    if (response.statusCode == 200) {
+      _loading = false;
+      update();
+      showToast('addedSuccess'.tr);
     } else {
       ApiChecker.checkApi(response);
     }
