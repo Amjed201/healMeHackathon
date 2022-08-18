@@ -6,8 +6,9 @@ class GradientButton extends StatelessWidget {
   String title;
   Function() onTap;
   double height;
+  bool isDisabled;
 
-  GradientButton(this.title, this.onTap, [this.height = 55]);
+  GradientButton(this.title, this.onTap, {this.height = 55,this.isDisabled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +19,13 @@ class GradientButton extends StatelessWidget {
           height: height,
           width: 400.w,
           decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
               borderRadius: BorderRadius.circular(12),
-              gradient: const LinearGradient(
-                  colors: [Color(0xff387D7E), Color(0xff27595A)],
+              gradient:
+               LinearGradient(
+                  colors:
+                  isDisabled?
+                  [Colors.grey[600]!,Colors.grey[700]!]:
+                  [const Color(0xff387D7E), const Color(0xff27595A)],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft)),
           child: Center(
