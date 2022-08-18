@@ -85,7 +85,7 @@ class CreateOrderController extends GetxController {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(vehicle.vehicleNameEn ?? ''),
+              Text(vehicle.vehicleNameAr ?? ''),
               SizedBox(
                 height: 40,
                 width: 76,

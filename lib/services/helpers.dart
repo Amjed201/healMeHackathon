@@ -5,12 +5,14 @@ import 'package:logistic/controllers/bid_controller.dart';
 import 'package:logistic/controllers/contacts_controller.dart';
 import 'package:logistic/controllers/create_order_controller.dart';
 import 'package:logistic/controllers/my_orders_controller.dart';
+import 'package:logistic/controllers/order_status_controller.dart';
 import 'package:logistic/controllers/profile_controller.dart';
 import 'package:logistic/controllers/zone_controller.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
 import 'package:logistic/data/repository/bid_repo.dart';
 import 'package:logistic/data/repository/contacts_repo.dart';
 import 'package:logistic/data/repository/create_order_repo.dart';
+import 'package:logistic/data/repository/orders_status_repo.dart';
 import 'package:logistic/data/repository/zone_repo.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -19,7 +21,7 @@ import 'package:logistic/controllers/localizationController.dart';
 import 'package:logistic/data/api/apiService.dart';
 import 'package:logistic/services/localStorage.dart';
 
-import '../data/repository/orders_repo.dart';
+import '../data/repository/my_orders_repo.dart';
 
 Future initControllers() async {
   await Get.put(LocalStorage()).load();
@@ -30,6 +32,7 @@ Future initControllers() async {
   Get.put(ContactsRepo());
   Get.put(ZoneRepo());
   Get.put(MyOrdersRepo());
+  Get.put(OrderStatusRepo());
   Get.put(CreateOrderRepo());
   Get.put(BidRepo());
 
@@ -40,6 +43,7 @@ Future initControllers() async {
   Get.put(ContactsController());
   Get.put(ZoneController());
   Get.put(MyOrdersController());
+  Get.put(OrderStatusController());
   Get.put(CreateOrderController());
   Get.put(LocationController());
   Get.put(BidController());

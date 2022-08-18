@@ -8,7 +8,7 @@ import 'package:logistic/data/models/order.dart';
 import 'package:logistic/data/models/user.dart';
 import 'package:logistic/data/repository/auth_repo.dart';
 import 'package:http/http.dart' as http;
-import 'package:logistic/data/repository/orders_repo.dart';
+import 'package:logistic/data/repository/my_orders_repo.dart';
 import 'package:logistic/services/helpers.dart';
 import 'package:logistic/services/localStorage.dart';
 import 'package:logistic/ui/screens/auth/complete_info.dart';

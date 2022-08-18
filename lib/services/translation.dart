@@ -12,6 +12,7 @@ class LocaleString extends Translations {
           "help": "Help",
           "completeInfo": "Complete your information",
           "cancel": "Cancel Order",
+          "sureCancel": "Are you sure you want to cancel the order?",
           "newOrder": "New Order + ",
           "confirmOrder": "Confirm Order",
           "paymentMethod": "Payment Method",
@@ -67,7 +68,7 @@ class LocaleString extends Translations {
           "changeLang": "Change Language",
           "logout": "Logout",
           "sureLogout": "Are you sure you want to logout?",
-          "sureDelete": "Are you sure you want to delete the conctact?",
+          "sureDelete": "Are you sure you want to delete the contact?",
           "yes": "Yes",
           "no": "No",
           "signUpFirst": "Please sign up first to continue",
@@ -130,6 +131,8 @@ class LocaleString extends Translations {
           "startPoint": "Origin point",
           "endPoint": "Drop Off Price",
           "noBids": "No bids available now",
+          "orderCancelled": "Order has been canceled",
+
 
 
         },
@@ -141,6 +144,7 @@ class LocaleString extends Translations {
           "save": "حفظ البيانات",
           "completeInfo": "اكمال البيانات",
           "cancel": "الغاء الطلب",
+          "sureCancel": "هل انت متأكد من الغاء الطلب ؟",
           "newOrder": "+ انشاء طلب جديد",
           "confirmOrder": "تأكيد الطلب",
           "paymentMethod": "طريقة الدفع",
@@ -274,6 +278,8 @@ class LocaleString extends Translations {
           "startPoint": "نقطة البداية",
           "endPoint": "نقطة النهاية",
           "noBids": "لا توجد عروض حاليا",
+          "orderCancelled": "تم الغاء الطلب",
+
         },
       };
 }

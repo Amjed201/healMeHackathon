@@ -1,37 +1,45 @@
+import 'package:logistic/data/models/user.dart';
+
 class Bid {
   Bid({
-      this.id, 
-      this.driverId, 
-      this.orderId, 
-      this.isAccepted, 
-      this.price, 
-      this.dropOffDate, 
-      this.isPartial, 
-      this.partialNotes, 
-      this.createdAt, 
-      this.updatedAt,});
+    this.id,
+    this.driverId,
+    this.orderId,
+    this.price,
+    this.dropOffTime,
+    this.isPartial,
+    this.partialNote,
+    this.isAccepted,
+    this.createdAt,
+    this.updatedAt,
+    this.driverUser,
+  });
 
   Bid.fromJson(dynamic json) {
     id = json['id'];
     driverId = json['driverId'];
     orderId = json['orderId'];
-    isAccepted = json['isAccepted'];
     price = json['price'];
-    dropOffDate = json['dropOffDate'];
+    dropOffTime = json['dropOffTime'];
     isPartial = json['isPartial'];
-    partialNotes = json['partialNotes'];
+    partialNote = json['partialNote'];
+    isAccepted = json['isAccepted'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+    driverUser = json['user'] != null ? User.fromJson(json['user']) : null;
   }
+
   int? id;
   int? driverId;
   int? orderId;
-  bool? isAccepted;
   int? price;
-  String? dropOffDate;
+  String? dropOffTime;
   bool? isPartial;
-  String? partialNotes;
+  dynamic partialNote;
+  bool? isAccepted;
   String? createdAt;
   String? updatedAt;
-
+  User? driverUser;
 }
+
+

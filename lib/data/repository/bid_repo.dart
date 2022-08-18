@@ -15,7 +15,7 @@ class BidRepo {
     required int orderId,
     required int bidId,
   }) async {
-    return await apiClient.post('order/$orderId/bid/', {"bidId": bidId},
+    return await apiClient.put('order/$orderId/bid/', {"bidId": bidId},
         token: token);
   }
 }

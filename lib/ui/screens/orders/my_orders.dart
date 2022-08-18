@@ -385,7 +385,7 @@ class OrderCard extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            'status'.tr,
+                            order.status ??'',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12.sp,

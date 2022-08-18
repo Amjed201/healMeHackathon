@@ -53,7 +53,7 @@ class RequestCard extends StatelessWidget {
                       Row(
                         children: [
                           AutoSizeText(
-                            "User name",
+                            bid.driverUser?.fullName??'Full Name',
                             style: TextStyle(
                               fontSize: 12.sp,
                             ),
@@ -62,7 +62,7 @@ class RequestCard extends StatelessWidget {
                             width: 2.w,
                           ),
                           AutoSizeText(
-                            "4.5",
+                            '${bid.driverUser?.driver?.ratingCount??0}',
                             style: TextStyle(
                               fontSize: 12.sp,
                             ),
@@ -75,7 +75,7 @@ class RequestCard extends StatelessWidget {
                         ],
                       ),
                       AutoSizeText(
-                        "Vechile type",
+                        '${bid.driverUser?.driver?.vehicleType?.vehicleNameAr}',
                         style: TextStyle(
                           fontSize: 12.sp,
                         ),

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logistic/controllers/auth_controller.dart';
 import 'package:logistic/controllers/bid_controller.dart';
+import 'package:logistic/controllers/order_status_controller.dart';
 import 'package:logistic/data/models/order.dart';
 import 'package:logistic/ui/screens/orders/request_details_screen.dart';
 import 'package:logistic/ui/widgets/back.dart';
@@ -27,8 +28,10 @@ class _RequestScreenState extends State<RequestScreen> {
   @override
   void initState() {
     super.initState();
-    Get.find<BidController>().getBids(widget.order.id??0);
+    Get.find<BidController>().getBids(widget.order.id ?? 0);
   }
+
+  final TextEditingController _reasonController = TextEditingController();
 
   PreferredSizeWidget getCancelAppBar() {
     return AppBar(
@@ -52,131 +55,144 @@ class _RequestScreenState extends State<RequestScreen> {
               showMaterialModalBottomSheet(
                 backgroundColor: Colors.transparent,
                 context: context,
-                builder: (context) => Container(
-                  height: 400,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 40.h,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 8.h,
+                builder: (context) => GetBuilder<OrderStatusController>(
+                    builder: (orderStatusController) {
+                  return Container(
+                    height: 400,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 40.h,
                         ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 19.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(
-                              "Reason 1",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black,
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 8.h,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 19.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                "Reason 1",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 8.h,
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 19.h,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AutoSizeText(
-                              "Reason 2",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black,
+                        Container(
+                          width: double.infinity,
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 8.h,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 19.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                "Reason 2",
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 8.h,
-                        ),
-                        child: TextFormField(
-                          textInputAction: TextInputAction.done,
-                          enabled: true,
-                          maxLines: 3,
-                          keyboardType: TextInputType.text,
-                          cursorColor: Theme.of(context).primaryColor,
-                          decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 24.w,
+                            vertical: 8.h,
+                          ),
+                          child: TextFormField(
+                            controller: _reasonController,
+                            textInputAction: TextInputAction.done,
                             enabled: true,
-                            hintText: 'reasons'.tr,
-                            contentPadding: const EdgeInsets.fromLTRB(
-                                20.0, 15.0, 20.0, 15.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey[400]!,
-                                width: 2.0,
+                            maxLines: 3,
+                            keyboardType: TextInputType.text,
+                            cursorColor: Theme.of(context).primaryColor,
+                            decoration: InputDecoration(
+                              fillColor: Colors.white,
+                              filled: true,
+                              enabled: true,
+                              hintText: 'reasons'.tr,
+                              contentPadding: const EdgeInsets.fromLTRB(
+                                  20.0, 15.0, 20.0, 15.0),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                borderSide: BorderSide(
+                                  color: Colors.grey[400]!,
+                                  width: 2.0,
+                                ),
                               ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide(
-                                color: Theme.of(context).primaryColor,
-                                width: 2.0,
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor,
+                                  width: 2.0,
+                                ),
                               ),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey[400]!,
-                                width: 2.0,
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                borderSide: BorderSide(
+                                  color: Colors.grey[400]!,
+                                  width: 2.0,
+                                ),
                               ),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                              borderSide: BorderSide(
-                                color: Colors.grey[400]!,
-                                width: 2,
+                              disabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                                borderSide: BorderSide(
+                                  color: Colors.grey[400]!,
+                                  width: 2,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 50.h,
-                      ),
-                      GradientButton('cancel'.tr, () {})
-                    ],
-                  ),
-                ),
+                        SizedBox(
+                          height: 50.h,
+                        ),
+                        orderStatusController.loading
+                            ? const LoadingWidget()
+                            : GradientButton('cancel'.tr, () {
+                                String reason = _reasonController.text;
+                                orderStatusController.cancelOrder(
+                                    orderId: widget.order.id ?? 0,
+                                    reason: reason);
+                              })
+                      ],
+                    ),
+                  );
+                }),
               );
             },
-            child: AutoSizeText(
-              'cancel'.tr,
-              style: TextStyle(
-                color: Colors.red[400],
-                fontSize: 14.sp,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: AutoSizeText(
+                  'cancelOrder'.tr,
+                  style: TextStyle(color: Colors.red[700]),
+                ),
               ),
             ),
           ),
@@ -202,12 +218,9 @@ class _RequestScreenState extends State<RequestScreen> {
                     : ListView.builder(
                         itemCount: controller.bids.length,
                         itemBuilder: (context, index) => InkWell(
-                            onTap: () => Get.to(() =>
-                                RequestDetailsScreen(
-                                 bid:
-                                    controller.bids[index],
+                            onTap: () => Get.to(() => RequestDetailsScreen(
+                                  bid: controller.bids[index],
                                   order: widget.order,
-
                                 )),
                             child: RequestCard(controller.bids[index])),
                       );

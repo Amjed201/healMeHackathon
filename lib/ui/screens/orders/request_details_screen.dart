@@ -89,7 +89,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                                 Row(
                                   children: [
                                     AutoSizeText(
-                                      "User name",
+                                      widget.bid.driverUser?.fullName ??
+                                          'Driver name',
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                       ),
@@ -98,7 +99,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                                       width: 2.w,
                                     ),
                                     AutoSizeText(
-                                      "4.5",
+                                      '${widget.bid.driverUser?.driver?.ratingCount ?? 0}',
                                       style: TextStyle(
                                         fontSize: 12.sp,
                                       ),
@@ -111,7 +112,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                                   ],
                                 ),
                                 AutoSizeText(
-                                  "Vechile type",
+                                  '${widget.bid.driverUser?.driver?.vehicleType?.vehicleNameAr ?? 0}',
                                   style: TextStyle(
                                     fontSize: 12.sp,
                                   ),
@@ -145,11 +146,15 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        widget.order.orderTiming?.startedAt??'completeInfo'.tr,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12.sp,
+                      Expanded(
+                        child: Text(
+                          widget.order.orderTiming?.startedAt ??
+                              '01/01/2022'.tr,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.sp,
+                          ),
                         ),
                       ),
                       Container(
@@ -175,24 +180,26 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                           ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'startPoint'.tr,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'startPoint'.tr,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12.sp,
+                              ),
                             ),
-                          ),
-                          Text(
-                            widget.order.cityPickup?.nameAr ?? '',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12.sp,
+                            Text(
+                              widget.order.cityPickup?.nameAr ?? '',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -204,11 +211,15 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text(
-                        widget.order.orderTiming?.startedAt??'completeInfo'.tr,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12.sp,
+                      Expanded(
+                        child: Text(
+                          widget.order.orderTiming?.startedAt ??
+                              '01/01/2022'.tr,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.sp,
+                          ),
                         ),
                       ),
                       Container(
@@ -234,24 +245,26 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                           ),
                         ),
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'endPoint'.tr,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12.sp,
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'endPoint'.tr,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12.sp,
+                              ),
                             ),
-                          ),
-                          Text(
-                            widget.order.cityDropOff?.nameAr ?? '',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12.sp,
+                            Text(
+                              widget.order.cityDropOff?.nameAr ?? '',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12.sp,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -298,7 +311,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                     ),
                   ),
                   AutoSizeText(
-                    '${widget.bid.price!}',
+                    ' ${widget.bid.price!} رس ',
                     style: TextStyle(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
@@ -314,7 +327,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
               GetBuilder<BidController>(
                 builder: (controller) {
                   return controller.loading
-                      ? LoadingWidget()
+                      ? const SizedBox(height:80,child: LoadingWidget())
                       : InkWell(
                           onTap: () {
                             controller.acceptOrder(
@@ -346,7 +359,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                                   ),
                                 ),
                                 AutoSizeText(
-                                  '1300 رس'.tr,
+                                  ' ${widget.bid.price!} رس ',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,

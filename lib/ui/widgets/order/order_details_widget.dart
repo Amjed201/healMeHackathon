@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/data/models/order.dart';
 
 class OrderDetailsWidget extends StatelessWidget {
-  const OrderDetailsWidget({Key? key}) : super(key: key);
+  Order order;
+   OrderDetailsWidget(this.order,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class OrderDetailsWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'completeInfo'.tr,
+                      order.orderTiming?.startedAt??'',
                       style: TextStyle(
                         fontSize: 12.sp,
                       ),
@@ -54,7 +56,7 @@ class OrderDetailsWidget extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'completeInfo'.tr,
+                     'رس 1200',
                       style: TextStyle(
                         fontSize: 12.sp,
                       ),
@@ -77,7 +79,7 @@ class OrderDetailsWidget extends StatelessWidget {
               ),
             ),
             Text(
-              'note'.tr,
+              order.details??'',
               style: TextStyle(
                 fontSize: 12.sp,
               ),
