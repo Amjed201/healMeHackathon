@@ -37,7 +37,7 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
           leading: const PopButton(),
           centerTitle: true,
           title: AutoSizeText(
-            'تفاصيل العرض' + ' #${widget.bid.orderId}',
+            'تفاصيل العرض'  ' #${widget.bid.orderId}',
             style: TextStyle(
               color: Colors.black,
               fontSize: 18.sp,
@@ -192,7 +192,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                               ),
                             ),
                             Text(
-                              widget.order.cityPickup?.nameAr ?? '',
+                              '${widget.order.cityPickup?.nameAr} , ${widget.order.regionPickup?.nameAr}  ',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12.sp,
@@ -257,7 +258,8 @@ class _RequestDetailsScreenState extends State<RequestDetailsScreen> {
                               ),
                             ),
                             Text(
-                              widget.order.cityDropOff?.nameAr ?? '',
+                              '${widget.order.regionDropOff?.nameAr} , ${widget.order.regionDropOff?.nameAr}  ',
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 12.sp,

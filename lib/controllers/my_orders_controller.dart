@@ -28,6 +28,14 @@ class MyOrdersController extends GetxController {
 
   List<Order> get runningOrders => _runningOrders;
 
+  set runningOrders(List<Order> value) {
+    _runningOrders = value;
+  }
+
+  set previousOrders(List<Order> value) {
+    _previousOrders = value;
+  }
+
   List<Order> _previousOrders = [];
 
   List<Order> get previousOrders => _previousOrders;
@@ -75,4 +83,5 @@ class MyOrdersController extends GetxController {
     _loading = false;
     update();
   }
+
 }

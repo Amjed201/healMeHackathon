@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logistic/controllers/my_orders_controller.dart';
+import 'package:logistic/controllers/order_status_controller.dart';
 import 'package:logistic/data/api/apiService.dart';
 import 'package:logistic/data/api/api_checker.dart';
 import 'package:logistic/data/models/user.dart';
@@ -15,6 +17,7 @@ import 'package:logistic/ui/screens/auth/otp.dart';
 import 'package:logistic/ui/screens/splash.dart';
 import 'package:logistic/ui/screens/splash.dart';
 import 'package:logistic/ui/screens/tabs_screen.dart';
+import 'my_orders_controller.dart';
 
 class AuthController extends GetxController {
   final authRepo = Get.find<AuthRepo>();
@@ -84,7 +87,7 @@ class AuthController extends GetxController {
 
   void registerUser({
     required String name,
-     String? email,
+    String? email,
   }) async {
     _loading = true;
     update();
@@ -117,6 +120,8 @@ class AuthController extends GetxController {
       confirm: InkWell(
           onTap: () {
             Get.find<LocalStorage>().clearAll();
+            Get.find<MyOrdersController>().runningOrders = [];
+            Get.find<MyOrdersController>().previousOrders = [];
             Get.offAll(LoginScreen());
           },
           child: Text('yes'.tr, style: const TextStyle(color: Colors.red))),

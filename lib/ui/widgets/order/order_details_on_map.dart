@@ -51,147 +51,135 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                   showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
                     context: context,
-                    builder: (context) =>
-                        GetBuilder<OrderStatusController>(
-                            builder: (orderStatusController) {
-                              return Container(
-                                height: 400,
-                                color: Colors.white,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 40.h,
+                    builder: (context) => GetBuilder<OrderStatusController>(
+                        builder: (orderStatusController) {
+                      return Container(
+                        height: 400,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 8.h,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 19.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AutoSizeText(
+                                    "Reason 1",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: Colors.black,
                                     ),
-                                    Container(
-                                      width: double.infinity,
-                                      margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 8.h,
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 19.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          AutoSizeText(
-                                            "Reason 1",
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 8.h,
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 19.h,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[100],
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AutoSizeText(
+                                    "Reason 2",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: Colors.black,
                                     ),
-                                    Container(
-                                      width: double.infinity,
-                                      margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 8.h,
-                                      ),
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 19.h,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment
-                                            .start,
-                                        children: [
-                                          AutoSizeText(
-                                            "Reason 2",
-                                            style: TextStyle(
-                                              fontSize: 12.sp,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 8.h,
+                              ),
+                              child: TextFormField(
+                                controller: _reasonController,
+                                textInputAction: TextInputAction.done,
+                                enabled: true,
+                                maxLines: 3,
+                                keyboardType: TextInputType.text,
+                                cursorColor: Theme.of(context).primaryColor,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabled: true,
+                                  hintText: 'reasons'.tr,
+                                  contentPadding: const EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[400]!,
+                                      width: 2.0,
                                     ),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                        horizontal: 24.w,
-                                        vertical: 8.h,
-                                      ),
-                                      child: TextFormField(
-                                        controller: _reasonController,
-                                        textInputAction: TextInputAction.done,
-                                        enabled: true,
-                                        maxLines: 3,
-                                        keyboardType: TextInputType.text,
-                                        cursorColor: Theme
-                                            .of(context)
-                                            .primaryColor,
-                                        decoration: InputDecoration(
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          enabled: true,
-                                          hintText: 'reasons'.tr,
-                                          contentPadding: const EdgeInsets
-                                              .fromLTRB(
-                                              20.0, 15.0, 20.0, 15.0),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                12.0),
-                                            borderSide: BorderSide(
-                                              color: Colors.grey[400]!,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                12.0),
-                                            borderSide: BorderSide(
-                                              color: Theme
-                                                  .of(context)
-                                                  .primaryColor,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                12.0),
-                                            borderSide: BorderSide(
-                                              color: Colors.grey[400]!,
-                                              width: 2.0,
-                                            ),
-                                          ),
-                                          disabledBorder: OutlineInputBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                12.0),
-                                            borderSide: BorderSide(
-                                              color: Colors.grey[400]!,
-                                              width: 2,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderSide: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 2.0,
                                     ),
-                                    SizedBox(
-                                      height: 50.h,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[400]!,
+                                      width: 2.0,
                                     ),
-                                    orderStatusController.loading
-                                        ? const LoadingWidget()
-                                        : GradientButton('cancel'.tr, () {
-                                      String reason = _reasonController.text;
-                                      orderStatusController.cancelOrder(
-                                          orderId: widget.order.id ?? 0,
-                                          reason: reason);
-                                    })
-                                  ],
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[400]!,
+                                      width: 2,
+                                    ),
+                                  ),
                                 ),
-                              );
-                            }),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                            orderStatusController.loading
+                                ? const LoadingWidget()
+                                : GradientButton('cancel'.tr, () {
+                                    String reason = _reasonController.text;
+                                    orderStatusController.cancelOrder(
+                                        orderId: widget.order.id ?? 0,
+                                        reason: reason);
+                                  })
+                          ],
+                        ),
+                      );
+                    }),
                   );
                 },
                 child: Center(
@@ -235,16 +223,18 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                   ),
                   panel: Column(
                     children: [
-                      GradientButton(
-                        Get.find<OrderStatusController>()
-                            .getOrderStatus(widget.order.status ?? ''),
-                            () {
-                          Get.find<OrderStatusController>().
-                          changeOrderStatus(orderId: widget.order.id ?? 0,
-                              orderStatus: widget.order.status ?? '');
-                        },
-                        isDisabled: widget.order.status == 'PendingStart',
-                      ),
+                      GetBuilder<OrderStatusController>(builder: (controller) {
+                        return GradientButton(
+                          controller.getOrderStatus(widget.order.status ?? ''),
+                          () {
+                            controller.changeOrderStatus(
+                                orderId: widget.order.id ?? 0,
+                                orderStatus: widget.order.status ?? '');
+                          },
+                          isDisabled: widget.order.status != 'PendingLoadOff' &&
+                              widget.order.status != 'PendingLoadIn',
+                        );
+                      }),
                       Stack(
                         children: [
                           Container(
@@ -268,7 +258,7 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                                 SizedBox(
                                   height: 22.h,
                                 ),
-                                const DriverDetails(),
+                                DriverDetails(widget.order.bid?.driverUser),
                                 SizedBox(
                                   height: 24.w,
                                 ),
@@ -293,14 +283,12 @@ class _OrderDetailsOnMapState extends State<OrderDetailsOnMap> {
                                 child: Icon(
                                   panelController.isAttached
                                       ? panelController.isPanelOpen
-                                      ? Icons.keyboard_arrow_down_outlined
-                                      : Icons.keyboard_arrow_up_outlined
+                                          ? Icons.keyboard_arrow_down_outlined
+                                          : Icons.keyboard_arrow_up_outlined
                                       : Icons.keyboard_arrow_up_outlined,
                                   color: Colors.white,
                                 ),
-                                backgroundColor: Theme
-                                    .of(context)
-                                    .primaryColor,
+                                backgroundColor: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),

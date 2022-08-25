@@ -22,7 +22,7 @@ import 'package:logistic/ui/screens/tabs_screen.dart';
 // 'PendingPaymentOnPickup','Loaded','GoingToDropOff','PendingPaymentOnDropOff',
 // 'PendingLoadOff','Completed','Canceled')
 
-enum OrderStatus{
+enum OrderStatus {
   pending,
 }
 
@@ -34,25 +34,28 @@ class OrderStatusController extends GetxController {
 
   bool get loading => _loading;
 
-
-  String getOrderStatus(String status){
-    switch (status){
-      case 'PendingStart' : return 'waitingDriver'.tr;
-      case 'PendingLoadIn' : return 'confirmLoadIn'.tr;
-      case 'PendingLoadOff' : return 'confirmLoadOff'.tr;
-      default : return 'waitingDriver'.tr;
+  String getOrderStatus(String status) {
+    switch (status) {
+      case 'PendingStart':
+        return 'waitingDriver'.tr;
+      case 'PendingLoadIn':
+        return 'confirmLoadIn'.tr;
+      case 'PendingLoadOff':
+        return 'confirmLoadOff'.tr;
+      default:
+        return 'waitingDriver'.tr;
     }
   }
 
-
-  void changeOrderStatus({required int orderId,required String orderStatus,String? reason}) async {
-    if(orderStatus == 'PendingLoadIn' || orderStatus == 'PendingLoadOff') {
+  void changeOrderStatus(
+      {required int orderId,
+      required String orderStatus,
+      String? reason}) async {
+    if (orderStatus == 'PendingLoadIn' || orderStatus == 'PendingLoadOff') {
       _loading = true;
       update();
       http.Response response = await orderStatusRepo.changeOrderStatus(
-          orderId: orderId,
-          status: orderStatus,
-          token: storage.getToken()!);
+          orderId: orderId, status: orderStatus, token: storage.getToken()!);
       if (response.statusCode == 200) {
         _loading = false;
         update();
@@ -66,17 +69,17 @@ class OrderStatusController extends GetxController {
     }
   }
 
-  void cancelOrder({required int orderId, String? reason}) async {
+  void cancelOrder({required int orderId, required String reason}) async {
     _loading = true;
     update();
     http.Response response = await orderStatusRepo.cancelOrder(
         orderId: orderId,
-        reason: reason ?? 'no reason selected',
+        reason: reason != '' ? reason : 'no reason selected',
         token: storage.getToken()!);
     if (response.statusCode == 200) {
       _loading = false;
       update();
-      showToast('orderCancelled'.tr,isError: true);
+      showToast('orderCancelled'.tr, isError: true);
       Get.offAll(() => TabsScreen());
       Get.find<MyOrdersController>().getRunningOrders();
     } else {

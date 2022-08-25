@@ -6,6 +6,7 @@ import 'package:logistic/controllers/my_orders_controller.dart';
 import 'package:logistic/data/models/order.dart';
 import 'package:logistic/ui/screens/orders/requests_screen.dart';
 import 'package:logistic/ui/widgets/commonButton.dart';
+import 'package:logistic/ui/widgets/global/loading.dart';
 import 'package:logistic/ui/widgets/map_widgets/from_to_widget.dart';
 import 'package:logistic/ui/widgets/order/order_details_on_map.dart';
 
@@ -90,47 +91,49 @@ class _RunningOrdersWidgetState extends State<RunningOrdersWidget> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyOrdersController>(builder: (controller) {
-      return controller.runningOrders.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const SuspendedAccount(),
-                      );
-                    },
-                    child: Icon(
-                      Icons.pending_actions,
-                      size: 50,
-                      color: Theme.of(context).focusColor,
-                    ),
+      return controller.loading
+          ? const LoadingWidget()
+          : controller.runningOrders.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SuspendedAccount(),
+                          );
+                        },
+                        child: Icon(
+                          Icons.pending_actions,
+                          size: 50,
+                          color: Theme.of(context).focusColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        'noCurrentOrders'.tr,
+                        style: TextStyle(color: Theme.of(context).focusColor),
+                      ),
+                    ],
                   ),
-                  AutoSizeText(
-                    'noCurrentOrders'.tr,
-                    style: TextStyle(color: Theme.of(context).focusColor),
-                  ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                Order order = controller.runningOrders[index];
-                return InkWell(
-                  onTap: () {
-                    order.assignedBid == null
-                        ? Get.to(() => RequestScreen(order))
-                        : Get.to(() => OrderDetailsOnMap(order));
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    Order order = controller.runningOrders[index];
+                    return InkWell(
+                      onTap: () {
+                        order.assignedBid == null
+                            ? Get.to(() => RequestScreen(order))
+                            : Get.to(() => OrderDetailsOnMap(order));
+                      },
+                      child: OrderCard(
+                          order: order,
+                          withDriverDetails: order.assignedBid != null),
+                    );
                   },
-                  child: OrderCard(
-                      order: order,
-                      withDriverDetails: order.assignedBid != null),
+                  itemCount: controller.runningOrders.length,
                 );
-              },
-              itemCount: controller.runningOrders.length,
-            );
     });
   }
 }
@@ -141,39 +144,42 @@ class HistoryOrdersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyOrdersController>(builder: (controller) {
-      return controller.previousOrders.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const SuspendedAccount(),
-                      );
-                    },
-                    child: Icon(
-                      Icons.pending_actions,
-                      size: 50,
-                      color: Theme.of(context).focusColor,
-                    ),
+      return controller.loading
+          ? const LoadingWidget()
+          : controller.previousOrders.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const SuspendedAccount(),
+                          );
+                        },
+                        child: Icon(
+                          Icons.pending_actions,
+                          size: 50,
+                          color: Theme.of(context).focusColor,
+                        ),
+                      ),
+                      AutoSizeText(
+                        'noCurrentOrders'.tr,
+                        style: TextStyle(color: Theme.of(context).focusColor),
+                      ),
+                    ],
                   ),
-                  AutoSizeText(
-                    'noCurrentOrders'.tr,
-                    style: TextStyle(color: Theme.of(context).focusColor),
-                  ),
-                ],
-              ),
-            )
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                Order order = controller.previousOrders[index];
-                return OrderCard(
-                    order: order, withDriverDetails: order.assignedBid != null);
-              },
-              itemCount: controller.previousOrders.length,
-            );
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    Order order = controller.previousOrders[index];
+                    return OrderCard(
+                        order: order,
+                        withDriverDetails: order.assignedBid != null);
+                  },
+                  itemCount: controller.previousOrders.length,
+                );
     });
   }
 }
@@ -205,7 +211,7 @@ class OrderCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.1),
               spreadRadius: 5,
               blurRadius: 7,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
@@ -298,7 +304,7 @@ class OrderCard extends StatelessWidget {
                   Column(
                     children: [
                       Text(
-                        order.cityPickup?.nameAr ?? '',
+                        '${order.cityPickup?.nameAr} , ${order.regionPickup?.nameAr}  ',
                         style: TextStyle(
                           fontSize: 12.sp,
                         ),
@@ -314,7 +320,7 @@ class OrderCard extends StatelessWidget {
                         height: 32.h,
                       ),
                       Text(
-                        order.cityDropOff?.nameAr ?? '',
+                        '${order.regionDropOff?.nameAr} , ${order.regionDropOff?.nameAr}  ',
                         style: TextStyle(
                           fontSize: 12.sp,
                         ),
@@ -367,14 +373,16 @@ class OrderCard extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'driver name',
+                                    order.bid?.driverUser?.fullName ?? '',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 12.sp,
                                     ),
                                   ),
                                   Text(
-                                    'vehicle'.tr + order.vehicleType.toString(),
+                                    order.bid?.driverUser?.driver?.vehicleType
+                                            ?.vehicleNameAr ??
+                                        '',
                                     style: TextStyle(
                                       color: Colors.grey[400],
                                       fontSize: 12.sp,
@@ -385,7 +393,7 @@ class OrderCard extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            order.status ??'',
+                            order.status ?? '',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12.sp,

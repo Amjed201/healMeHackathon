@@ -25,6 +25,6 @@ class OrderStatusRepo {
       required String reason,
       required String token}) async {
     return await apiClient
-        .post('order/user-cancel/$orderId', {"reason": reason}, token: token);
+        .post('order-process/user-cancel/$orderId', {"reason": reason}, token: token);
   }
 }

@@ -134,6 +134,7 @@ class LocaleString extends Translations {
           "endPoint": "Drop Off Price",
           "noBids": "No bids available now",
           "orderCancelled": "Order has been canceled",
+          "noCurrentOrders": "No current orders",
 
 
 
@@ -283,6 +284,7 @@ class LocaleString extends Translations {
           "endPoint": "نقطة النهاية",
           "noBids": "لا توجد عروض حاليا",
           "orderCancelled": "تم الغاء الطلب",
+          "noCurrentOrders": "لا توجد طلبات حالية",
 
         },
       };

@@ -9,12 +9,32 @@ class MyOrdersRepo {
   // 'PendingPaymentOnPickup','Loaded','GoingToDropOff','PendingPaymentOnDropOff',
   // 'PendingLoadOff','Completed','Canceled')
   Future<http.Response> getRunningOrders({required String token}) async {
-    return await apiClient.post('order/user-search',{},
+    return await apiClient.post(
+        'order/user-search',
+        {
+          'status': [
+            'Created',
+            'PendingStart',
+            'Started',
+            'GoingToPickup',
+            'PendingLoadIn',
+            'PendingPaymentOnPickup',
+            'Loaded',
+            'GoingToDropOff',
+            'GoingToDropOff',
+            'PendingPaymentOnDropOff',
+            'PendingLoadOff'
+          ]
+        },
         token: token);
   }
 
   Future<http.Response> getPreviousOrders({required String token}) async {
-    return await apiClient.post('order/user-search', {'status': 'Completed'},
+    return await apiClient.post(
+        'order/user-search',
+        {
+          'status': ['Completed', 'Canceled']
+        },
         token: token);
   }
 }

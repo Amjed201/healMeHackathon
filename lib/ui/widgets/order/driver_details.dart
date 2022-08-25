@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:logistic/data/models/user.dart';
+import 'package:logistic/services/helpers.dart';
 
 class DriverDetails extends StatelessWidget {
-  const DriverDetails({Key? key}) : super(key: key);
+  User? driver;
+
+  DriverDetails(this.driver, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +39,13 @@ class DriverDetails extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'driver name'.tr,
+                      driver?.fullName ?? '',
                       style: TextStyle(
                         fontSize: 12.sp,
                       ),
                     ),
                     Text(
-                      'car type'.tr,
+                      driver?.driver?.vehicleType?.vehicleNameAr ?? '',
                       style: TextStyle(
                         fontSize: 12.sp,
                         color: Colors.grey,
@@ -70,17 +74,20 @@ class DriverDetails extends StatelessWidget {
                 SizedBox(
                   width: 13.w,
                 ),
-                Container(
-                  height: 81.h,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.phone,
-                      color: Colors.white,
+                InkWell(
+                  onTap: () => launchPhone(driver?.phoneNumber ?? ''),
+                  child: Container(
+                    height: 81.h,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
