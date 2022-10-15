@@ -1,4 +1,4 @@
-name: logistic
+name: healMe
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -76,6 +76,8 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   geocoding: ^2.0.4
   geolocator: ^9.0.1
+  socket_io_client: ^2.0.0-beta.2
+
 
 
 dev_dependencies:
@@ -118,27 +120,21 @@ flutter:
   # example:
   fonts:
 
-    - family: Montserrat-Arabic
+    - family: Poppins
       fonts:
-        - asset: assets/fonts/Montserrat-Arabic-Regular.ttf
+        - asset: assets/fonts/Poppins-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Montserrat-Arabic-Medium.ttf
+        - asset: assets/fonts/Poppins-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Montserrat-Arabic-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Montserrat-Arabic-ExtraBold.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
           weight: 900
-        - asset: assets/fonts/Montserrat-Arabic-Black.ttf
+        - asset: assets/fonts/Poppins-Black.ttf
           weight: 900
-        - asset: assets/fonts/Montserrat-Arabic-Light.ttf
+        - asset: assets/fonts/Poppins-Light.ttf
           weight: 900
 
-    - family: PlusJakartaSans
-      fonts:
-        - asset: assets/fonts/PlusJakartaSans-Bold.ttf
-        - asset: assets/fonts/PlusJakartaSans-Regular.ttf
-        - asset: assets/fonts/PlusJakartaSans-Light.ttf
-        - asset: assets/fonts/PlusJakartaSans-Italic.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

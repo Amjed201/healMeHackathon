@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:logistic/data/models/user.dart';
+import 'package:healMe/data/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
@@ -40,6 +40,15 @@ class LocalStorage {
 
   String? getToken() {
     return _prefs.getString("token");
+  }
+
+  // Support Token
+  Future setSupportToken(String token) async {
+    await _prefs.setString("supportToken", token);
+  }
+
+  String? getSupportToken() {
+    return _prefs.getString("supportToken");
   }
 
   //FCM Token

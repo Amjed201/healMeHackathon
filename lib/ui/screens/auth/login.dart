@@ -1,12 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:logistic/controllers/auth_controller.dart';
-import 'package:logistic/services/helpers.dart';
-import 'package:logistic/ui/screens/auth/otp.dart';
-import 'package:logistic/ui/widgets/back.dart';
-import 'package:logistic/ui/widgets/commonButton.dart';
-import 'package:logistic/ui/widgets/global/loading.dart';
+import 'package:healMe/controllers/auth_controller.dart';
+import 'package:healMe/services/helpers.dart';
+import 'package:healMe/ui/screens/auth/otp.dart';
+import 'package:healMe/ui/screens/auth/register.dart';
+import 'package:healMe/ui/widgets/back.dart';
+import 'package:healMe/ui/widgets/commonButton.dart';
+import 'package:healMe/ui/widgets/global/loading.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,18 +15,19 @@ import 'package:get/get.dart';
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
-  void sendOtp() {
+  void login() {
     final authController = Get.find<AuthController>();
 
-    if (authController.phone.length == 0) {
-      showToast('enterPhone'.tr);
-    } else if (authController.phone.length < 9) {
-      showToast('shortPhone'.tr);
-    } else {
-      authController.sendOtp(countryCode: '+249', phone: authController.phone);
-    }
+    if (_emailController.text == '') {
+      showToast('Enter your email');
+    } else if (_passwordController.text == '') {
+      showToast('Enter your password');
+    } else
+      authController.login(
+          email: _emailController.text, password: _passwordController.text);
   }
 
   @override
@@ -35,48 +37,43 @@ class LoginScreen extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           children: [
-            //check if keyboard is opened or not
-            // if condition is true => keyboard is closed
-            MediaQuery.of(context).viewInsets.bottom == 0
-                ?
-                //shape
-                Column(
+            Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                    Theme.of(context).primaryColor,
+                    Theme.of(context).secondaryHeaderColor,
+                  ])),
+              height: 320.h,
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Row(
                     children: [
-                      Lottie.asset(
-                        'assets/lottie/box.json',
-                        fit: BoxFit.fill,
-                        width: 428.w,
-                        height: 580.h,
-                        repeat: false,
-                      ),
-                      Divider(
-                        height: 10,
-                        color: Theme.of(context).secondaryHeaderColor,
-                        thickness: 10,
-                      ),
+                      Spacer(),
+                      Image.asset(
+                        'assets/images/shape.png',
+                      )
                     ],
-                  )
-                : Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            PopButton(
-                              onTap: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 170.h,
-                        ),
-                      ],
-                    ),
                   ),
+                  Image.asset(
+                    'assets/images/Logo-w.png',
+                  ),
+                  SizedBox(height: 20.h,)
+                ],
+              ),
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.all(30.0),
+            //   child: Image.asset(
+            //     'assets/images/Logo.png',
+            //     width: 200.w,
+            //     height: 200.h,
+            //   ),
+            // ),
             SizedBox(
               height: 20.h,
             ),
@@ -93,15 +90,15 @@ class LoginScreen extends StatelessWidget {
                         AutoSizeText(
                           'login'.tr,
                           style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 22.sp,
+                            color: Color(0xff083243),
+                            fontSize: 26.sp,
                           ),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 30.h,
                         ),
                         AutoSizeText(
-                          'phone'.tr,
+                          'email'.tr,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14.sp,
@@ -120,26 +117,81 @@ class LoginScreen extends StatelessWidget {
                         width: 380.w,
                         height: 69.h,
                         child: TextFormField(
-                          controller: _phoneController,
+                          controller: _emailController,
                           textInputAction: TextInputAction.done,
-                          onEditingComplete: () {
-                            authController.phone = _phoneController.text;
-                            sendOtp();
-                          },
-                          onChanged: (text) => authController.phone = text,
-                          onFieldSubmitted: (text) =>
-                              authController.phone = text,
                           textDirection: TextDirection.ltr,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           cursorColor: Theme.of(context).primaryColor,
                           decoration: InputDecoration(
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-                              child: Text(
-                                '+966',
-                                style: TextStyle(fontSize: 18.sp),
+                            fillColor: Colors.white,
+                            filled: true,
+                            // hintText: 'phone'.tr,
+                            contentPadding: const EdgeInsets.fromLTRB(
+                                20.0, 15.0, 20.0, 15.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: const BorderSide(
+                                color: Colors.black26,
+                                width: 1.0,
                               ),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 2.0,
+                              ),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        AutoSizeText(
+                          'Password'.tr,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  GetBuilder<AuthController>(builder: (authController) {
+                    // _phoneController.text = authController.phone;
+                    return Center(
+                      child: SizedBox(
+                        width: 380.w,
+                        height: 69.h,
+                        child: TextFormField(
+                          controller: _passwordController,
+                          textInputAction: TextInputAction.done,
+                          // onEditingComplete: () {
+                          // authController.phone = _phoneController.text;
+                          // sendOtp();
+                          // },
+                          // onChanged: (text) => authController.phone = text,
+                          // onFieldSubmitted: (text) =>
+                          //     authController.phone = text,
+                          textDirection: TextDirection.ltr,
+                          keyboardType: TextInputType.number,
+                          obscureText: true,
+                          cursorColor: Theme.of(context).primaryColor,
+                          decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
                             // hintText: 'phone'.tr,
@@ -173,7 +225,34 @@ class LoginScreen extends StatelessWidget {
                   GetBuilder<AuthController>(
                       builder: (controller) => controller.loading
                           ? const Center(child: LoadingWidget())
-                          : GradientButton('login'.tr, () => sendOtp())),
+                          : GradientButton('login'.tr, () => login())),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        'Dont have an account ?',
+                        style: TextStyle(
+                          color: Color(0xff083243),
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => RegisterScreen());
+                        },
+                        child: AutoSizeText(
+                          '   Register here',
+                          style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             )

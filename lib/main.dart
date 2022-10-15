@@ -1,22 +1,37 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:logistic/services/helpers.dart';
 import 'package:get/get.dart';
-import 'package:logistic/services/localStorage.dart';
-import 'package:logistic/services/translation.dart';
-import 'package:logistic/ui/screens/auth/login.dart';
-import 'package:logistic/ui/screens/splash.dart';
+import 'package:healMe/services/helpers.dart';
+import 'package:healMe/services/translation.dart';
+import 'package:healMe/ui/screens/auth/login.dart';
+import 'package:healMe/ui/screens/auth/register.dart';
+import 'package:healMe/ui/screens/home_screen.dart';
+import 'package:healMe/ui/screens/result_screen.dart';
+import 'package:healMe/ui/screens/splash_screen.dart';
 // import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await initControllers();
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -26,18 +41,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: (_,widget) => GetMaterialApp(
+      builder: (_, widget) => GetMaterialApp(
         locale:
             // Get.find<LocalStorage>().getLang() == 'en'
             //     ? Locale('en', 'EN')
             //     :
-            Locale('ar', 'AR'),
+            Locale('en', 'EN'),
         translations: LocaleString(),
         debugShowCheckedModeBanner: false,
-        title: 'Logistic',
+        title: 'Heal Me',
         theme: ThemeData(
-          primaryColor: const Color(0xff387E7E),
-          secondaryHeaderColor: const Color(0xffFAA933),
+          primaryColor: const Color(0xff1B9CED) ,
+          secondaryHeaderColor: const Color(0xff2BDABA),
           // focus color for texts
           hintColor: Color(0xff444A60),
           focusColor: Colors.black,
@@ -45,7 +60,7 @@ class MyApp extends StatelessWidget {
               // Get.locale?.languageCode == 'en'
               //     ? 'PlusJakartaSans'
               //     :
-              'Montserrat-Arabic',
+              'Poppins',
           colorScheme:
               ColorScheme.fromSwatch(primarySwatch: Colors.orange).copyWith(
             secondary: const Color(0xffa49e9e),

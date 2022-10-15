@@ -1,4 +1,4 @@
-package com.ktl.logistic
+package com.ktl.healMe
 
 import io.flutter.embedding.android.FlutterActivity
 

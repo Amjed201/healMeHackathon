@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "500698076345",
-    "project_id": "logistic-8127f",
-    "storage_bucket": "logistic-8127f.appspot.com"
+    "project_number": "867961077867",
+    "project_id": "healMes-bc331",
+    "storage_bucket": "healMes-bc331.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:500698076345:android:530ca0b73a18d02b06f768",
+        "mobilesdk_app_id": "1:867961077867:android:1f686c7b81ead3f5ae312e",
         "android_client_info": {
-          "package_name": "com.ktl.logistic"
+          "package_name": "com.ktl.healMe"
         }
       },
       "oauth_client": [
         {
-          "client_id": "500698076345-6icobt5k2nnvmb20tq79mvha67b3dnn0.apps.googleusercontent.com",
+          "client_id": "867961077867-rqio07e5vc98m8f5a9sgdg4cdpl0inqc.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBAoh9Qix_lwG16Q4WL9zt98VoOiJnXBTw"
+          "current_key": "AIzaSyDNBVgyNbeno3XGnpXd2-ctYvKHzswxY-Y"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "500698076345-6icobt5k2nnvmb20tq79mvha67b3dnn0.apps.googleusercontent.com",
+              "client_id": "867961077867-rqio07e5vc98m8f5a9sgdg4cdpl0inqc.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

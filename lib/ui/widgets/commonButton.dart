@@ -13,7 +13,10 @@ class GradientButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap:
+      isDisabled?
+          null:
+      onTap,
       child: Center(
         child: Container(
           height: height,
@@ -24,8 +27,8 @@ class GradientButton extends StatelessWidget {
                LinearGradient(
                   colors:
                   isDisabled?
-                  [Colors.grey[600]!,Colors.grey[700]!]:
-                  [const Color(0xff387D7E), const Color(0xff27595A)],
+                  [Color(0xffe5e5e5),Color(0xffe5e5e5)]:
+                  [const Color(0xff1B9CED), const Color(0xff2BDABA)],
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft)),
           child: Center(
@@ -33,7 +36,11 @@ class GradientButton extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 18.sp,
-              color: Colors.white,
+              color:
+              isDisabled?
+
+              Color(0xff083243):
+              Colors.white,
             ),
           )),
         ),

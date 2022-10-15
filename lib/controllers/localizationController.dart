@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:logistic/services/localStorage.dart';
+import 'package:healMe/services/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logistic/ui/screens/splash.dart';
+import 'package:healMe/ui/screens/splash_screen.dart';
 
 class LocalizationController extends GetxController {
   Locale _locale = const Locale('ar', 'AR');
