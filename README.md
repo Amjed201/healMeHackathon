@@ -1,16 +1,7 @@
-# healMe
+HealMe is an AI diagnosing application and virutal Doctor appointment booking application, that has been developed to override the problems of booking an appointment with a doctor specially prevailing in the pandemic situation. This software is supported to eliminate the hardships faced by this existing manual booking system.This application uses NodeJs as backend and tranined by thousands of Covid data.
 
-A new Flutter project.
+Source code :
+https://github.com/A7mdos/eeese-1/tree/main/back-end
+https://github.com/b1ackven0m/eeese/tree/main/ai
+https://github.com/Amjed201/healMeHackathon
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
